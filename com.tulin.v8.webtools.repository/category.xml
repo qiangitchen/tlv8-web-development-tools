@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<site>
+   <feature id="com.tulin.v8.webtools.feature">
+      <category name="TLv8_Web_Tools"/>
+   </feature>
+   <category-def name="TLv8_Web_Tools" label="TLv8 Web Tools"/>
+</site>

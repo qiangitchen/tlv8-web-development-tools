@@ -1,0 +1,59 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>com.tulin.v8.webtools</groupId>
+	<artifactId>parent</artifactId>
+	<version>1.0.0-SNAPSHOT</version>
+	<packaging>pom</packaging>
+	<name>Eclipse TLv8 Web development tools - Parent</name>
+	<description>TLv8 Web development tools in the Eclipse IDE</description>
+
+	<properties>
+		<java.version>17</java.version>
+		<tycho.version>1.4.0</tycho.version>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
+
+	<repositories>
+		<repository>
+			<id>eclipse</id>
+			<url>https://download.eclipse.org/releases/2023-06</url>
+			<layout>p2</layout>
+		</repository>
+		<repository>
+			<id>eclipse-updates</id>
+			<url>https://download.eclipse.org/eclipse/updates/4.28</url>
+			<layout>p2</layout>
+		</repository>
+	</repositories>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.eclipse.tycho</groupId>
+				<artifactId>tycho-maven-plugin</artifactId>
+				<version>${tycho.version}</version>
+				<extensions>true</extensions>
+			</plugin>
+
+			<plugin>
+				<groupId>org.eclipse.tycho</groupId>
+				<artifactId>tycho-compiler-plugin</artifactId>
+				<version>${tycho.version}</version>
+				<configuration>
+					<source>${java.version}</source>
+					<target>${java.version}</target>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+	<modules>
+		<module>com.tulin.v8.webtools.plugin</module>
+		<module>com.tulin.v8.webtools.feature</module>
+		<module>com.tulin.v8.webtools.repository</module>
+	</modules>
+
+</project>

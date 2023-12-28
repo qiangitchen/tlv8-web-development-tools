@@ -1,0 +1,927 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+<plugin>
+
+   <!--====================================================-->
+   <!-- Extention points -->
+   <!--====================================================-->
+   <extension-point id="customTagConverter" name="customTagConverter" schema="schema/customTagConverter.exsd"/>
+   <extension-point id="customTagAttributeAssist" name="customTagAttributeAssist" schema="schema/customTagAttributeAssist.exsd"/>
+   <extension-point id="paletteItem" name="paletteItem" schema="schema/paletteItem.exsd"/>
+   <extension-point id="noValidationNatures" name="noValidationNatures" schema="schema/noValidationNatures.exsd"/>
+   <extension-point id="fileAssistProcessor" name="fileAssistProcessor" schema="schema/fileAssistProcessor.exsd"/>
+   <extension-point id="hyperlinkProvider" name="hyperlinkProvider" schema="schema/hyperlinkProvider.exsd"/>
+   <extension-point id="tldLocator" name="tldLocator" schema="schema/tldLocator.exsd"/>
+   <extension-point id="customTagValidator" name="customTagValidator" schema="schema/customTagValidator.exsd"/>
+   <extension-point id="preferenceContributer" name="preferenceContributer" schema="schema/preferenceContributer.exsd"/>
+   <extension-point id="pagefilter" name="pagefilter" schema="schema/pagefilter.exsd"/>
+   <extension-point id="javaScriptCompleter" name="javaScriptCompleter" schema="schema/javaScriptCompleter.exsd"/>
+   <extension-point id="jspelAssistProcessor" name="jspelAssistProcessor" schema="schema/jspelAssistProcessor.exsd"/>
+
+   <extension
+         point="org.eclipse.ui.commands">
+      <category
+            name="%category.label.source"
+            id="tulin.commands.category">
+      </category>
+      <command
+      		categoryId="tulin.commands.category"
+            id="tulin.command.comment"
+            name="%menu.label.comment">
+      </command>
+      <command
+      		categoryId="tulin.commands.category"
+            id="tulin.command.MultilineComment"
+            name="%menu.label.mcomment">
+      </command>
+      <command
+      		categoryId="tulin.commands.category"
+            id="tulin.command.UnMultilineComment"
+            name="%menu.label.umcomment">
+      </command>
+      <command
+      		categoryId="tulin.commands.category"
+            id="tulin.command.format"
+            name="%menu.label.fortmat">
+      </command>
+   </extension>
+   <extension
+         point="org.eclipse.ui.handlers">
+      <handler
+            commandId="tulin.command.comment"
+            class="com.tulin.v8.webtools.handlers.ToggleCommentHandler">
+      </handler>
+      <handler
+            commandId="tulin.command.MultilineComment"
+            class="com.tulin.v8.webtools.handlers.MultilineCommentHandler">
+      </handler>
+      <handler
+            commandId="tulin.command.UnMultilineComment"
+            class="com.tulin.v8.webtools.handlers.UnMultilineCommentHandler">
+      </handler>
+      <handler
+            commandId="tulin.command.format"
+            class="com.tulin.v8.webtools.handlers.FormaterHandler">
+      </handler>
+   </extension>
+   <extension
+         point="org.eclipse.ui.bindings">
+      <key
+            commandId="tulin.command.comment"
+            contextId="org.eclipse.ui.contexts.window"
+            sequence="M1+/"
+            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>
+      <key
+            commandId="tulin.command.MultilineComment"
+            contextId="org.eclipse.ui.contexts.window"
+            sequence="M1+M2+/"
+            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>
+      <key
+            commandId="tulin.command.UnMultilineComment"
+            contextId="org.eclipse.ui.contexts.window"
+            sequence="M1+M2+\"
+            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>
+      <key
+            commandId="tulin.command.format"
+            contextId="org.eclipse.ui.contexts.window"
+            sequence="M1+M2+F"
+            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>
+   </extension>
+   
+   <!--====================================================-->
+   <!-- Editors -->
+   <!--====================================================-->
+   <extension
+         point="org.eclipse.ui.editors">
+      <editor
+            class="com.tulin.v8.webtools.htmleditor.editors.HTMLEditor"
+            contributorClass="com.tulin.v8.webtools.htmleditor.editors.HTMLEditorContributor"
+            extensions="html,xhtml"
+            icon="icons/html_file.gif"
+            id="com.tulin.v8.webtools.editors.HTMLEditor"
+            name="%plugin.editor.htmleditor"/>
+      <editor
+            class="com.tulin.v8.webtools.csseditor.editors.CSSEditor"
+            contributorClass="org.eclipse.ui.editors.text.TextEditorActionContributor"
+            default="true"
+            extensions="css"
+            icon="icons/css.gif"
+            id="com.tulin.v8.webtools.csseditor.editors.CSSEditor"
+            name="%plugin.editor.csseditor"/>
+      <editor
+            class="com.tulin.v8.webtools.jspeditor.editors.JSPEditor"
+            contributorClass="com.tulin.v8.webtools.jspeditor.editors.JSPEditorContributor"
+            default="true"
+            extensions="jsp,jspf"
+            icon="icons/jsp_file.gif"
+            id="com.tulin.v8.webtools.jspeditor.editors.JSPEditor"
+            name="%plugin.editor.jspeditor"/>
+      <!--
+      <editor
+            class="com.tulin.v8.webtools.xmleditor.editors.XMLEditor"
+            contributorClass="com.tulin.v8.webtools.xmleditor.editors.XMLEditorContributor"
+            default="true"
+            extensions="xml,tld,xsl"
+            icon="icons/xml.gif"
+            id="com.tulin.v8.webtools.xmleditor.editors.XMLEditor"
+            name="%plugin.editor.xmleditor">
+      </editor>
+      <editor
+            class="com.tulin.v8.webtools.dtdeditor.editors.DTDEditor"
+            contributorClass="org.eclipse.ui.editors.text.TextEditorActionContributor"
+            default="true"
+            extensions="dtd"
+            icon="icons/dtd.gif"
+            id="com.tulin.v8.webtools.dtdeditor.editors.DTDEditor"
+            name="%plugin.editor.dtdeditor"/>
+      -->
+      <editor
+            class="com.tulin.v8.webtools.jseditor.editors.JavaScriptEditor"
+            contributorClass="com.tulin.v8.webtools.jseditor.editors.JavaScriptEditorContributor"
+            default="true"
+            extensions="js"
+            icon="icons/js.gif"
+            id="com.tulin.v8.webtools.jseditor.editors.JavaScriptEditor"
+            name="%plugin.editor.jseditor"/>
+      <!--
+      <editor
+            class="com.tulin.v8.webtools.editors.WebBrowser"
+            extensions="url"
+            icon="icons/web.gif"
+            id="com.tulin.v8.webtools.editors.WebBrowser"
+            name="%plugin.editor.webbrowser"/>
+      -->
+   </extension>
+
+   <extension
+         point="com.tulin.v8.webtools.fileAssistProcessor">
+      <processor class="com.tulin.v8.webtools.htmleditor.assist.FileAssistProcessor"/>
+   </extension>
+   <extension
+         point="com.tulin.v8.webtools.customTagAttributeAssist">
+      <customTagAttributeAssist
+            class="com.tulin.v8.webtools.jspeditor.editors.JSTLAttributeAssist">
+      </customTagAttributeAssist>
+   </extension>
+
+   <!--====================================================-->
+   <!-- Wizards -->
+   <!--====================================================-->
+   <extension
+         point="org.eclipse.ui.newWizards">
+      <category
+            name="%plugin.preference.category"
+            id="com.tulin.v8.webtools"/>
+      <wizard
+            class="com.tulin.v8.webtools.htmleditor.wizards.HTMLNewWizard"
+            icon="icons/html_file.gif"
+            category="com.tulin.v8.webtools"
+            name="%plugin.wizard.html"
+            id="com.tulin.v8.webtools.wizards.HTMLNewWizard"/>
+      <!--
+      <wizard
+            icon="icons/web.gif"
+            class="com.tulin.v8.webtools.htmleditor.wizards.URLNewWizard"
+            category="com.tulin.v8.webtools"
+            name="%plugin.wizard.url"
+            id="com.tulin.v8.webtools.wizards.URLNewWizard"/>
+      -->
+      <wizard
+            class="com.tulin.v8.webtools.htmleditor.wizards.JSPNewWizard"
+            icon="icons/jsp_file.gif"
+            category="com.tulin.v8.webtools"
+            name="%plugin.wizard.jsp"
+            id="com.tulin.v8.webtools.wizards.JSPNewWizard"/>
+      <wizard
+            class="com.tulin.v8.webtools.htmleditor.wizards.XMLNewWizard"
+            icon="icons/xml.gif"
+            category="com.tulin.v8.webtools"
+            name="%plugin.wizard.xml"
+            id="com.tulin.v8.webtools.wizards.XMLNewWizard"/>
+      <wizard
+            category="com.tulin.v8.webtools"
+            class="com.tulin.v8.webtools.jseditor.wizards.AddJavaScriptLibraryWizard"
+            icon="icons/js.gif"
+            id="com.tulin.v8.webtools.jseditor.wizards.AddJavaScriptLibraryWizard"
+            name="%plugin.wizard.jslibrary">
+      </wizard>
+      
+      <wizard
+            canFinishEarly="false"
+            category="com.tulin.v8.webtools"
+            class="com.tulin.v8.webtools.wizards.NewWebProjectWizard"
+            finalPerspective="com.tulin.v8.ide.perspectives.RelEngPerspective"
+            hasPages="true"
+            icon="icons/web.gif"
+            id="com.tulin.v8.webtools.wizards.NewWebProjectWizard"
+            name="%np.title"
+            project="true">
+        <description>
+            %np.desc
+        </description>
+       </wizard>
+   </extension>
+   
+   <!--====================================================-->
+   <!-- Preferences -->
+   <!--====================================================-->
+   <extension
+         point="org.eclipse.ui.preferencePages">
+      <page
+            class="com.tulin.v8.webtools.htmleditor.HTMLEditorPreferencePage"
+            name="%plugin.preference.category"
+            category="com.tulin.v8.ide.preferences.StudioPreferencePage"
+            id="com.tulin.v8.webtools.category"/>
+      <!--
+      <page
+            class="com.tulin.v8.webtools.htmleditor.AppearancePreferencePage"
+            category="com.tulin.v8.webtools.category"
+            name="%plugin.preference.appearance"
+            id="com.tulin.v8.webtools.page1"/>
+      -->
+      <page
+            class="com.tulin.v8.webtools.htmleditor.CustomAssistPreferencePage"
+            category="com.tulin.v8.webtools.AssistPreferencePage"
+            name="%plugin.preference.customassist"
+            id="com.tulin.v8.webtools.CustomAssistPreferencePage"/>
+      <page
+            class="com.tulin.v8.webtools.htmleditor.DTDPreferencePage"
+            category="com.tulin.v8.webtools.XMLPreferencePage"
+            name="%plugin.preference.dtd"
+            id="com.tulin.v8.webtools.DTDPreferencePage"/>
+      <page
+            class="com.tulin.v8.webtools.htmleditor.TLDPreferencePage"
+            category="com.tulin.v8.webtools.JSPEditorPreferencePage"
+            name="%plugin.preference.tld"
+            id="com.tulin.v8.webtools.TLDPreferencePage"/>
+      <page
+            class="com.tulin.v8.webtools.htmleditor.AssistPreferencePage"
+            category="com.tulin.v8.webtools.category"
+            name="%plugin.preference.codeassist"
+            id="com.tulin.v8.webtools.AssistPreferencePage"/>
+      <page
+            class="com.tulin.v8.webtools.htmleditor.CSSEditorPreferencePage"
+            category="com.tulin.v8.webtools.category"
+            name="%plugin.preference.csseditor"
+            id="com.tulin.v8.webtools.CSSEditorPreferencePage"/>
+      <page
+            class="com.tulin.v8.webtools.htmleditor.JSPEditorPreferencePage"
+            category="com.tulin.v8.webtools.category"
+            name="%plugin.preference.jspeditor"
+            id="com.tulin.v8.webtools.JSPEditorPreferencePage"/>
+      <page
+            class="com.tulin.v8.webtools.htmleditor.JavaScriptEditorPreferencePage"
+            category="com.tulin.v8.webtools.category"
+            name="%plugin.preference.jseditor"
+            id="com.tulin.v8.webtools.JavaScriptEditorPreferencePage"/>
+      <page
+            class="com.tulin.v8.webtools.htmleditor.tasktag.HTMLTaskTagPreferencePage"
+            category="com.tulin.v8.webtools.XMLPreferencePage"
+            name="%plugin.preference.tasktag"
+            id="com.tulin.v8.webtools.tasktag.HTMLTaskTagPreferencePage"/>
+      <page
+            class="com.tulin.v8.webtools.htmleditor.XMLPreferencePage"
+            category="com.tulin.v8.webtools.category"
+            name="XML"
+            id="com.tulin.v8.webtools.XMLPreferencePage"/>
+      <page
+            class="com.tulin.v8.webtools.htmleditor.template.HTMLTemplatePreferencePage"
+            category="com.tulin.v8.webtools.AssistPreferencePage"
+            name="%plugin.preference.template"
+            id="com.tulin.v8.webtools.template.HTMLTemplatePreferencePage"/>
+      <page
+            class="com.tulin.v8.webtools.htmleditor.FormatterPreferencePage"
+            category="com.tulin.v8.webtools.category"
+            name="%plugin.preference.formatter"
+            id="com.tulin.v8.webtools.FormatterPreferencePage"/>
+   </extension>
+   <extension
+         point="org.eclipse.core.runtime.preferences">
+      <initializer class="com.tulin.v8.webtools.htmleditor.HTMLPreferenceInitializer"/>
+   </extension>
+
+   <!--====================================================-->
+   <!-- Views -->
+   <!--====================================================-->
+   <extension
+         point="org.eclipse.ui.views">
+      <category
+            name="%plugin.preference.category"
+            id="com.tulin.v8.webtools"/>
+      <view
+            icon="icons/image.gif"
+            category="com.tulin.v8.webtools"
+            class="com.tulin.v8.webtools.htmleditor.views.ImageView"
+            name="%plugin.views.image"
+            id="com.tulin.v8.webtools.views.ImageView"/>
+
+      <view
+            class="com.tulin.v8.webtools.htmleditor.views.PaletteView"
+            category="com.tulin.v8.webtools"
+            icon="icons/palette.gif"
+            name="%plugin.views.palette"
+            id="com.tulin.v8.webtools.views.PaletteView"/>
+      <view
+            category="com.tulin.v8.webtools"
+            class="com.tulin.v8.webtools.htmleditor.views.CSSPreviewView"
+            icon="icons/css.gif"
+            id="com.tulin.v8.webtools.views.CSSPreviewView"
+            name="%plugin.views.csspreview"/>
+   </extension>
+   <!--====================================================-->
+   <!-- Project properties -->
+   <!--====================================================-->
+   <extension
+         id="com.tulin.v8.webtools.HTMLProjectPropertyPage"
+         point="org.eclipse.ui.propertyPages">
+      <page
+            class="com.tulin.v8.webtools.htmleditor.HTMLProjectPropertyPage"
+            id="com.tulin.v8.webtools.HTMLProjectPropertyPage"
+            name="%plugin.preference.category">
+         <enabledWhen>
+            <adapt
+                  type="org.eclipse.core.resources.IProject">
+            </adapt>
+         </enabledWhen>
+      </page>
+      <page
+            category="com.tulin.v8.webtools.HTMLProjectPropertyPage"
+            class="com.tulin.v8.webtools.htmleditor.JavaScriptPropertyPage"
+            id="com.tulin.v8.webtools.JavaScriptPropertyPage"
+            name="JavaScript">
+         <enabledWhen>
+            <adapt
+                  type="org.eclipse.core.resources.IProject">
+            </adapt>
+         </enabledWhen>
+      </page>
+   </extension>
+
+   <!--
+   <extension
+         point="org.eclipse.debug.core.sourceLocators">
+      <sourceLocator
+            class="com.tulin.v8.webtools.jspeditor.editors.JSPSourceLocator"
+            name="JSP Source Locator"
+            id="com.tulin.v8.webtools.jspeditor.JSPSourceLocator"/>
+   </extension>
+   -->
+
+   <!--====================================================-->
+   <!-- Template -->
+   <!--====================================================-->
+   <extension
+         point="org.eclipse.ui.editors.templates">
+      <contextType
+            class="com.tulin.v8.webtools.htmleditor.template.HTMLContextType"
+            name="HTML/JSP/XML"
+            id="com.tulin.v8.webtools.templateContextType.html"/>
+      <contextType
+            class="com.tulin.v8.webtools.htmleditor.template.JavaScriptContextType"
+            name="JavaScript"
+            id="com.tulin.v8.webtools.templateContextType.javascript"/>
+      <template
+            autoinsert="false"
+            contextTypeId="com.tulin.v8.webtools.templateContextType.javascript"
+            description="%plugin.template.js.catch"
+            id="com.tulin.v8.webtools.template.js.catch"
+            name="catch">
+         <pattern>
+catch (e) {
+	${cursor}// ${todo}: handle exception
+}
+         </pattern>
+      </template>
+      <template
+            autoinsert="false"
+            contextTypeId="com.tulin.v8.webtools.templateContextType.javascript"
+            description="%plugin.template.js.do"
+            id="com.tulin.v8.webtools.template.js.do"
+            name="do">
+         <pattern>
+do {
+	${line_selection}${cursor}
+} while (${condition});
+         </pattern>
+      </template>
+      <template
+            autoinsert="false"
+            contextTypeId="com.tulin.v8.webtools.templateContextType.javascript"
+            description="%plugin.template.js.else"
+            id="com.tulin.v8.webtools.template.js.else"
+            name="else">
+         <pattern>
+else {
+	${cursor}
+}
+         </pattern>
+      </template>
+      <template
+            autoinsert="false"
+            contextTypeId="com.tulin.v8.webtools.templateContextType.javascript"
+            description="%plugin.template.js.elseif"
+            id="com.tulin.v8.webtools.template.js.elseif"
+            name="elseif">
+         <pattern>
+else if (${condition}) {
+	${cursor}
+}
+         </pattern>
+      </template>
+      <template
+            autoinsert="false"
+            contextTypeId="com.tulin.v8.webtools.templateContextType.javascript"
+            description="%plugin.template.js.for"
+            id="com.tulin.v8.webtools.template.js.for"
+            name="for">
+         <pattern>
+for (var ${index} = 0; ${index} &lt; ${array}.length; ${index}++) {
+	${line_selection}${cursor}
+}
+         </pattern>
+      </template>
+      <template
+            autoinsert="false"
+            contextTypeId="com.tulin.v8.webtools.templateContextType.javascript"
+            description="%plugin.template.js.forwithvar"
+            id="com.tulin.v8.webtools.template.js.forwithvar"
+            name="for">
+         <pattern>
+for (var ${index} = 0; ${index} &lt; ${array}.length; ${index}++) {
+	var ${array_element} = ${array}[${index}];
+	${cursor}
+}
+         </pattern>
+      </template>
+      <template
+            autoinsert="false"
+            contextTypeId="com.tulin.v8.webtools.templateContextType.javascript"
+            description="%plugin.template.js.forin"
+            id="com.tulin.v8.webtools.template.js.forin"
+            name="forin">
+         <pattern>
+for (var ${iterable_element} in ${iterable}) {
+	${cursor}
+}
+         </pattern>
+      </template>
+      <template
+            autoinsert="false"
+            contextTypeId="com.tulin.v8.webtools.templateContextType.javascript"
+            description="%plugin.template.js.function"
+            id="com.tulin.v8.webtools.template.js.function"
+            name="function">
+         <pattern>
+function ${name}(${args}) {
+    ${cursor}
+}
+         </pattern>
+      </template>
+      <template
+            autoinsert="false"
+            contextTypeId="com.tulin.v8.webtools.templateContextType.javascript"
+            description="%plugin.template.js.anonymousFunction"
+            id="com.tulin.v8.webtools.template.js.anonymousFunction"
+            name="function">
+         <pattern>
+function (${args}) {
+    ${cursor}
+}
+         </pattern>
+      </template>
+      <template
+            autoinsert="false"
+            contextTypeId="com.tulin.v8.webtools.templateContextType.javascript"
+            description="%plugin.template.js.if"
+            id="com.tulin.v8.webtools.template.js.if"
+            name="if">
+         <pattern>
+if (${condition}) {
+	${line_selection}${cursor}
+}
+         </pattern>
+      </template>
+      <template
+            autoinsert="false"
+            contextTypeId="com.tulin.v8.webtools.templateContextType.javascript"
+            description="%plugin.template.js.ifelse"
+            id="com.tulin.v8.webtools.template.js.ifelse"
+            name="ifelse">
+         <pattern>
+if (${condition}) {
+	${cursor}
+} else {
+
+}
+         </pattern>
+      </template>
+      <template
+            autoinsert="false"
+            contextTypeId="com.tulin.v8.webtools.templateContextType.javascript"
+            description="%plugin.template.js.lazy"
+            id="com.tulin.v8.webtools.template.js.lazy"
+            name="lazy">
+         <pattern>
+if (${name:var} == null) {
+	${name} = new ${type}(${arguments});
+	${cursor}
+}
+
+return ${name};
+         </pattern>
+      </template>
+      <template
+            autoinsert="false"
+            contextTypeId="com.tulin.v8.webtools.templateContextType.javascript"
+            description="%plugin.template.js.new"
+            id="com.tulin.v8.webtools.template.js.new"
+            name="new">
+         <pattern>
+new ${type}(${arguments});
+         </pattern>
+      </template>
+      <template
+            autoinsert="false"
+            contextTypeId="com.tulin.v8.webtools.templateContextType.javascript"
+            description="%plugin.template.js.newwithvar"
+            id="com.tulin.v8.webtools.template.js.newwithvar"
+            name="new">
+         <pattern>
+var ${name} = new ${type}(${arguments});
+         </pattern>
+      </template>
+      <template
+            autoinsert="false"
+            contextTypeId="com.tulin.v8.webtools.templateContextType.javascript"
+            description="%plugin.template.js.require"
+            id="com.tulin.v8.webtools.template.js.require"
+            name="require">
+         <pattern>
+require('${value}')
+         </pattern>
+      </template>
+      <template
+            autoinsert="false"
+            contextTypeId="com.tulin.v8.webtools.templateContextType.javascript"
+            description="%plugin.template.js.requirewithvar"
+            id="com.tulin.v8.webtools.template.js.requirewithvar"
+            name="require">
+         <pattern>
+var ${name} = require('${value}');
+         </pattern>
+      </template>
+      <template
+            autoinsert="false"
+            contextTypeId="com.tulin.v8.webtools.templateContextType.javascript"
+            description="%plugin.template.js.switch"
+            id="com.tulin.v8.webtools.template.js.switch"
+            name="switch">
+         <pattern>
+switch (${key}) {
+	case ${value}:
+		${cursor}
+		break;
+
+	default:
+		break;
+}
+         </pattern>
+      </template>
+      <template
+            autoinsert="false"
+            contextTypeId="com.tulin.v8.webtools.templateContextType.javascript"
+            description="%plugin.template.js.try"
+            id="com.tulin.v8.webtools.template.js.try"
+            name="try">
+         <pattern>
+try {
+	${line_selection}${cursor}
+} catch (${e}) {
+	// ${todo}: handle exception
+}
+         </pattern>
+      </template>
+      <template
+            autoinsert="false"
+            contextTypeId="com.tulin.v8.webtools.templateContextType.javascript"
+            description="%plugin.template.js.var"
+            id="com.tulin.v8.webtools.template.js.var"
+            name="var">
+         <pattern>
+var ${name};
+         </pattern>
+      </template>
+      <template
+            autoinsert="false"
+            contextTypeId="com.tulin.v8.webtools.templateContextType.javascript"
+            description="%plugin.template.js.while"
+            id="com.tulin.v8.webtools.template.js.while"
+            name="while">
+         <pattern>
+while (${condition}) {
+	${line_selection}${cursor}
+}
+         </pattern>
+      </template>
+   </extension>
+
+   <!--====================================================-->
+   <!-- nature and builder -->
+   <!--====================================================-->
+   <extension
+         id="HTMLProjectNature"
+         name="HTMLProjectNature"
+         point="org.eclipse.core.resources.natures">
+      <!--
+      <requires-nature
+            id="org.eclipse.jdt.core.javanature">
+      </requires-nature>
+      -->
+      <runtime>
+         <run
+               class="com.tulin.v8.webtools.htmleditor.HTMLProjectNature">
+         </run>
+      </runtime>
+   </extension>
+   <extension
+         id="HTMLProjectBuilder"
+         name="HTMLProjectBuilder"
+         point="org.eclipse.core.resources.builders">
+      <builder>
+         <run class="com.tulin.v8.webtools.htmleditor.HTMLProjectBuilder"/>
+      </builder>
+   </extension>
+
+   <!--====================================================-->
+   <!-- JavaScript Launcher -->
+   <!--====================================================-->
+   <extension
+         point="org.eclipse.debug.core.launchConfigurationTypes">
+      <launchConfigurationType
+            delegate="com.tulin.v8.webtools.jseditor.launch.JavaScriptLaunchConfigurationDelegate"
+            id="com.tulin.v8.webtools.jseditor.launch.JavaScriptLaunchConfigurationType"
+            modes="run"
+            name="%plugin.launcher.javascript"
+            public="true">
+         <fileExtension
+               default="false"
+               extension="js"/>
+      </launchConfigurationType>
+   </extension>
+   <extension
+         point="org.eclipse.debug.ui.launchConfigurationTypeImages">
+      <launchConfigurationTypeImage
+            configTypeID="com.tulin.v8.webtools.jseditor.launch.JavaScriptLaunchConfigurationType"
+            icon="icons/javascript.gif"
+            id="com.tulin.v8.webtools.jseditor.launch.launchConfigurationTypeImage"/>
+   </extension>
+   <extension
+		 point="org.eclipse.debug.ui.launchConfigurationTabGroups">
+	  <launchConfigurationTabGroup
+			type="com.tulin.v8.webtools.jseditor.launch.JavaScriptLaunchConfigurationType"
+			class="com.tulin.v8.webtools.jseditor.launch.JavaScriptTabGroup"
+			id="com.tulin.v8.webtools.jseditor.launch.JavaScriptTabGroup">
+	  </launchConfigurationTabGroup>
+   </extension>
+   <extension
+         point="org.eclipse.debug.ui.launchShortcuts">
+      <shortcut
+            class="com.tulin.v8.webtools.jseditor.launch.JavaScriptLaunchShortcut"
+            icon="icons/javascript.gif"
+            id="com.tulin.v8.webtools.jseditor.launch.JavaScriptLaunchShortcut"
+            label="%plugin.launcher.javascript"
+            modes="run">
+         <contextualLaunch>
+            <enablement>
+               <with variable="selection">
+                  <count value="1"/>
+                  <iterate>
+                     <test
+                           property="org.eclipse.debug.ui.matchesPattern"
+                           value="*.js"/>
+                  </iterate>
+               </with>
+            </enablement>
+         </contextualLaunch>
+      </shortcut>
+   </extension>
+   <extension
+         point="org.eclipse.jdt.core.classpathVariableInitializer">
+      <classpathVariableInitializer
+            class="com.tulin.v8.webtools.htmleditor.WebAppClasspathVariableInitializer"
+            variable="WEBAPP_LIBS"/>
+   </extension>
+   <extension point="org.eclipse.jdt.core.classpathContainerInitializer">
+    <classpathContainerInitializer
+      class="com.tulin.v8.webtools.internal.web.classpath.WebAppLibrariesContainerInitializer"
+      id="com.tulin.v8.webtools.internal.web.container"/>
+  </extension>
+  <extension point="org.eclipse.jdt.ui.classpathContainerPage">
+    <classpathContainerPage
+      name="%webLibrariesContainerName"
+      class="com.tulin.v8.webtools.internal.web.classpath.WebAppLibrariesContainerPage"
+      id="com.tulin.v8.webtools.internal.web.container">
+    </classpathContainerPage>
+  </extension>
+   <!--
+   <extension
+         point="org.eclipse.ui.commands">
+      <category
+            id="com.tulin.v8.webtools"
+            name="Eclipse HTML Editor"/>
+      <command
+            categoryId="com.tulin.v8.webtools"
+            id="com.tulin.v8.webtools.xmleditor.format"
+            name="%plugin.command.formatXML"/>
+      <command
+            categoryId="com.tulin.v8.webtools"
+            id="com.tulin.v8.webtools.jspeditor.format"
+            name="%plugin.command.formatJSP"/>
+   </extension>
+   -->
+   <!--
+   <extension
+         point="org.eclipse.ui.bindings">
+      <key
+            commandId="com.tulin.v8.webtools.xmleditor.format"
+            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+            sequence="CTRL+SHIFT+F"/>
+      <key
+            commandId="com.tulin.v8.webtools.jspeditor.format"
+            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+            sequence="CTRL+SHIFT+F"/>
+   </extension>
+   -->
+   <extension
+         point="org.eclipse.help.toc">
+      <toc
+            file="toc.xml"
+            primary="true">
+      </toc>
+   </extension>
+
+   <!--====================================================-->
+   <!-- JavaScript Completers -->
+   <!--====================================================-->
+   <extension
+         point="com.tulin.v8.webtools.javaScriptCompleter">
+      <completer
+            class="com.tulin.v8.webtools.jseditor.editors.additional.PrototypeCompleter"
+            name="Prototype JavaScript framework">
+      </completer>
+      <completer
+            class="com.tulin.v8.webtools.jseditor.editors.additional.ECMAScriptCompleter"
+            name="ECMA Script">
+      </completer>
+      <completer
+            class="com.tulin.v8.webtools.jseditor.editors.additional.FireFoxCompleter"
+            name="FireFox">
+      </completer>
+      <completer
+            class="com.tulin.v8.webtools.jseditor.editors.additional.ChromeCompleter"
+            name="Chrome">
+      </completer>
+      <completer
+            class="com.tulin.v8.webtools.jseditor.editors.additional.ScriptaculousCompleter"
+            name="script.aculo.us">
+      </completer>
+      <completer
+            class="com.tulin.v8.webtools.jseditor.editors.additional.NodeJsCompleter"
+            name="Node.js">
+      </completer>
+      <completer
+            class="com.tulin.v8.webtools.jseditor.editors.additional.JQueryCompleter"
+            name="jQuery">
+      </completer>
+      <completer
+            class="com.tulin.v8.webtools.jseditor.editors.additional.TLv8Completer"
+            name="TLv8">
+      </completer>
+<!--
+      <completer
+            class="com.tulin.v8.webtools.jseditor.editors.additional.AIRCompleter"
+            name="AIR">
+      </completer>
+-->
+   </extension>
+   
+   <!-- 通用文本编辑器js扩展 -->
+   <extension
+         point="org.eclipse.core.contenttype.contentTypes">
+      <content-type
+            id="com.tulin.v8.webtools.js"
+            name="JS"
+            base-type="org.eclipse.core.runtime.text"
+            file-extensions="js">
+      </content-type>
+   </extension>
+   <extension
+         point="org.eclipse.ui.editors">
+      <editorContentTypeBinding
+            contentTypeId="com.tulin.v8.webtools.js"
+            editorId="org.eclipse.ui.genericeditor.GenericEditor">
+      </editorContentTypeBinding>
+   </extension>
+   <extension
+         point="org.eclipse.ui.genericeditor.presentationReconcilers">
+      <presentationReconciler
+            class="com.tulin.v8.webtools.jseditor.editors.JavaScriptPresentationReconciler"
+            contentType="com.tulin.v8.webtools.js">
+      </presentationReconciler>
+   </extension>
+   <extension
+         point="org.eclipse.ui.genericeditor.hoverProviders">
+      <hoverProvider
+            class="com.tulin.v8.webtools.jseditor.editors.JavaScriptHoverProvider"
+            contentType="com.tulin.v8.webtools.js">
+      </hoverProvider>
+   </extension>
+   <extension
+         point="org.eclipse.ui.genericeditor.contentAssistProcessors">
+      <contentAssistProcessor
+            class="com.tulin.v8.webtools.jseditor.editors.JavaScriptAssistProcessor"
+            contentType="com.tulin.v8.webtools.js">
+      </contentAssistProcessor>
+   </extension>
+   <extension
+         point="org.eclipse.ui.genericeditor.autoEditStrategies">
+      <autoEditStrategy
+            class="com.tulin.v8.webtools.jseditor.editors.JavaScriptAutoEditStrategy"
+            contentType="com.tulin.v8.webtools.js">
+      </autoEditStrategy>
+   </extension>
+   <extension point="org.eclipse.ui.genericeditor.icons">
+    <icon contentType="com.tulin.v8.webtools.js" icon="icons/javascript.gif"/>
+   </extension>
+   
+   <!-- 通用文本编辑器css扩展 -->
+   <extension
+         point="org.eclipse.core.contenttype.contentTypes">
+      <content-type
+            id="com.tulin.v8.webtools.css"
+            name="CSS"
+            base-type="org.eclipse.core.runtime.text"
+            file-extensions="css,less,scss,sass">
+      </content-type>
+   </extension>
+   <extension
+         point="org.eclipse.ui.editors">
+      <editorContentTypeBinding
+            contentTypeId="com.tulin.v8.webtools.css"
+            editorId="org.eclipse.ui.genericeditor.GenericEditor">
+      </editorContentTypeBinding>
+   </extension>
+   <extension
+         point="org.eclipse.ui.genericeditor.presentationReconcilers">
+      <presentationReconciler
+            class="com.tulin.v8.webtools.csseditor.editors.CSSPresentationReconciler"
+            contentType="com.tulin.v8.webtools.css">
+      </presentationReconciler>
+   </extension>
+   <extension
+         point="org.eclipse.ui.genericeditor.contentAssistProcessors">
+      <contentAssistProcessor
+            class="com.tulin.v8.webtools.csseditor.editors.CSSAssistProcessor"
+            contentType="com.tulin.v8.webtools.css">
+      </contentAssistProcessor>
+   </extension>
+   <extension point="org.eclipse.ui.genericeditor.icons">
+    <icon contentType="com.tulin.v8.webtools.css" icon="icons/css.png"/>
+   </extension>
+   
+   <!-- 通用文本编辑器html扩展 -->
+   <extension
+         point="org.eclipse.core.contenttype.contentTypes">
+      <content-type
+            id="com.tulin.v8.webtools.html"
+            name="HTML"
+            base-type="org.eclipse.core.runtime.text"
+            file-extensions="html,htm">
+      </content-type>
+   </extension>
+   <extension
+         point="org.eclipse.ui.editors">
+      <editorContentTypeBinding
+            contentTypeId="com.tulin.v8.webtools.html"
+            editorId="org.eclipse.ui.genericeditor.GenericEditor">
+      </editorContentTypeBinding>
+   </extension>
+   <extension
+         point="org.eclipse.ui.genericeditor.presentationReconcilers">
+      <presentationReconciler
+            class="com.tulin.v8.webtools.htmleditor.editors.HTMLPresentationReconciler"
+            contentType="com.tulin.v8.webtools.html">
+      </presentationReconciler>
+   </extension>
+   <extension
+         point="org.eclipse.ui.genericeditor.contentAssistProcessors">
+      <contentAssistProcessor
+            class="com.tulin.v8.webtools.htmleditor.assist.HTMLAssistProcessor"
+            contentType="com.tulin.v8.webtools.html">
+      </contentAssistProcessor>
+   </extension>
+   <extension point="org.eclipse.ui.genericeditor.icons">
+    <icon contentType="com.tulin.v8.webtools.html" icon="icons/html.png"/>
+   </extension>
+
+</plugin>
