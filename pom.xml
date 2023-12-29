@@ -11,7 +11,7 @@
 	<description>TLv8 Web development tools in the Eclipse IDE</description>
 
 	<properties>
-		<java.version>17</java.version>
+		<java.version>1.8</java.version>
 		<tycho.version>1.4.0</tycho.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>

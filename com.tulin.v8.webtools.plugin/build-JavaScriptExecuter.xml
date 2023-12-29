@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<project name="EclipseHTMLEditor" default="JavaScriptExecuter">
-	<target name="JavaScriptExecuter">
-		<property file="build.properties" />
-		<jar destfile="lib/JavaScriptExecutor.jar" basedir="${output..}"
-			includes="**/launch/executer/*"/>
-	</target>
-</project>

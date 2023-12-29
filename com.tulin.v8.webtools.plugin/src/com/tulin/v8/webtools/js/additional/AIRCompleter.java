@@ -1,0 +1,14 @@
+package com.tulin.v8.webtools.js.additional;
+
+import java.util.List;
+
+import com.tulin.v8.webtools.js.model.JavaScriptModel;
+
+/**
+ * <code>IAdditionalJavaScriptCompleter</code> implementation for Adobe AIR.
+ */
+public class AIRCompleter extends AbstractCompleter {
+	public List<JavaScriptModel> loadModel(List<JavaScriptModel> libModelList) {
+		return null;
+	}
+}
