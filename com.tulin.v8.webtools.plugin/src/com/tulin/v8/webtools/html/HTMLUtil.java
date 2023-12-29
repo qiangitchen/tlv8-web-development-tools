@@ -63,7 +63,6 @@ import com.tulin.v8.webtools.WebToolsPlugin;
  * This provides utility methods.
  *
  */
-@SuppressWarnings("removal")
 public class HTMLUtil {
 
 	public static String extractJavadoc(IMember member, IProgressMonitor monitor)

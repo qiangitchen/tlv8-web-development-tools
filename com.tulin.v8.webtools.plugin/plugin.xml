@@ -32,6 +32,7 @@
             name="HTML">
       </content-type>
    </extension>
+   <!--
    <extension
          point="org.eclipse.ui.editors">
       <editorContentTypeBinding
@@ -39,51 +40,36 @@
             editorId="org.eclipse.ui.genericeditor.GenericEditor">
       </editorContentTypeBinding>
    </extension>
-   <extension
-         point="org.eclipse.ui.genericeditor.presentationReconcilers">
-      <presentationReconciler
-            class="com.tulin.v8.webtools.html.HtmlPresentationReconciler"
-            contentType="com.tulin.v8.webtools.html">
-      </presentationReconciler>
-   </extension>
-   <extension
-         point="org.eclipse.ui.genericeditor.hoverProviders">
-      <hoverProvider
-            class="com.tulin.v8.webtools.html.HtmlHoverProvider"
-            contentType="com.tulin.v8.webtools.html">
-      </hoverProvider>
-   </extension>
-   <extension
-         point="org.eclipse.ui.genericeditor.contentAssistProcessors">
-      <contentAssistProcessor
-            class="com.tulin.v8.webtools.html.HtmlContentAssistProcessor"
-            contentType="com.tulin.v8.webtools.html">
-      </contentAssistProcessor>
-   </extension>
-   <extension
-         point="org.eclipse.ui.genericeditor.autoEditStrategies">
-      <autoEditStrategy
-            class="com.tulin.v8.webtools.html.HtmlAutoEditStrategy"
-            contentType="com.tulin.v8.webtools.html">
-      </autoEditStrategy>
-   </extension>
-   <extension
-         point="org.eclipse.ui.genericeditor.reconcilers">
-      <reconciler
-            class="com.tulin.v8.webtools.html.HtmlReconciler"
-            contentType="com.tulin.v8.webtools.html">
-      </reconciler>
-   </extension>
-   <extension
-         point="org.eclipse.core.filebuffers.documentSetup">
-      <participant
-            class="com.tulin.v8.webtools.html.ValidatorDocumentSetupParticipant"
-            contentTypeId="com.tulin.v8.webtools.html"
-            extensions="html">
-      </participant>
-   </extension>
    <extension point="org.eclipse.ui.genericeditor.icons">
     <icon contentType="com.tulin.v8.webtools.html" icon="icons/html.png"/>
+   </extension>
+   -->
+   
+   <extension
+         point="org.eclipse.ui.editors">
+      <editor
+            class="com.tulin.v8.webtools.html.editors.HTMLEditor"
+            contributorClass="com.tulin.v8.webtools.html.editors.HTMLEditorContributor"
+            extensions="html,xhtml"
+            icon="icons/html_file.gif"
+            id="com.tulin.v8.webtools.editors.HTMLEditor"
+            name="%plugin.editor.htmleditor"/>
+      <editor
+            class="com.tulin.v8.webtools.css.editors.CSSEditor"
+            contributorClass="org.eclipse.ui.editors.text.TextEditorActionContributor"
+            default="true"
+            extensions="css"
+            icon="icons/css.gif"
+            id="com.tulin.v8.webtools.csseditor.editors.CSSEditor"
+            name="%plugin.editor.csseditor"/>
+      <editor
+            class="com.tulin.v8.webtools.js.editors.JavaScriptEditor"
+            contributorClass="com.tulin.v8.webtools.js.editors.JavaScriptEditorContributor"
+            default="true"
+            extensions="js"
+            icon="icons/js.gif"
+            id="com.tulin.v8.webtools.jseditor.editors.JavaScriptEditor"
+            name="%plugin.editor.jseditor"/>
    </extension>
    
    <!-- Javascript File Editor-->

@@ -3,6 +3,8 @@ Bundle-ManifestVersion: 2
 Bundle-Name: Web Tools
 Bundle-SymbolicName: com.tulin.v8.webtools;singleton:=true
 Bundle-Vendor: TuLin
+Bundle-Encoding: UTF-8
+Bundle-Localization: plugin
 Bundle-Version: 1.0.0.qualifier
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
@@ -24,10 +26,23 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.text,
  org.eclipse.jface,
  org.eclipse.core.filebuffers
-Bundle-RequiredExecutionEnvironment: JavaSE-17
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
 Bundle-Activator: com.tulin.v8.webtools.WebToolsPlugin
 Bundle-ClassPath: .,
  lib/fuzzyxml.jar,
- lib/js.jar
+ lib/js.jar,
+ lib/ss_css2.jar,
+ lib/dtdparser121.jar,
+ lib/jaxen-1_1_beta_9.jar,
+ lib/jtidy-8.0-20111220.jar,
+ lib/org.apache.commons.jrcs.diff.jar,
+ lib/trang.jar,
+ lib/xercesImpl.jar,
+ lib/xml-apis.jar,
+ lib/commons-jxpath-1.2.jar,
+ lib/dom4j-2.1.1.jar,
+ lib/egen-develop.jar,
+ lib/jsp-api.jar,
+ lib/servlet-api.jar
 Automatic-Module-Name: com.tulin.v8.webtools.plugin

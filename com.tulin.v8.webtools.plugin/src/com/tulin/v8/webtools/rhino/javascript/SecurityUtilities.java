@@ -43,7 +43,6 @@ import java.security.AccessController;
 import java.security.PrivilegedAction;
 import java.security.ProtectionDomain;
 
-@SuppressWarnings({ "removal" })
 public class SecurityUtilities {
 	/**
 	 * Retrieves a system property within a privileged block. Use it only when the

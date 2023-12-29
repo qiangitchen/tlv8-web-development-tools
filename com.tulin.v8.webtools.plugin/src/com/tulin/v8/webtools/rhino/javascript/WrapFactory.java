@@ -73,7 +73,6 @@ public class WrapFactory {
 	 *                   based on its class, staticType will be used instead.
 	 * @return the wrapped value.
 	 */
-	@SuppressWarnings("deprecation")
 	public Object wrap(Context cx, Scriptable scope, Object obj, Class<?> staticType) {
 		if (obj == null || obj == Undefined.instance || obj instanceof Scriptable) {
 			return obj;

@@ -1,11 +1,20 @@
 package com.tulin.v8.webtools;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IConfigurationElement;
+import org.eclipse.core.runtime.IExtension;
+import org.eclipse.core.runtime.IExtensionPoint;
+import org.eclipse.core.runtime.IExtensionRegistry;
 import org.eclipse.core.runtime.ILog;
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.resource.ImageRegistry;
@@ -16,6 +25,7 @@ import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
+import com.tulin.v8.webtools.html.editors.views.IPaletteContributer;
 import com.tulin.v8.webtools.js.launch.ClosureCompilerLaunchUtil;
 import com.tulin.v8.webtools.js.launch.JavaScriptLaunchUtil;
 
@@ -230,7 +240,7 @@ public class WebToolsPlugin extends AbstractUIPlugin {
 		super();
 		plugin = this;
 		try {
-			resourceBundle = ResourceBundle.getBundle("com.tulin.v8.webtools.PluginResources.properties");
+			resourceBundle = ResourceBundle.getBundle("com.tulin.v8.webtools.PluginResources");
 		} catch (MissingResourceException x) {
 			resourceBundle = null;
 		}
@@ -367,5 +377,87 @@ public class WebToolsPlugin extends AbstractUIPlugin {
 
 		// TODO debug
 		ex.printStackTrace();
+	}
+
+	/** List of IPaletteContributer */
+	private Map<String, IPaletteContributer> palette = null;
+
+	/**
+	 * Returns contributed IPaletteContributer which was registered as specified
+	 * group name.
+	 */
+	public IPaletteContributer getPaletteContributer(String group) {
+		if (palette == null) {
+			loadPalleteContributer();
+		}
+		return palette.get(group);
+	}
+
+	/**
+	 * Returns group names of contributed IPaletteContributer.
+	 */
+	public String[] getPaletteContributerGroups() {
+		if (palette == null) {
+			loadPalleteContributer();
+		}
+		return palette.keySet().toArray(new String[0]);
+	}
+
+	/**
+	 * Load informations of IPaletteContributer.
+	 */
+	private void loadPalleteContributer() {
+		try {
+			palette = new HashMap<String, IPaletteContributer>();
+			IExtensionRegistry registry = Platform.getExtensionRegistry();
+			IExtensionPoint point = registry.getExtensionPoint(getPluginId() + ".paletteItem");
+			IExtension[] extensions = point.getExtensions();
+			for (int i = 0; i < extensions.length; i++) {
+				IConfigurationElement[] elements = extensions[i].getConfigurationElements();
+				for (int j = 0; j < elements.length; j++) {
+					if ("contributer".equals(elements[j].getName())) {
+						String group = elements[j].getAttribute("name");
+						IPaletteContributer contributer = (IPaletteContributer) elements[j]
+								.createExecutableExtension("class");
+						palette.put(group, contributer);
+					}
+				}
+			}
+		} catch (Exception ex) {
+			logException(ex);
+		}
+	}
+
+	/**
+	 * Returns contributed IFileAssistProcessor.
+	 */
+	public IFileAssistProcessor[] getFileAssistProcessors() {
+		List<IFileAssistProcessor> list = loadContributedClasses("fileAssistProcessor", "processor",
+				IFileAssistProcessor.class);
+		return list.toArray(new IFileAssistProcessor[list.size()]);
+	}
+
+	/**
+	 * @since 2.0.5
+	 */
+	@SuppressWarnings("unchecked")
+	private static <T> List<T> loadContributedClasses(String extPointId, String elementName, Class<T> type) {
+		List<T> result = new ArrayList<T>();
+		try {
+			IExtensionRegistry registry = Platform.getExtensionRegistry();
+			IExtensionPoint point = registry.getExtensionPoint(getPluginId() + "." + extPointId);
+			IExtension[] extensions = point.getExtensions();
+			for (int i = 0; i < extensions.length; i++) {
+				IConfigurationElement[] elements = extensions[i].getConfigurationElements();
+				for (int j = 0; j < elements.length; j++) {
+					if (elementName.equals(elements[j].getName())) {
+						result.add((T) elements[j].createExecutableExtension("class"));
+					}
+				}
+			}
+		} catch (Exception ex) {
+			logException(ex);
+		}
+		return result;
 	}
 }

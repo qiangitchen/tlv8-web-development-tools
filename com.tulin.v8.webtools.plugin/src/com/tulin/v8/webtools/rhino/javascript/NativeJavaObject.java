@@ -62,7 +62,6 @@ import java.util.Map;
  * @see NativeJavaPackage
  * @see NativeJavaClass
  */
-@SuppressWarnings("deprecation")
 public class NativeJavaObject implements Scriptable, Wrapper, Serializable
 {
     static final long serialVersionUID = -6948590651130498591L;
