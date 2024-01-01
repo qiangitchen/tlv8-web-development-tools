@@ -1,4 +1,4 @@
-package com.tulin.v8.webtools.html;
+package com.tulin.v8.webtools;
 
 import jp.aonir.fuzzyxml.FuzzyXMLDocument;
 import jp.aonir.fuzzyxml.FuzzyXMLElement;
@@ -11,24 +11,24 @@ import com.tulin.v8.webtools.html.editors.HTMLHyperlinkInfo;
  * This provides additional hyperlinks to the <code>HTMLSourceEditor</code>.
  */
 public interface IHyperlinkProvider {
-
+	
 	/**
-	 * This method returns a target object of hyperlink. If this provider doesn't
-	 * support specified arguments, returns null.
+	 * This method returns a target object of hyperlink.
+	 * If this provider doesn't support specified arguments, returns null.
 	 * 
 	 * @param file      the <code>IFile</code> instance
 	 * @param doc       a document object of FuzzyXML
 	 * @param element   an element that are calet position
 	 * @param attrName  an attribute name that are calet position
 	 * @param attrValue an attribute value that are calet position
-	 * @return
-	 *         <ul>
-	 *         <li><code>IFile</code></li>
-	 *         <li><code>IJavaElement</code></li>
-	 *         <li><code>null</code></li>
-	 *         </ul>
+	 * @return 
+	 *   <ul>
+	 *     <li><code>IFile</code></li>
+	 *     <li><code>IJavaElement</code></li>
+	 *     <li><code>null</code></li>
+	 *   </ul>
 	 */
-	public HTMLHyperlinkInfo getHyperlinkInfo(IFile file, FuzzyXMLDocument doc, FuzzyXMLElement element,
-			String attrName, String attrValue, int offset);
-
+	public HTMLHyperlinkInfo getHyperlinkInfo(IFile file,FuzzyXMLDocument doc,
+			FuzzyXMLElement element,String attrName,String attrValue,int offset);
+	
 }

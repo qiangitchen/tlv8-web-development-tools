@@ -2,9 +2,9 @@
 <!-- Schema file written by PDE -->
 <schema targetNamespace="com.tulin.v8.webtools" xmlns="http://www.w3.org/2001/XMLSchema">
 <annotation>
-      <appInfo>
+      <appinfo>
          <meta.schema plugin="com.tulin.v8.webtools" id="hyperlinkProvider" name="hyperlinkProvider"/>
-      </appInfo>
+      </appinfo>
       <documentation>
          
       </documentation>
@@ -12,9 +12,9 @@
 
    <element name="extension">
       <annotation>
-         <appInfo>
+         <appinfo>
             <meta.element />
-         </appInfo>
+         </appinfo>
       </annotation>
       <complexType>
          <sequence>
@@ -51,9 +51,9 @@
                <documentation>
                   
                </documentation>
-               <appInfo>
-                  <meta.attribute kind="java" basedOn="com.tulin.v8.webtools.IHyperlinkProvider"/>
-               </appInfo>
+               <appinfo>
+                  <meta.attribute kind="java" basedOn=":com.tulin.v8.webtools.IHyperlinkProvider"/>
+               </appinfo>
             </annotation>
          </attribute>
       </complexType>

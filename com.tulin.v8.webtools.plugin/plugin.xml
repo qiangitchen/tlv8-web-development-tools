@@ -15,6 +15,8 @@
    <extension-point id="pagefilter" name="pagefilter" schema="schema/pagefilter.exsd"/>
    <extension-point id="javaScriptCompleter" name="javaScriptCompleter" schema="schema/javaScriptCompleter.exsd"/>
    <extension-point id="jspelAssistProcessor" name="jspelAssistProcessor" schema="schema/jspelAssistProcessor.exsd"/>
+   <extension-point id="contentAssistProcessors" name="contentAssistProcessors" schema="schema/contentAssistProcessors.exsd"/>
+   <extension-point id="hoverProviders" name="hoverProviders" schema="schema/hoverProviders.exsd"/>
    
 	<!-- 初始配置 -->
 	<extension

@@ -29,7 +29,6 @@ import com.tulin.v8.webtools.html.editors.views.IPaletteTarget;
  * methods to them.
  */
 public class HTMLEditor extends EditorPart implements IPaletteTarget {
-
 	protected EditorPart editor;
 	protected File prevTempFile = null;
 
@@ -38,13 +37,13 @@ public class HTMLEditor extends EditorPart implements IPaletteTarget {
 		IPreferenceStore store = WebToolsPlugin.getDefault().getPreferenceStore();
 		String type = store.getString(WebToolsPlugin.PREF_EDITOR_TYPE);
 		if (type.equals("horizontal")) {
-			editor = new SplitPageHTMLEditor(this, true, createHTMLSourceEditor(getSourceViewerConfiguration()));
+			editor = new SplitPageHTMLEditor(this, true, createHTMLSourceEditor());
 		} else if (type.equals("vertical")) {
-			editor = new SplitPageHTMLEditor(this, false, createHTMLSourceEditor(getSourceViewerConfiguration()));
+			editor = new SplitPageHTMLEditor(this, false, createHTMLSourceEditor());
 		} else if (type.equals("tab")) {
-			editor = new MultiPageHTMLEditor(this, createHTMLSourceEditor(getSourceViewerConfiguration()));
+			editor = new MultiPageHTMLEditor(this, createHTMLSourceEditor());
 		} else {
-			editor = createHTMLSourceEditor(getSourceViewerConfiguration());
+			editor = createHTMLSourceEditor();
 			editor.addPropertyListener(new IPropertyListener() {
 				public void propertyChanged(Object source, int propertyId) {
 					firePropertyChange(propertyId);
@@ -53,12 +52,8 @@ public class HTMLEditor extends EditorPart implements IPaletteTarget {
 		}
 	}
 
-	protected HTMLConfiguration getSourceViewerConfiguration() {
-		return new HTMLConfiguration(WebToolsPlugin.getDefault().getColorProvider());
-	}
-
-	protected HTMLSourceEditor createHTMLSourceEditor(HTMLConfiguration config) {
-		return new HTMLSourceEditor(config);
+	protected HTMLSourceEditor createHTMLSourceEditor() {
+		return new HTMLSourceEditor();
 	}
 
 	public HTMLSourceEditor getPaletteTarget() {

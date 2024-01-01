@@ -83,6 +83,7 @@ public class HTMLSourceEditor extends TextEditor {
 	private HTMLCharacterPairMatcher pairMatcher;
 	private SoftTabVerifyListener softTabListener;
 	private EditorSelectionChangedListener selectionChangeListener;
+	private HTMLConfiguration configuration;
 
 	public static final String GROUP_HTML = "_html";
 	public static final String ACTION_ESCAPE_HTML = "_escape_html";
@@ -98,13 +99,10 @@ public class HTMLSourceEditor extends TextEditor {
 	private boolean validation = true;
 
 	public HTMLSourceEditor() {
-		this(new HTMLConfiguration(WebToolsPlugin.getDefault().getColorProvider()));
-	}
-
-	public HTMLSourceEditor(HTMLConfiguration config) {
 		super();
 		colorProvider = WebToolsPlugin.getDefault().getColorProvider();
-		setSourceViewerConfiguration(config);
+		configuration = new HTMLConfiguration(this, WebToolsPlugin.getDefault().getColorProvider());
+		setSourceViewerConfiguration(configuration);
 		setPreferenceStore(new ChainedPreferenceStore(
 				new IPreferenceStore[] { getPreferenceStore(), WebToolsPlugin.getDefault().getPreferenceStore() }));
 
@@ -507,6 +505,7 @@ public class HTMLSourceEditor extends TextEditor {
 			}
 		}
 		super.doSetInput(input);
+		configuration.watchDocument(getDocumentProvider().getDocument(input));
 	}
 
 	public void doSave(IProgressMonitor progressMonitor) {

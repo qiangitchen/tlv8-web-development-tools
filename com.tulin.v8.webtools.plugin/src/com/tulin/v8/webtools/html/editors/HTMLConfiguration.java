@@ -1,17 +1,32 @@
 package com.tulin.v8.webtools.html.editors;
 
+import java.util.Arrays;
+import java.util.LinkedHashSet;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Queue;
+import java.util.Set;
+
+import org.eclipse.core.filebuffers.FileBuffers;
+import org.eclipse.core.filebuffers.ITextFileBuffer;
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.Platform;
+import org.eclipse.core.runtime.content.IContentType;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.text.DefaultInformationControl;
 import org.eclipse.jface.text.DocumentEvent;
 import org.eclipse.jface.text.IAutoEditStrategy;
 import org.eclipse.jface.text.IDocument;
+import org.eclipse.jface.text.IDocumentPartitioningListener;
 import org.eclipse.jface.text.IInformationControl;
 import org.eclipse.jface.text.IInformationControlCreator;
 import org.eclipse.jface.text.IRegion;
 import org.eclipse.jface.text.ITextDoubleClickStrategy;
+import org.eclipse.jface.text.ITextHover;
 import org.eclipse.jface.text.ITypedRegion;
 import org.eclipse.jface.text.Region;
-import org.eclipse.jface.text.contentassist.ContentAssistant;
+import org.eclipse.jface.text.contentassist.IContentAssistProcessor;
 import org.eclipse.jface.text.contentassist.IContentAssistant;
 import org.eclipse.jface.text.hyperlink.IHyperlinkDetector;
 import org.eclipse.jface.text.presentation.IPresentationReconciler;
@@ -22,12 +37,17 @@ import org.eclipse.jface.text.rules.RuleBasedScanner;
 import org.eclipse.jface.text.source.ISourceViewer;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.editors.text.TextSourceViewerConfiguration;
+import org.eclipse.ui.texteditor.ITextEditor;
 
 import com.tulin.v8.webtools.ColorProvider;
 import com.tulin.v8.webtools.WebToolsPlugin;
+import com.tulin.v8.webtools.assist.ContentAssistProcessorRegistry;
+import com.tulin.v8.webtools.assist.ContentTypeRelatedExtensionTracker;
+import com.tulin.v8.webtools.assist.EditorContentAssistant;
 import com.tulin.v8.webtools.assist.HTMLAssistProcessor;
 import com.tulin.v8.webtools.assist.InnerCSSAssistProcessor;
 import com.tulin.v8.webtools.assist.InnerJavaScriptAssistProcessor;
+import com.tulin.v8.webtools.hover.CompositeTextHover;
 import com.tulin.v8.webtools.html.HTMLHyperlinkDetector;
 import com.tulin.v8.webtools.html.HTMLPartitionScanner;
 import com.tulin.v8.webtools.html.HTMLScanner;
@@ -39,8 +59,7 @@ import com.tulin.v8.webtools.html.InnerJavaScriptScanner;
 /**
  * <code>SourceViewerConfiguration</code> for <code>HTMLSourceEditor</code>.
  */
-public class HTMLConfiguration extends TextSourceViewerConfiguration {
-
+public class HTMLConfiguration extends TextSourceViewerConfiguration implements IDocumentPartitioningListener {
 	private HTMLDoubleClickStrategy doubleClickStrategy;
 
 	private HTMLScanner scanner;
@@ -54,7 +73,7 @@ public class HTMLConfiguration extends TextSourceViewerConfiguration {
 
 	private ColorProvider colorProvider;
 
-	private ContentAssistant assistant;
+//	private ContentAssistant assistant;
 	private HTMLAssistProcessor processor;
 	private InnerJavaScriptAssistProcessor jsProcessor;
 	private InnerCSSAssistProcessor cssProcessor;
@@ -62,7 +81,13 @@ public class HTMLConfiguration extends TextSourceViewerConfiguration {
 	private HtmlAutoEditStrategy autoEditStrategy;
 	private HTMLHyperlinkDetector hyperlinkDetector;
 
-	public HTMLConfiguration(ColorProvider colorProvider) {
+	private ITextEditor editor;
+	private Set<IContentType> resolvedContentTypes;
+	private Set<IContentType> fallbackContentTypes;
+	private EditorContentAssistant contentAssistant;
+
+	public HTMLConfiguration(ITextEditor editor, ColorProvider colorProvider) {
+		this.editor = editor;
 		this.colorProvider = colorProvider;
 	}
 
@@ -171,41 +196,123 @@ public class HTMLConfiguration extends TextSourceViewerConfiguration {
 		return cssProcessor;
 	}
 
+	public Set<IContentType> getContentTypes(IDocument document) {
+		if (this.resolvedContentTypes != null) {
+			return this.resolvedContentTypes;
+		}
+		this.resolvedContentTypes = new LinkedHashSet<>();
+		ITextFileBuffer buffer = getCurrentBuffer(document);
+		if (buffer != null) {
+			try {
+				IContentType contentType = buffer.getContentType();
+				if (contentType != null) {
+					this.resolvedContentTypes.add(contentType);
+				}
+			} catch (CoreException ex) {
+				ex.printStackTrace();
+			}
+		}
+		String fileName = getCurrentFileName(document);
+		if (fileName != null) {
+			Queue<IContentType> types = new LinkedList<>(
+					Arrays.asList(Platform.getContentTypeManager().findContentTypesFor(fileName)));
+			while (!types.isEmpty()) {
+				IContentType type = types.poll();
+				this.resolvedContentTypes.add(type);
+				IContentType parent = type.getBaseType();
+				if (parent != null) {
+					types.add(parent);
+				}
+			}
+		}
+		return this.resolvedContentTypes.isEmpty() ? fallbackContentTypes : resolvedContentTypes;
+	}
+
+	private static ITextFileBuffer getCurrentBuffer(IDocument document) {
+		if (document != null) {
+			return FileBuffers.getTextFileBufferManager().getTextFileBuffer(document);
+		}
+		return null;
+	}
+
+	private String getCurrentFileName(IDocument document) {
+		String fileName = null;
+		if (this.editor != null) {
+			fileName = editor.getEditorInput().getName();
+		}
+		if (fileName == null) {
+			ITextFileBuffer buffer = getCurrentBuffer(document);
+			if (buffer != null) {
+				IPath path = buffer.getLocation();
+				if (path != null) {
+					fileName = path.lastSegment();
+				}
+			}
+		}
+		return fileName;
+	}
+	
+	@Override
+	public ITextHover getTextHover(ISourceViewer sourceViewer, String contentType) {
+		List<ITextHover> hovers = WebToolsPlugin.getDefault().getHoverRegistry().getAvailableHovers(sourceViewer,
+				editor, getContentTypes(sourceViewer.getDocument()));
+		if (hovers == null || hovers.isEmpty()) {
+			return null;
+		} else if (hovers.size() == 1) {
+			return hovers.get(0);
+		} else {
+			return new CompositeTextHover(hovers);
+		}
+	}
+
 	/**
 	 * Creates or Returns the <code>IContentAssistant</code>.
 	 */
+	@Override
 	public IContentAssistant getContentAssistant(ISourceViewer sourceViewer) {
-		if (assistant == null) {
-			assistant = new ContentAssistant();
-			assistant.setInformationControlCreator(new IInformationControlCreator() {
-				public IInformationControl createInformationControl(Shell parent) {
-					return new DefaultInformationControl(parent);
-				}
-			});
-			assistant.setContextInformationPopupOrientation(IContentAssistant.CONTEXT_INFO_ABOVE);
-			assistant.enableAutoInsert(true);
-
-			HTMLAssistProcessor processor = getAssistProcessor();
-			assistant.setContentAssistProcessor(processor, IDocument.DEFAULT_CONTENT_TYPE);
-			assistant.setContentAssistProcessor(processor, HTMLPartitionScanner.HTML_TAG);
-			assistant.setContentAssistProcessor(processor, HTMLPartitionScanner.PREFIX_TAG);
-
-			InnerJavaScriptAssistProcessor jsProcessor = getJavaScriptAssistProcessor();
-			assistant.setContentAssistProcessor(jsProcessor, HTMLPartitionScanner.JAVASCRIPT);
-
-			InnerCSSAssistProcessor cssProcessor = getCSSAssistProcessor();
-			assistant.setContentAssistProcessor(cssProcessor, HTMLPartitionScanner.HTML_CSS);
-
-			assistant.install(sourceViewer);
-
-			IPreferenceStore store = WebToolsPlugin.getDefault().getPreferenceStore();
-			assistant.enableAutoActivation(store.getBoolean(WebToolsPlugin.PREF_ASSIST_AUTO));
-			assistant.setAutoActivationDelay(store.getInt(WebToolsPlugin.PREF_ASSIST_TIMES));
-			assistant.setInformationControlCreator(getInformationControlCreator(sourceViewer));
-			processor.setAutoAssistChars(store.getString(WebToolsPlugin.PREF_ASSIST_CHARS).toCharArray());
-			processor.setAssistCloseTag(store.getBoolean(WebToolsPlugin.PREF_ASSIST_CLOSE));
+		ContentAssistProcessorRegistry registry = WebToolsPlugin.getDefault().getContentAssistProcessorRegistry();
+		ContentTypeRelatedExtensionTracker<IContentAssistProcessor> contentAssistProcessorTracker = new ContentTypeRelatedExtensionTracker<IContentAssistProcessor>(
+				WebToolsPlugin.getDefault().getBundle().getBundleContext(), IContentAssistProcessor.class,
+				sourceViewer.getTextWidget().getDisplay());
+		Set<IContentType> types = getContentTypes(sourceViewer.getDocument());
+		contentAssistant = new EditorContentAssistant(contentAssistProcessorTracker,
+				registry.getContentAssistProcessors(sourceViewer, editor, types), types, fPreferenceStore);
+		if (this.document != null) {
+			associateTokenContentTypes(this.document);
 		}
-		return assistant;
+		watchDocument(sourceViewer.getDocument());
+		return contentAssistant;
+//		if (assistant == null) {
+//			assistant = new ContentAssistant();
+//			assistant.setInformationControlCreator(new IInformationControlCreator() {
+//				public IInformationControl createInformationControl(Shell parent) {
+//					return new DefaultInformationControl(parent);
+//				}
+//			});
+//			assistant.setContextInformationPopupOrientation(IContentAssistant.CONTEXT_INFO_ABOVE);
+//			assistant.enableAutoInsert(true);
+//
+//			HTMLAssistProcessor processor = getAssistProcessor();
+//			assistant.setContentAssistProcessor(processor, IDocument.DEFAULT_CONTENT_TYPE);
+//			assistant.setContentAssistProcessor(processor, HTMLPartitionScanner.HTML_TAG);
+//			assistant.setContentAssistProcessor(processor, HTMLPartitionScanner.PREFIX_TAG);
+//
+//			InnerJavaScriptAssistProcessor jsProcessor = getJavaScriptAssistProcessor();
+//			assistant.setContentAssistProcessor(jsProcessor, HTMLPartitionScanner.JAVASCRIPT);
+//
+//			InnerCSSAssistProcessor cssProcessor = getCSSAssistProcessor();
+//			assistant.setContentAssistProcessor(cssProcessor, HTMLPartitionScanner.HTML_CSS);
+//
+//			assistant.install(sourceViewer);
+//
+//			IPreferenceStore store = WebToolsPlugin.getDefault().getPreferenceStore();
+//			assistant.enableAutoActivation(store.getBoolean(WebToolsPlugin.PREF_ASSIST_AUTO));
+//			assistant.setAutoActivationDelay(store.getInt(WebToolsPlugin.PREF_ASSIST_TIMES));
+//			assistant.setInformationControlCreator(getInformationControlCreator(sourceViewer));
+//			processor.setAutoAssistChars(store.getString(WebToolsPlugin.PREF_ASSIST_CHARS).toCharArray());
+//			processor.setAssistCloseTag(store.getBoolean(WebToolsPlugin.PREF_ASSIST_CLOSE));
+//		}
+//		return assistant;
 	}
 
 //	public IInformationControlCreator getInformationControlCreator(ISourceViewer sourceViewer) {
@@ -438,6 +545,34 @@ public class HTMLConfiguration extends TextSourceViewerConfiguration {
 			return partition;
 		}
 
+	}
+
+	private IDocument document;
+
+	void watchDocument(IDocument document) {
+		if (this.document == document) {
+			return;
+		}
+		if (this.document != null) {
+			this.document.removeDocumentPartitioningListener(this);
+		}
+		if (document != null) {
+			this.document = document;
+			associateTokenContentTypes(document);
+			document.addDocumentPartitioningListener(this);
+		}
+	}
+
+	@Override
+	public void documentPartitioningChanged(IDocument document) {
+		associateTokenContentTypes(document);
+	}
+
+	private void associateTokenContentTypes(IDocument document) {
+		if (contentAssistant == null) {
+			return;
+		}
+		contentAssistant.updateTokens(document);
 	}
 
 }

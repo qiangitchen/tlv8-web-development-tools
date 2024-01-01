@@ -88,13 +88,16 @@ public class JavaScriptEditor extends TextEditor {
 	public static final String ACTION_OUTLINE = "_outline";
 	public static final String ACTION_TOGGLE_BREAKPOINT = "_toggle_breakpoint";
 
+	private JavaScriptConfiguration configuration;
+
 	/**
 	 * The constructor.
 	 */
 	public JavaScriptEditor() {
 		super();
 		colorProvider = WebToolsPlugin.getDefault().getColorProvider();
-		setSourceViewerConfiguration(new JavaScriptConfiguration(colorProvider));
+		configuration = new JavaScriptConfiguration(this, colorProvider);
+		setSourceViewerConfiguration(configuration);
 		setPreferenceStore(new ChainedPreferenceStore(
 				new IPreferenceStore[] { getPreferenceStore(), WebToolsPlugin.getDefault().getPreferenceStore() }));
 
@@ -157,6 +160,7 @@ public class JavaScriptEditor extends TextEditor {
 			setDocumentProvider(new JavaScriptTextDocumentProvider());
 		}
 		super.doSetInput(input);
+		configuration.watchDocument(getDocumentProvider().getDocument(input));
 	}
 
 	public void doSave(IProgressMonitor progressMonitor) {

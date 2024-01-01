@@ -22,14 +22,17 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.MessageBox;
+import org.eclipse.ui.internal.genericeditor.hover.TextHoverRegistry;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
+import com.tulin.v8.webtools.assist.ContentAssistProcessorRegistry;
 import com.tulin.v8.webtools.html.editors.views.IPaletteContributer;
 import com.tulin.v8.webtools.js.launch.ClosureCompilerLaunchUtil;
 import com.tulin.v8.webtools.js.launch.JavaScriptLaunchUtil;
 
 public class WebToolsPlugin extends AbstractUIPlugin {
+	public static final String BUNDLE_ID = "com.tulin.v8.webtools";
 	// The shared instance.
 	private static WebToolsPlugin plugin;
 	// Resource bundle.
@@ -459,5 +462,32 @@ public class WebToolsPlugin extends AbstractUIPlugin {
 			logException(ex);
 		}
 		return result;
+	}
+	
+	private TextHoverRegistry textHoversRegistry;
+	
+	/**
+	 * @return the registry allowing to access contributed {@link ITextHover}s.
+	 * @since 1.0
+	 */
+	public synchronized TextHoverRegistry getHoverRegistry() {
+		if (this.textHoversRegistry == null) {
+			this.textHoversRegistry = new TextHoverRegistry(getPreferenceStore());
+		}
+		return this.textHoversRegistry;
+	}
+	
+	private ContentAssistProcessorRegistry contentAssistProcessorsRegistry;
+	
+	/**
+	 * @return the registry allowing to access contributed
+	 *         {@link IContentAssistProcessor}s.
+	 * @since 1.0
+	 */
+	public synchronized ContentAssistProcessorRegistry getContentAssistProcessorRegistry() {
+		if (this.contentAssistProcessorsRegistry == null) {
+			this.contentAssistProcessorsRegistry = new ContentAssistProcessorRegistry();
+		}
+		return this.contentAssistProcessorsRegistry;
 	}
 }

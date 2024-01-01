@@ -29,6 +29,7 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.ide.IDE;
 import org.eclipse.ui.texteditor.AbstractTextEditor;
 
+import com.tulin.v8.webtools.IHyperlinkProvider;
 import com.tulin.v8.webtools.WebToolsPlugin;
 import com.tulin.v8.webtools.html.editors.HTMLEditor;
 import com.tulin.v8.webtools.html.editors.HTMLHyperlinkInfo;
