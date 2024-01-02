@@ -12,7 +12,10 @@ import com.tulin.v8.webtools.js.model.JavaScriptModel;
  * 
  * @author 陈乾
  * @author tulin
+ * 
+ * @Deprecated 使用tern提供js代码辅助
  */
+@Deprecated
 public class TLv8Completer extends AbstractCompleter {
 	private static final String[] JS_FILES = new String[] { "comon.main.js", "flow.main.js", "grid.main.js",
 			"tree.main.js", "treegrid.main.js", "Context.js" };

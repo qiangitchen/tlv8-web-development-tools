@@ -26,6 +26,7 @@ import org.eclipse.jface.text.ITextDoubleClickStrategy;
 import org.eclipse.jface.text.ITextHover;
 import org.eclipse.jface.text.ITypedRegion;
 import org.eclipse.jface.text.Region;
+import org.eclipse.jface.text.contentassist.ContentAssistant;
 import org.eclipse.jface.text.contentassist.IContentAssistProcessor;
 import org.eclipse.jface.text.contentassist.IContentAssistant;
 import org.eclipse.jface.text.hyperlink.IHyperlinkDetector;
@@ -73,7 +74,7 @@ public class HTMLConfiguration extends TextSourceViewerConfiguration implements 
 
 	private ColorProvider colorProvider;
 
-//	private ContentAssistant assistant;
+	private ContentAssistant assistant;
 	private HTMLAssistProcessor processor;
 	private InnerJavaScriptAssistProcessor jsProcessor;
 	private InnerCSSAssistProcessor cssProcessor;
@@ -281,38 +282,37 @@ public class HTMLConfiguration extends TextSourceViewerConfiguration implements 
 			associateTokenContentTypes(this.document);
 		}
 		watchDocument(sourceViewer.getDocument());
-		return contentAssistant;
-//		if (assistant == null) {
-//			assistant = new ContentAssistant();
-//			assistant.setInformationControlCreator(new IInformationControlCreator() {
-//				public IInformationControl createInformationControl(Shell parent) {
-//					return new DefaultInformationControl(parent);
-//				}
-//			});
-//			assistant.setContextInformationPopupOrientation(IContentAssistant.CONTEXT_INFO_ABOVE);
-//			assistant.enableAutoInsert(true);
-//
-//			HTMLAssistProcessor processor = getAssistProcessor();
-//			assistant.setContentAssistProcessor(processor, IDocument.DEFAULT_CONTENT_TYPE);
-//			assistant.setContentAssistProcessor(processor, HTMLPartitionScanner.HTML_TAG);
-//			assistant.setContentAssistProcessor(processor, HTMLPartitionScanner.PREFIX_TAG);
-//
-//			InnerJavaScriptAssistProcessor jsProcessor = getJavaScriptAssistProcessor();
-//			assistant.setContentAssistProcessor(jsProcessor, HTMLPartitionScanner.JAVASCRIPT);
-//
-//			InnerCSSAssistProcessor cssProcessor = getCSSAssistProcessor();
-//			assistant.setContentAssistProcessor(cssProcessor, HTMLPartitionScanner.HTML_CSS);
-//
-//			assistant.install(sourceViewer);
-//
-//			IPreferenceStore store = WebToolsPlugin.getDefault().getPreferenceStore();
-//			assistant.enableAutoActivation(store.getBoolean(WebToolsPlugin.PREF_ASSIST_AUTO));
-//			assistant.setAutoActivationDelay(store.getInt(WebToolsPlugin.PREF_ASSIST_TIMES));
-//			assistant.setInformationControlCreator(getInformationControlCreator(sourceViewer));
-//			processor.setAutoAssistChars(store.getString(WebToolsPlugin.PREF_ASSIST_CHARS).toCharArray());
-//			processor.setAssistCloseTag(store.getBoolean(WebToolsPlugin.PREF_ASSIST_CLOSE));
-//		}
-//		return assistant;
+		if (assistant == null) {
+			assistant = new ContentAssistant();
+			assistant.setInformationControlCreator(new IInformationControlCreator() {
+				public IInformationControl createInformationControl(Shell parent) {
+					return new DefaultInformationControl(parent);
+				}
+			});
+			assistant.setContextInformationPopupOrientation(IContentAssistant.CONTEXT_INFO_ABOVE);
+			assistant.enableAutoInsert(true);
+
+			HTMLAssistProcessor processor = getAssistProcessor();
+			assistant.setContentAssistProcessor(processor, IDocument.DEFAULT_CONTENT_TYPE);
+			assistant.setContentAssistProcessor(processor, HTMLPartitionScanner.HTML_TAG);
+			assistant.setContentAssistProcessor(processor, HTMLPartitionScanner.PREFIX_TAG);
+
+			//InnerJavaScriptAssistProcessor jsProcessor = getJavaScriptAssistProcessor();
+			assistant.setContentAssistProcessor(contentAssistant.getContentAssistProcessor(IDocument.DEFAULT_CONTENT_TYPE), HTMLPartitionScanner.JAVASCRIPT);
+
+			InnerCSSAssistProcessor cssProcessor = getCSSAssistProcessor();
+			assistant.setContentAssistProcessor(cssProcessor, HTMLPartitionScanner.HTML_CSS);
+
+			assistant.install(sourceViewer);
+
+			IPreferenceStore store = WebToolsPlugin.getDefault().getPreferenceStore();
+			assistant.enableAutoActivation(store.getBoolean(WebToolsPlugin.PREF_ASSIST_AUTO));
+			assistant.setAutoActivationDelay(store.getInt(WebToolsPlugin.PREF_ASSIST_TIMES));
+			assistant.setInformationControlCreator(getInformationControlCreator(sourceViewer));
+			processor.setAutoAssistChars(store.getString(WebToolsPlugin.PREF_ASSIST_CHARS).toCharArray());
+			processor.setAssistCloseTag(store.getBoolean(WebToolsPlugin.PREF_ASSIST_CLOSE));
+		}
+		return assistant;
 	}
 
 //	public IInformationControlCreator getInformationControlCreator(ISourceViewer sourceViewer) {

@@ -14,8 +14,9 @@ import com.tulin.v8.webtools.WebToolsPlugin;
 
 /**
  * An abstract class for <code>IAdditionalJavaScriptCompleter</code>.
- * 
+ * @Deprecated 使用tern提供js代码辅助
  */
+@Deprecated
 public abstract class AbstractCompleter implements IAdditionalJavaScriptCompleter {
 
 	protected Map<File, JsFileCache> jsFileCacheMap = new HashMap<File, JsFileCache>();

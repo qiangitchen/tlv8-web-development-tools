@@ -10,7 +10,9 @@ import com.tulin.v8.webtools.js.model.JavaScriptModel;
  * <code>IAdditionalJavaScriptCompleter</code> implementation for
  * <strong>FireFox</strong>.
  * 
+ * @Deprecated 使用tern提供js代码辅助
  */
+@Deprecated
 public class FireFoxCompleter extends AbstractCompleter {
 	public List<JavaScriptModel> loadModel(List<JavaScriptModel> libModelList) {
 		try {

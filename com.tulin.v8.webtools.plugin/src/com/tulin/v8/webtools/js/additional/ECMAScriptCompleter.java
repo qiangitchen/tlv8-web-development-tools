@@ -9,7 +9,10 @@ import com.tulin.v8.webtools.js.model.JavaScriptModel;
 /**
  * <code>IAdditionalJavaScriptCompleter</code> implementation for <strong>ECMA
  * Script</strong>.
+ * 
+ * @Deprecated 使用tern提供js代码辅助
  */
+@Deprecated
 public class ECMAScriptCompleter extends AbstractCompleter {
 	public List<JavaScriptModel> loadModel(List<JavaScriptModel> libModelList) {
 		try {

@@ -6,6 +6,10 @@ import java.util.List;
 import com.tulin.v8.webtools.WebToolsPlugin;
 import com.tulin.v8.webtools.js.model.JavaScriptModel;
 
+/**
+ * @Deprecated 使用tern提供js代码辅助
+ */
+@Deprecated
 public class ScriptaculousCompleter extends AbstractCompleter {
 	private static final String[] JS_FILES = new String[] { "scriptaculous.js", "builder.js", "effects.js",
 			"dragdrop.js", "controls.js", "slider.js", "sound" };
