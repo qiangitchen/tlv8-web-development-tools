@@ -22,11 +22,11 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.MessageBox;
-import org.eclipse.ui.internal.genericeditor.hover.TextHoverRegistry;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
 import com.tulin.v8.webtools.assist.ContentAssistProcessorRegistry;
+import com.tulin.v8.webtools.hover.TextHoverRegistry;
 import com.tulin.v8.webtools.html.editors.views.IPaletteContributer;
 import com.tulin.v8.webtools.js.launch.ClosureCompilerLaunchUtil;
 import com.tulin.v8.webtools.js.launch.JavaScriptLaunchUtil;

@@ -24,6 +24,7 @@ import org.eclipse.jface.text.source.ISourceViewer;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.texteditor.ITextEditor;
 
+import com.tulin.v8.webtools.ContentTypeRelatedExtension;
 import com.tulin.v8.webtools.WebToolsPlugin;
 
 /**

@@ -40,9 +40,9 @@ import org.eclipse.ui.editors.text.TextSourceViewerConfiguration;
 import org.eclipse.ui.texteditor.ITextEditor;
 
 import com.tulin.v8.webtools.ColorProvider;
+import com.tulin.v8.webtools.ContentTypeRelatedExtensionTracker;
 import com.tulin.v8.webtools.WebToolsPlugin;
 import com.tulin.v8.webtools.assist.ContentAssistProcessorRegistry;
-import com.tulin.v8.webtools.assist.ContentTypeRelatedExtensionTracker;
 import com.tulin.v8.webtools.assist.EditorContentAssistant;
 import com.tulin.v8.webtools.assist.HTMLAssistProcessor;
 import com.tulin.v8.webtools.assist.InnerCSSAssistProcessor;

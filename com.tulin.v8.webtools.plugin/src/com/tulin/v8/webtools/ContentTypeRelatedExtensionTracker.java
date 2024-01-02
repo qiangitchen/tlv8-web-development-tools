@@ -1,4 +1,4 @@
-package com.tulin.v8.webtools.assist;
+package com.tulin.v8.webtools;
 
 import java.util.Collection;
 import java.util.function.Consumer;
@@ -12,7 +12,7 @@ import org.osgi.framework.ServiceReference;
 import org.osgi.util.tracker.ServiceTracker;
 import org.osgi.util.tracker.ServiceTrackerCustomizer;
 
-import com.tulin.v8.webtools.assist.ContentTypeRelatedExtensionTracker.LazyServiceSupplier;
+import com.tulin.v8.webtools.ContentTypeRelatedExtensionTracker.LazyServiceSupplier;
 
 /**
  * {@link ServiceTrackerCustomizer} that maps OSGi-Services to
