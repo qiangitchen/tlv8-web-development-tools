@@ -4,7 +4,7 @@ import java.util.Iterator;
 import java.util.Map;
 
 import com.tulin.v8.webtools.ICustomTagConverter;
-import com.tulin.v8.webtools.jsp.editors.JSPInfo;
+import com.tulin.v8.webtools.jsp.JSPInfo;
 import com.tulin.v8.webtools.jsp.editors.JSPPreviewConverter;
 
 import jp.aonir.fuzzyxml.FuzzyXMLElement;

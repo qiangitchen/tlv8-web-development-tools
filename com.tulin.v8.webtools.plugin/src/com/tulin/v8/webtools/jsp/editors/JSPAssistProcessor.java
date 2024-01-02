@@ -26,6 +26,9 @@ import com.tulin.v8.webtools.assist.TagInfo;
 import com.tulin.v8.webtools.assist.TextInfo;
 import com.tulin.v8.webtools.html.HTMLUtil;
 import com.tulin.v8.webtools.html.editors.HTMLSourceEditor;
+import com.tulin.v8.webtools.jsp.IJSPELAssistProcessor;
+import com.tulin.v8.webtools.jsp.JSPInfo;
+import com.tulin.v8.webtools.jsp.TLDInfo;
 import com.tulin.v8.webtools.xml.editors.ClassNameAssistProcessor;
 
 /**

@@ -2,7 +2,7 @@ package com.tulin.v8.webtools.jsp.converters;
 
 import java.util.Map;
 
-import com.tulin.v8.webtools.jsp.editors.JSPInfo;
+import com.tulin.v8.webtools.jsp.JSPInfo;
 
 import jp.aonir.fuzzyxml.FuzzyXMLNode;
 

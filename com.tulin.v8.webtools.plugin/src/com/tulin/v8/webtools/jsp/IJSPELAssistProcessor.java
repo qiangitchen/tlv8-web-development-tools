@@ -1,4 +1,4 @@
-package com.tulin.v8.webtools.jsp.editors;
+package com.tulin.v8.webtools.jsp;
 
 import com.tulin.v8.webtools.assist.AssistInfo;
 

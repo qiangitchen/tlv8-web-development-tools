@@ -26,7 +26,7 @@ import org.eclipse.ui.IWorkbenchPreferencePage;
 
 import com.tulin.v8.webtools.WebToolsPlugin;
 import com.tulin.v8.webtools.dialog.AbstractValidationDialog;
-import com.tulin.v8.webtools.jsp.editors.ITLDLocator;
+import com.tulin.v8.webtools.jsp.ITLDLocator;
 
 /**
  * The preference page to configure TLD settings.

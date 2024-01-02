@@ -1,4 +1,4 @@
-package com.tulin.v8.webtools.jsp.editors;
+package com.tulin.v8.webtools.jsp;
 
 import java.io.File;
 import java.io.FileInputStream;

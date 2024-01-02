@@ -30,6 +30,7 @@ import com.tulin.v8.webtools.WebToolsPlugin;
 import com.tulin.v8.webtools.html.HTMLPartitionScanner;
 import com.tulin.v8.webtools.html.IHTMLOutlinePage;
 import com.tulin.v8.webtools.html.editors.HTMLSourceEditor;
+import com.tulin.v8.webtools.jsp.JSPValidator;
 
 public class JSPSourceEditor extends HTMLSourceEditor {
 	public static final String ACTION_JSP_COMMENT = "_jsp_comment";

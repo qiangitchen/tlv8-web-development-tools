@@ -1,4 +1,4 @@
-package com.tulin.v8.webtools.jsp.editors;
+package com.tulin.v8.webtools.jsp;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -22,6 +22,7 @@ import com.tulin.v8.webtools.assist.AttributeInfo;
 import com.tulin.v8.webtools.assist.TagInfo;
 import com.tulin.v8.webtools.gefutils.IJarVisitor;
 import com.tulin.v8.webtools.gefutils.JarAcceptor;
+import com.tulin.v8.webtools.jsp.editors.Function;
 
 public class TLDParser {
 

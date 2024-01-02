@@ -19,6 +19,7 @@ import com.tulin.v8.webtools.ICustomTagConverterContributer;
 import com.tulin.v8.webtools.ProjectParams;
 import com.tulin.v8.webtools.WebToolsPlugin;
 import com.tulin.v8.webtools.html.HTMLUtil;
+import com.tulin.v8.webtools.jsp.JSPInfo;
 
 /**
  * This class provides some utility methods to convert JSP to HTML for preview.

@@ -1,4 +1,4 @@
-package com.tulin.v8.webtools.jsp.editors;
+package com.tulin.v8.webtools.jsp;
 
 import java.io.IOException;
 import java.util.ArrayList;

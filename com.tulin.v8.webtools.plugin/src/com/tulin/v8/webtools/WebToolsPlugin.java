@@ -33,9 +33,9 @@ import com.tulin.v8.webtools.hover.TextHoverRegistry;
 import com.tulin.v8.webtools.html.editors.views.IPaletteContributer;
 import com.tulin.v8.webtools.js.launch.ClosureCompilerLaunchUtil;
 import com.tulin.v8.webtools.js.launch.JavaScriptLaunchUtil;
-import com.tulin.v8.webtools.jsp.editors.IJSPELAssistProcessor;
-import com.tulin.v8.webtools.jsp.editors.IJSPFilter;
-import com.tulin.v8.webtools.jsp.editors.ITLDLocator;
+import com.tulin.v8.webtools.jsp.IJSPELAssistProcessor;
+import com.tulin.v8.webtools.jsp.IJSPFilter;
+import com.tulin.v8.webtools.jsp.ITLDLocator;
 
 public class WebToolsPlugin extends AbstractUIPlugin {
 	public static final String BUNDLE_ID = "com.tulin.v8.webtools";

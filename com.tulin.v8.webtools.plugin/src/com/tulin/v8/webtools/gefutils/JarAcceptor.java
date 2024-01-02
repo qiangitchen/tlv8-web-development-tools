@@ -9,7 +9,7 @@ import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IProject;
 
 import com.tulin.v8.webtools.WebToolsPlugin;
-import com.tulin.v8.webtools.jsp.editors.TLDInfo;
+import com.tulin.v8.webtools.jsp.TLDInfo;
 
 /**
  * An acceptor for each entries of <tt>WEB-INF/lib/*.jar</tt>.
