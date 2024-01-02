@@ -93,6 +93,17 @@
       </editor>
    </extension>
    
+   <extension
+         point="com.tulin.v8.webtools.fileAssistProcessor">
+      <processor class="com.tulin.v8.webtools.assist.FileAssistProcessor"/>
+   </extension>
+   <extension
+         point="com.tulin.v8.webtools.customTagAttributeAssist">
+      <customTagAttributeAssist
+            class="com.tulin.v8.webtools.jsp.editors.JSTLAttributeAssist">
+      </customTagAttributeAssist>
+   </extension>
+   
    <!--====================================================-->
    <!-- Preferences -->
    <!--====================================================-->
@@ -160,6 +171,336 @@
             id="com.tulin.v8.webtools.FormatterPreferencePage"/>
    </extension>
    
+   <extension
+         point="org.eclipse.ui.commands">
+      <category
+            name="%category.label.source"
+            id="tulin.commands.category">
+      </category>
+      <command
+      		categoryId="tulin.commands.category"
+            id="tulin.command.comment"
+            name="%menu.label.comment">
+      </command>
+      <command
+      		categoryId="tulin.commands.category"
+            id="tulin.command.MultilineComment"
+            name="%menu.label.mcomment">
+      </command>
+      <command
+      		categoryId="tulin.commands.category"
+            id="tulin.command.UnMultilineComment"
+            name="%menu.label.umcomment">
+      </command>
+      <command
+      		categoryId="tulin.commands.category"
+            id="tulin.command.format"
+            name="%menu.label.fortmat">
+      </command>
+   </extension>
+   
+   <extension
+         point="org.eclipse.ui.handlers">
+      <handler
+            commandId="tulin.command.comment"
+            class="com.tulin.v8.webtools.handlers.ToggleCommentHandler">
+      </handler>
+      <handler
+            commandId="tulin.command.MultilineComment"
+            class="com.tulin.v8.webtools.handlers.MultilineCommentHandler">
+      </handler>
+      <handler
+            commandId="tulin.command.UnMultilineComment"
+            class="com.tulin.v8.webtools.handlers.UnMultilineCommentHandler">
+      </handler>
+      <handler
+            commandId="tulin.command.format"
+            class="com.tulin.v8.webtools.handlers.FormaterHandler">
+      </handler>
+   </extension>
+   
+   <extension
+         point="org.eclipse.ui.bindings">
+      <key
+            commandId="tulin.command.comment"
+            contextId="org.eclipse.ui.contexts.window"
+            sequence="M1+/"
+            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>
+      <key
+            commandId="tulin.command.MultilineComment"
+            contextId="org.eclipse.ui.contexts.window"
+            sequence="M1+M2+/"
+            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>
+      <key
+            commandId="tulin.command.UnMultilineComment"
+            contextId="org.eclipse.ui.contexts.window"
+            sequence="M1+M2+\"
+            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>
+      <key
+            commandId="tulin.command.format"
+            contextId="org.eclipse.ui.contexts.window"
+            sequence="M1+M2+F"
+            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>
+   </extension>
+   
+   <!--====================================================-->
+   <!-- Template -->
+   <!--====================================================-->
+   <extension
+         point="org.eclipse.ui.editors.templates">
+      <contextType
+            class="com.tulin.v8.webtools.template.HTMLContextType"
+            name="HTML/JSP/XML"
+            id="com.tulin.v8.webtools.templateContextType.html"/>
+      <contextType
+            class="com.tulin.v8.webtools.template.JavaScriptContextType"
+            name="JavaScript"
+            id="com.tulin.v8.webtools.templateContextType.javascript"/>
+      <template
+            autoinsert="false"
+            contextTypeId="com.tulin.v8.webtools.templateContextType.javascript"
+            description="%plugin.template.js.catch"
+            id="com.tulin.v8.webtools.template.js.catch"
+            name="catch">
+         <pattern>
+catch (e) {
+	${cursor}// ${todo}: handle exception
+}
+         </pattern>
+      </template>
+      <template
+            autoinsert="false"
+            contextTypeId="com.tulin.v8.webtools.templateContextType.javascript"
+            description="%plugin.template.js.do"
+            id="com.tulin.v8.webtools.template.js.do"
+            name="do">
+         <pattern>
+do {
+	${line_selection}${cursor}
+} while (${condition});
+         </pattern>
+      </template>
+      <template
+            autoinsert="false"
+            contextTypeId="com.tulin.v8.webtools.templateContextType.javascript"
+            description="%plugin.template.js.else"
+            id="com.tulin.v8.webtools.template.js.else"
+            name="else">
+         <pattern>
+else {
+	${cursor}
+}
+         </pattern>
+      </template>
+      <template
+            autoinsert="false"
+            contextTypeId="com.tulin.v8.webtools.templateContextType.javascript"
+            description="%plugin.template.js.elseif"
+            id="com.tulin.v8.webtools.template.js.elseif"
+            name="elseif">
+         <pattern>
+else if (${condition}) {
+	${cursor}
+}
+         </pattern>
+      </template>
+      <template
+            autoinsert="false"
+            contextTypeId="com.tulin.v8.webtools.templateContextType.javascript"
+            description="%plugin.template.js.for"
+            id="com.tulin.v8.webtools.template.js.for"
+            name="for">
+         <pattern>
+for (var ${index} = 0; ${index} &lt; ${array}.length; ${index}++) {
+	${line_selection}${cursor}
+}
+         </pattern>
+      </template>
+      <template
+            autoinsert="false"
+            contextTypeId="com.tulin.v8.webtools.templateContextType.javascript"
+            description="%plugin.template.js.forwithvar"
+            id="com.tulin.v8.webtools.template.js.forwithvar"
+            name="for">
+         <pattern>
+for (var ${index} = 0; ${index} &lt; ${array}.length; ${index}++) {
+	var ${array_element} = ${array}[${index}];
+	${cursor}
+}
+         </pattern>
+      </template>
+      <template
+            autoinsert="false"
+            contextTypeId="com.tulin.v8.webtools.templateContextType.javascript"
+            description="%plugin.template.js.forin"
+            id="com.tulin.v8.webtools.template.js.forin"
+            name="forin">
+         <pattern>
+for (var ${iterable_element} in ${iterable}) {
+	${cursor}
+}
+         </pattern>
+      </template>
+      <template
+            autoinsert="false"
+            contextTypeId="com.tulin.v8.webtools.templateContextType.javascript"
+            description="%plugin.template.js.function"
+            id="com.tulin.v8.webtools.template.js.function"
+            name="function">
+         <pattern>
+function ${name}(${args}) {
+    ${cursor}
+}
+         </pattern>
+      </template>
+      <template
+            autoinsert="false"
+            contextTypeId="com.tulin.v8.webtools.templateContextType.javascript"
+            description="%plugin.template.js.anonymousFunction"
+            id="com.tulin.v8.webtools.template.js.anonymousFunction"
+            name="function">
+         <pattern>
+function (${args}) {
+    ${cursor}
+}
+         </pattern>
+      </template>
+      <template
+            autoinsert="false"
+            contextTypeId="com.tulin.v8.webtools.templateContextType.javascript"
+            description="%plugin.template.js.if"
+            id="com.tulin.v8.webtools.template.js.if"
+            name="if">
+         <pattern>
+if (${condition}) {
+	${line_selection}${cursor}
+}
+         </pattern>
+      </template>
+      <template
+            autoinsert="false"
+            contextTypeId="com.tulin.v8.webtools.templateContextType.javascript"
+            description="%plugin.template.js.ifelse"
+            id="com.tulin.v8.webtools.template.js.ifelse"
+            name="ifelse">
+         <pattern>
+if (${condition}) {
+	${cursor}
+} else {
+
+}
+         </pattern>
+      </template>
+      <template
+            autoinsert="false"
+            contextTypeId="com.tulin.v8.webtools.templateContextType.javascript"
+            description="%plugin.template.js.lazy"
+            id="com.tulin.v8.webtools.template.js.lazy"
+            name="lazy">
+         <pattern>
+if (${name:var} == null) {
+	${name} = new ${type}(${arguments});
+	${cursor}
+}
+
+return ${name};
+         </pattern>
+      </template>
+      <template
+            autoinsert="false"
+            contextTypeId="com.tulin.v8.webtools.templateContextType.javascript"
+            description="%plugin.template.js.new"
+            id="com.tulin.v8.webtools.template.js.new"
+            name="new">
+         <pattern>
+new ${type}(${arguments});
+         </pattern>
+      </template>
+      <template
+            autoinsert="false"
+            contextTypeId="com.tulin.v8.webtools.templateContextType.javascript"
+            description="%plugin.template.js.newwithvar"
+            id="com.tulin.v8.webtools.template.js.newwithvar"
+            name="new">
+         <pattern>
+var ${name} = new ${type}(${arguments});
+         </pattern>
+      </template>
+      <template
+            autoinsert="false"
+            contextTypeId="com.tulin.v8.webtools.templateContextType.javascript"
+            description="%plugin.template.js.require"
+            id="com.tulin.v8.webtools.template.js.require"
+            name="require">
+         <pattern>
+require('${value}')
+         </pattern>
+      </template>
+      <template
+            autoinsert="false"
+            contextTypeId="com.tulin.v8.webtools.templateContextType.javascript"
+            description="%plugin.template.js.requirewithvar"
+            id="com.tulin.v8.webtools.template.js.requirewithvar"
+            name="require">
+         <pattern>
+var ${name} = require('${value}');
+         </pattern>
+      </template>
+      <template
+            autoinsert="false"
+            contextTypeId="com.tulin.v8.webtools.templateContextType.javascript"
+            description="%plugin.template.js.switch"
+            id="com.tulin.v8.webtools.template.js.switch"
+            name="switch">
+         <pattern>
+switch (${key}) {
+	case ${value}:
+		${cursor}
+		break;
+
+	default:
+		break;
+}
+         </pattern>
+      </template>
+      <template
+            autoinsert="false"
+            contextTypeId="com.tulin.v8.webtools.templateContextType.javascript"
+            description="%plugin.template.js.try"
+            id="com.tulin.v8.webtools.template.js.try"
+            name="try">
+         <pattern>
+try {
+	${line_selection}${cursor}
+} catch (${e}) {
+	// ${todo}: handle exception
+}
+         </pattern>
+      </template>
+      <template
+            autoinsert="false"
+            contextTypeId="com.tulin.v8.webtools.templateContextType.javascript"
+            description="%plugin.template.js.var"
+            id="com.tulin.v8.webtools.template.js.var"
+            name="var">
+         <pattern>
+var ${name};
+         </pattern>
+      </template>
+      <template
+            autoinsert="false"
+            contextTypeId="com.tulin.v8.webtools.templateContextType.javascript"
+            description="%plugin.template.js.while"
+            id="com.tulin.v8.webtools.template.js.while"
+            name="while">
+         <pattern>
+while (${condition}) {
+	${line_selection}${cursor}
+}
+         </pattern>
+      </template>
+   </extension>
+   
    <!-- Javascript File Editor-->
     <extension
          point="org.eclipse.core.contenttype.contentTypes">
@@ -170,6 +511,7 @@
             name="Javascript">
       </content-type>
    </extension>
+   <!--
    <extension
          point="org.eclipse.ui.editors">
       <editorContentTypeBinding
@@ -184,5 +526,6 @@
             contentType="com.tulin.v8.webtools.js">
       </autoEditStrategy>
    </extension>
+   -->
 
 </plugin>

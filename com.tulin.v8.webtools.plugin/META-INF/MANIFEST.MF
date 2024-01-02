@@ -31,7 +31,6 @@ Bundle-Activator: com.tulin.v8.webtools.WebToolsPlugin
 Bundle-ClassPath: .,
  lib/fuzzyxml.jar,
  lib/js.jar,
- lib/ss_css2.jar,
  lib/dtdparser121.jar,
  lib/jaxen-1_1_beta_9.jar,
  lib/jtidy-8.0-20111220.jar,
@@ -43,5 +42,10 @@ Bundle-ClassPath: .,
  lib/dom4j-2.1.1.jar,
  lib/egen-develop.jar,
  lib/jsp-api.jar,
- lib/servlet-api.jar
+ lib/servlet-api.jar,
+ lib/JavaScriptExecutor.jar,
+ lib/asm-9.4.jar,
+ lib/nashorn-core-15.3.jar,
+ lib/asm-util-9.2.jar,
+ lib/ss_css2.jar
 Automatic-Module-Name: com.tulin.v8.webtools.plugin

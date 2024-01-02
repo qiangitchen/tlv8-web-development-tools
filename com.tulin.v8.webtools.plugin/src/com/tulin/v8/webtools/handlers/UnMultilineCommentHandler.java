@@ -18,7 +18,7 @@ import com.tulin.v8.webtools.html.editors.HTMLSourceEditor;
 import com.tulin.v8.webtools.js.editors.JavaScriptEditor;
 import com.tulin.v8.webtools.xml.editors.XMLEditor;
 
-public class ToggleCommentHandler extends AbstractHandler {
+public class UnMultilineCommentHandler extends AbstractHandler {
 
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
@@ -33,62 +33,40 @@ public class ToggleCommentHandler extends AbstractHandler {
 			MultiPageEditorPart editor = (MultiPageEditorPart) page.getActiveEditor();
 			if (editor.getSelectedPage() instanceof XMLEditor) {
 				XMLEditor xmleditor = (XMLEditor) editor.getSelectedPage();
-				toggleComment(xmleditor);
+				ToggleCommentHandler.toggleComment(xmleditor);
 			} else if (editor.getSelectedPage() instanceof HTMLSourceEditor) {
 				HTMLSourceEditor htmleditor = (HTMLSourceEditor) editor.getSelectedPage();
-				toggleComment(htmleditor);
+				ToggleCommentHandler.toggleComment(htmleditor);
 			} else if (editor.getSelectedPage() instanceof JavaScriptEditor) {
 				JavaScriptEditor jseditor = (JavaScriptEditor) editor.getSelectedPage();
-				toggleJSComment(jseditor);
+				JSComment(jseditor);
 			}
 		} else if (page.getActiveEditor() instanceof XMLEditor) {
 			XMLEditor editor = (XMLEditor) page.getActiveEditor();
-			toggleComment(editor);
+			ToggleCommentHandler.toggleComment(editor);
 		} else if (page.getActiveEditor() instanceof HTMLEditor) {
 			HTMLSourceEditor editor = ((HTMLEditor) page.getActiveEditor()).getPaletteTarget();
-			toggleComment(editor);
+			ToggleCommentHandler.toggleComment(editor);
 		} else if (page.getActiveEditor() instanceof JavaScriptEditor) {
 			JavaScriptEditor editor = (JavaScriptEditor) page.getActiveEditor();
-			toggleJSComment(editor);
+			JSComment(editor);
 		}
 		return null;
 	}
 
-	public static void toggleComment(HTMLSourceEditor editor) {
+	public static void JSComment(JavaScriptEditor editor) {
 		ITextSelection sel = (ITextSelection) editor.getSelectionProvider().getSelection();
 		IDocument doc = editor.getDocumentProvider().getDocument(editor.getEditorInput());
-		String text = sel.getText().trim();
+		String text = sel.getText();
 		if ("".equals(text)) {
 			return;
 		}
 		try {
-			if (text.startsWith("<!--") && text.indexOf("-->") > 3) {
-				text = sel.getText().replaceFirst("<!--", "");
-				text = text.replaceFirst("-->", "");
+			if (text.startsWith("/*") && text.indexOf("*/") > 3) {
+				text = sel.getText().replaceFirst("/\\*", "");
+				text = text.replaceFirst("\\*/", "");
 				doc.replace(sel.getOffset(), sel.getLength(), text);
-			} else {
-				doc.replace(sel.getOffset(), sel.getLength(), "<!--" + sel.getText() + "-->");
 			}
-		} catch (BadLocationException e) {
-			WebToolsPlugin.logException(e);
-		}
-	}
-
-	public static void toggleJSComment(JavaScriptEditor editor) {
-		ITextSelection sel = (ITextSelection) editor.getSelectionProvider().getSelection();
-		IDocument doc = editor.getDocumentProvider().getDocument(editor.getEditorInput());
-		try {
-			int startline = sel.getStartLine();
-			int endline = sel.getEndLine();
-			int offset = doc.getLineOffset(startline);
-			int length = doc.getLineOffset(endline) + doc.getLineLength(endline) - offset - 2;
-			String text = doc.get(offset, length);
-			if (text.startsWith("//")) {
-				text = text.replaceAll("(^|\r\n|\r|\n)//", "$1");
-			} else {
-				text = text.replaceAll("(^|\r\n|\r|\n)", "$1//");
-			}
-			doc.replace(offset, length, text);
 		} catch (BadLocationException e) {
 			WebToolsPlugin.logException(e);
 		}

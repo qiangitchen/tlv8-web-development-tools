@@ -1,7 +1,5 @@
 package com.tulin.v8.webtools.js.editors;
 
-import java.io.InputStreamReader;
-import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
@@ -62,12 +60,10 @@ import com.tulin.v8.webtools.ColorProvider;
 import com.tulin.v8.webtools.ProjectParams;
 import com.tulin.v8.webtools.StringUtils;
 import com.tulin.v8.webtools.WebToolsPlugin;
+import com.tulin.v8.webtools.formatter.Formater;
 import com.tulin.v8.webtools.html.editors.FoldingInfo;
 import com.tulin.v8.webtools.html.editors.SoftTabVerifyListener;
 import com.tulin.v8.webtools.js.launch.JavaScriptLaunchUtil;
-import com.tulin.v8.webtools.rhino.javascript.Context;
-import com.tulin.v8.webtools.rhino.javascript.Scriptable;
-import com.tulin.v8.webtools.rhino.javascript.ScriptableObject;
 
 /**
  * The JavaScript editor.
@@ -523,50 +519,17 @@ public class JavaScriptEditor extends TextEditor {
 	 * Format source code using JsDecoder.
 	 */
 	private class FormatAction extends Action {
+		Formater formater = new Formater();
+
 		public FormatAction() {
 			super(WebToolsPlugin.getResourceString("HTMLEditor.Format"));
+			setActionDefinitionId("tulin.command.format");
 		}
 
 		@Override
 		public void run() {
 			try {
-				IFileEditorInput input = (IFileEditorInput) getEditorInput();
-				ProjectParams params = new ProjectParams(input.getFile().getProject());
-				StringBuilder buf = new StringBuilder();
-				buf.append(", {indent_size:　");
-				buf.append(params.getJavaScriptIndentSize());
-				buf.append(", indent_char:　'");
-				buf.append(params.getJavaScriptIndentChar());
-				buf.append("', preserve_newlines:　");
-				buf.append(params.isJavaScriptPreserveNewlines());
-				buf.append(", space_after_anon_function:　");
-				buf.append(params.isJavaScriptSpaceAfterAnonFunc());
-				buf.append(", brace_style:　");
-				if (params.isJavaScriptBracesOnOwnLine()) {
-					buf.append("'collapse'");
-				} else {
-					buf.append("'expand'");
-				}
-				buf.append(", indent_level:　");
-				buf.append(params.getJavaScriptInitIndentLevel());
-				buf.append('}');
-
-				IDocument doc = getDocumentProvider().getDocument(getEditorInput());
-				String source = doc.get();
-
-				Context cx = Context.enter();
-				Scriptable scope = cx.initStandardObjects();
-
-				ScriptableObject.putProperty(scope, "source", source);
-
-				cx.evaluateReader(scope,
-						new InputStreamReader(JavaScriptEditor.class.getResourceAsStream("beautify.js")), "beautify.js",
-						1, null);
-				String result = (String) cx.evaluateReader(scope,
-						new StringReader("js_beautify(source" + buf.toString() + ");"), "main", 1, null);
-
-				doc.set(result);
-
+				formater.format(JavaScriptEditor.this);
 			} catch (Exception ex) {
 				WebToolsPlugin.logException(ex);
 			}
@@ -577,7 +540,6 @@ public class JavaScriptEditor extends TextEditor {
 
 		public QuickOutlineAction() {
 			super(WebToolsPlugin.getResourceString("JavaScriptEditor.QuickOutline"));
-			setAccelerator(SWT.CTRL | 'O');
 		}
 
 		@Override

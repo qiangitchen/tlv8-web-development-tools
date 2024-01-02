@@ -3,7 +3,6 @@ package com.tulin.v8.webtools.handlers;
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
-import org.eclipse.jface.text.BadLocationException;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.ITextSelection;
 import org.eclipse.ui.IWorkbenchPage;
@@ -12,13 +11,15 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.handlers.HandlerUtil;
 import org.eclipse.ui.part.MultiPageEditorPart;
 
-import com.tulin.v8.webtools.WebToolsPlugin;
+import com.tulin.v8.webtools.formatter.FormatHTMLAction;
+import com.tulin.v8.webtools.formatter.FormatXMLAction;
+import com.tulin.v8.webtools.formatter.JavascriptFormator;
 import com.tulin.v8.webtools.html.editors.HTMLEditor;
 import com.tulin.v8.webtools.html.editors.HTMLSourceEditor;
 import com.tulin.v8.webtools.js.editors.JavaScriptEditor;
 import com.tulin.v8.webtools.xml.editors.XMLEditor;
 
-public class ToggleCommentHandler extends AbstractHandler {
+public class FormaterHandler extends AbstractHandler {
 
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
@@ -33,65 +34,53 @@ public class ToggleCommentHandler extends AbstractHandler {
 			MultiPageEditorPart editor = (MultiPageEditorPart) page.getActiveEditor();
 			if (editor.getSelectedPage() instanceof XMLEditor) {
 				XMLEditor xmleditor = (XMLEditor) editor.getSelectedPage();
-				toggleComment(xmleditor);
+				new FormatXMLAction(xmleditor).run();
 			} else if (editor.getSelectedPage() instanceof HTMLSourceEditor) {
 				HTMLSourceEditor htmleditor = (HTMLSourceEditor) editor.getSelectedPage();
-				toggleComment(htmleditor);
+				new FormatHTMLAction(htmleditor).run();
 			} else if (editor.getSelectedPage() instanceof JavaScriptEditor) {
 				JavaScriptEditor jseditor = (JavaScriptEditor) editor.getSelectedPage();
-				toggleJSComment(jseditor);
+				try {
+					String tText = jseditor.getDocumentProvider().getDocument(jseditor.getEditorInput()).get();
+					ITextSelection sel = (ITextSelection) jseditor.getSelectionProvider().getSelection();
+					String stext = sel.getText().trim();
+					if (("".equals(stext)) || (stext == null)) {
+						String text = JavascriptFormator.format(tText);
+						jseditor.getDocumentProvider().getDocument(jseditor.getEditorInput()).set(text);
+						return null;
+					}
+					String text = JavascriptFormator.format(stext);
+					IDocument doc = jseditor.getDocumentProvider().getDocument(jseditor.getEditorInput());
+					doc.replace(sel.getOffset(), sel.getLength(), text);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 			}
 		} else if (page.getActiveEditor() instanceof XMLEditor) {
 			XMLEditor editor = (XMLEditor) page.getActiveEditor();
-			toggleComment(editor);
+			new FormatXMLAction(editor).run();
 		} else if (page.getActiveEditor() instanceof HTMLEditor) {
 			HTMLSourceEditor editor = ((HTMLEditor) page.getActiveEditor()).getPaletteTarget();
-			toggleComment(editor);
+			new FormatHTMLAction(editor).run();
 		} else if (page.getActiveEditor() instanceof JavaScriptEditor) {
 			JavaScriptEditor editor = (JavaScriptEditor) page.getActiveEditor();
-			toggleJSComment(editor);
+			try {
+				String tText = editor.getDocumentProvider().getDocument(editor.getEditorInput()).get();
+				ITextSelection sel = (ITextSelection) editor.getSelectionProvider().getSelection();
+				String stext = sel.getText().trim();
+				if (("".equals(stext)) || (stext == null)) {
+					String text = JavascriptFormator.format(tText);
+					editor.getDocumentProvider().getDocument(editor.getEditorInput()).set(text);
+				} else {
+					String text = JavascriptFormator.format(stext);
+					IDocument doc = editor.getDocumentProvider().getDocument(editor.getEditorInput());
+					doc.replace(sel.getOffset(), sel.getLength(), text);
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 		return null;
-	}
-
-	public static void toggleComment(HTMLSourceEditor editor) {
-		ITextSelection sel = (ITextSelection) editor.getSelectionProvider().getSelection();
-		IDocument doc = editor.getDocumentProvider().getDocument(editor.getEditorInput());
-		String text = sel.getText().trim();
-		if ("".equals(text)) {
-			return;
-		}
-		try {
-			if (text.startsWith("<!--") && text.indexOf("-->") > 3) {
-				text = sel.getText().replaceFirst("<!--", "");
-				text = text.replaceFirst("-->", "");
-				doc.replace(sel.getOffset(), sel.getLength(), text);
-			} else {
-				doc.replace(sel.getOffset(), sel.getLength(), "<!--" + sel.getText() + "-->");
-			}
-		} catch (BadLocationException e) {
-			WebToolsPlugin.logException(e);
-		}
-	}
-
-	public static void toggleJSComment(JavaScriptEditor editor) {
-		ITextSelection sel = (ITextSelection) editor.getSelectionProvider().getSelection();
-		IDocument doc = editor.getDocumentProvider().getDocument(editor.getEditorInput());
-		try {
-			int startline = sel.getStartLine();
-			int endline = sel.getEndLine();
-			int offset = doc.getLineOffset(startline);
-			int length = doc.getLineOffset(endline) + doc.getLineLength(endline) - offset - 2;
-			String text = doc.get(offset, length);
-			if (text.startsWith("//")) {
-				text = text.replaceAll("(^|\r\n|\r|\n)//", "$1");
-			} else {
-				text = text.replaceAll("(^|\r\n|\r|\n)", "$1//");
-			}
-			doc.replace(offset, length, text);
-		} catch (BadLocationException e) {
-			WebToolsPlugin.logException(e);
-		}
 	}
 
 }

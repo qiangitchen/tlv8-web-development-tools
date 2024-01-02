@@ -7,7 +7,16 @@ import javax.script.ScriptEngineManager;
 public class JavascriptFormator {
 	public static String format(String text) throws Exception {
 		ScriptEngineManager mgr = new ScriptEngineManager();
-		ScriptEngine engine = mgr.getEngineByName("JavaScript");
+		ScriptEngine engine = null;
+		try {
+			engine = mgr.getEngineByName("JavaScript");
+		} catch (Exception e) {
+		}
+		if (engine == null) {
+			mgr.registerEngineName("customScriptEngineFactory",
+					new org.openjdk.nashorn.api.scripting.NashornScriptEngineFactory());
+			engine = mgr.getEngineByName("JavaScript");
+		}
 		String scriptText = FileUtils.FileToString("/js/format/jsformat.js");
 		engine.eval(scriptText);
 		Invocable inv = (Invocable) engine;
