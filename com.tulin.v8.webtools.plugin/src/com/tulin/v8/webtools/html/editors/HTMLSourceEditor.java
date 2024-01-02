@@ -62,7 +62,7 @@ import org.eclipse.ui.texteditor.ITextEditorActionDefinitionIds;
 import org.eclipse.ui.views.contentoutline.IContentOutlinePage;
 
 import com.tulin.v8.webtools.ColorProvider;
-import com.tulin.v8.webtools.HTMLProjectParams;
+import com.tulin.v8.webtools.ProjectParams;
 import com.tulin.v8.webtools.SearchXPathDialog;
 import com.tulin.v8.webtools.WebToolsPlugin;
 import com.tulin.v8.webtools.assist.HTMLAssistProcessor;
@@ -77,13 +77,13 @@ import com.tulin.v8.webtools.html.IHTMLOutlinePage;
  * HTML source editor.
  */
 public class HTMLSourceEditor extends TextEditor {
-
 	private ColorProvider colorProvider;
 	private IHTMLOutlinePage outlinePage;
 	private HTMLCharacterPairMatcher pairMatcher;
 	private SoftTabVerifyListener softTabListener;
 	private EditorSelectionChangedListener selectionChangeListener;
-	private HTMLConfiguration configuration;
+
+	protected HTMLConfiguration configuration;
 
 	public static final String GROUP_HTML = "_html";
 	public static final String ACTION_ESCAPE_HTML = "_escape_html";
@@ -314,7 +314,7 @@ public class HTMLSourceEditor extends TextEditor {
 					IFile file = input.getFile();
 					file.deleteMarkers(IMarker.PROBLEM, false, 0);
 
-					HTMLProjectParams params = new HTMLProjectParams(file.getProject());
+					ProjectParams params = new ProjectParams(file.getProject());
 					if (params.getValidateHTML()) {
 						new HTMLValidator(input.getFile()).doValidate();
 					}
@@ -422,7 +422,7 @@ public class HTMLSourceEditor extends TextEditor {
 					public void run(IProgressMonitor monitor) throws CoreException {
 						try {
 							IFileEditorInput input = (IFileEditorInput) getEditorInput();
-							HTMLProjectParams params = new HTMLProjectParams(input.getFile().getProject());
+							ProjectParams params = new ProjectParams(input.getFile().getProject());
 							if (params.getRemoveMarkers()) {
 								input.getFile().deleteMarkers(IMarker.PROBLEM, false, 0);
 							}

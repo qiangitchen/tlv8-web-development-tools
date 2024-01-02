@@ -16,7 +16,7 @@ import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.ui.internal.texteditor.EditPosition;
 import org.eclipse.ui.internal.texteditor.TextEditorPlugin;
 
-import com.tulin.v8.webtools.HTMLProjectParams;
+import com.tulin.v8.webtools.ProjectParams;
 import com.tulin.v8.webtools.IOUtil;
 import com.tulin.v8.webtools.WebToolsPlugin;
 import com.tulin.v8.webtools.html.HTMLUtil;
@@ -112,7 +112,7 @@ public class ModelManager {
 				}
 			}
 			try {
-				HTMLProjectParams params = new HTMLProjectParams(project);
+				ProjectParams params = new ProjectParams(project);
 				String[] jsLibPaths = params.getJavaScripts();
 				if (jsLibPaths != null && jsLibPaths.length > 0) {
 					IWorkspaceRoot wsroot = ResourcesPlugin.getWorkspace().getRoot();
@@ -224,7 +224,7 @@ public class ModelManager {
 		List<IAdditionalJavaScriptCompleter> completerList = new ArrayList<IAdditionalJavaScriptCompleter>();
 		String[] paths = null;
 		try {
-			HTMLProjectParams params = new HTMLProjectParams(project);
+			ProjectParams params = new ProjectParams(project);
 
 			String[] names = params.getJavaScriptCompleters();
 			for (int i = 0; i < names.length; i++) {

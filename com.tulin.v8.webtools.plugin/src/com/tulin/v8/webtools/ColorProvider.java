@@ -5,6 +5,7 @@ import java.util.Iterator;
 import java.util.Map;
 
 import org.eclipse.jface.preference.IPreferenceStore;
+import org.eclipse.jface.preference.PreferenceConverter;
 import org.eclipse.jface.resource.StringConverter;
 import org.eclipse.jface.text.TextAttribute;
 import org.eclipse.jface.text.rules.IToken;
@@ -14,8 +15,11 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.RGB;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.themes.ITheme;
 
 /**
+ * 高亮及文本颜色
  * 
  * @author chenqian
  * @update 2021-7-24
@@ -90,6 +94,10 @@ public class ColorProvider {
 	}
 
 	private Color getColor(RGB rgb) {
+		if (isDarkTheme()) {
+			rgb = getInverseColor(rgb);
+		} else {
+		}
 		Color color = colorTable.get(rgb);
 		if (color == null) {
 			color = new Color(Display.getCurrent(), rgb);
@@ -112,4 +120,41 @@ public class ColorProvider {
 			token.setData(new TextAttribute(getColor(rgb)));
 		}
 	}
+
+	/**
+	 * 判断是否为暗色主题
+	 * 
+	 * @return
+	 */
+	public boolean isDarkTheme() {
+		ITheme currentTheme = PlatformUI.getWorkbench().getThemeManager().getCurrentTheme();
+		RGB bgColor = currentTheme.getColorRegistry().getRGB("org.eclipse.ui.workbench.ACTIVE_TAB_BG_START");
+		if (bgColor == null) {
+			// 如果没有设置特定的背景颜色，可以使用默认的背景颜色
+			bgColor = PreferenceConverter.getDefaultColor((IPreferenceStore) PlatformUI.getWorkbench().getDisplay(),
+					"org.eclipse.ui.workbench.ACTIVE_TAB_BG_START");
+		}
+		// 判断背景颜色是否属于暗色
+		return isDarkColor(bgColor);
+	}
+
+	private boolean isDarkColor(RGB color) {
+		// 根据颜色的亮度来判断是否为暗色
+		double brightness = (color.red * 0.299 + color.green * 0.587 + color.blue * 0.114) / 255;
+		return brightness < 0.5;
+	}
+
+	/**
+	 * 颜色取反色
+	 * 
+	 * @param color
+	 * @return
+	 */
+	public RGB getInverseColor(RGB color) {
+		int red = 255 - color.red;
+		int green = 255 - color.green;
+		int blue = 255 - color.blue;
+		return new RGB(red, green, blue);
+	}
+
 }

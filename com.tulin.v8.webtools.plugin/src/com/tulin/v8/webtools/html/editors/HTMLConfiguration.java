@@ -38,7 +38,6 @@ import org.eclipse.jface.text.rules.RuleBasedScanner;
 import org.eclipse.jface.text.source.ISourceViewer;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.editors.text.TextSourceViewerConfiguration;
-import org.eclipse.ui.texteditor.ITextEditor;
 
 import com.tulin.v8.webtools.ColorProvider;
 import com.tulin.v8.webtools.ContentTypeRelatedExtensionTracker;
@@ -82,12 +81,13 @@ public class HTMLConfiguration extends TextSourceViewerConfiguration implements 
 	private HtmlAutoEditStrategy autoEditStrategy;
 	private HTMLHyperlinkDetector hyperlinkDetector;
 
-	private ITextEditor editor;
+	protected HTMLSourceEditor editor;
+	
 	private Set<IContentType> resolvedContentTypes;
 	private Set<IContentType> fallbackContentTypes;
 	private EditorContentAssistant contentAssistant;
 
-	public HTMLConfiguration(ITextEditor editor, ColorProvider colorProvider) {
+	public HTMLConfiguration(HTMLSourceEditor editor, ColorProvider colorProvider) {
 		this.editor = editor;
 		this.colorProvider = colorProvider;
 	}
@@ -103,7 +103,9 @@ public class HTMLConfiguration extends TextSourceViewerConfiguration implements 
 	 * @since 2.0.3
 	 */
 	protected HTMLHyperlinkDetector createHyperlinkDetector() {
-		return new HTMLHyperlinkDetector();
+		HTMLHyperlinkDetector hyperlinkDetector = new HTMLHyperlinkDetector();
+		hyperlinkDetector.setEditor(editor);
+		return hyperlinkDetector;
 	}
 
 	/**
@@ -252,7 +254,7 @@ public class HTMLConfiguration extends TextSourceViewerConfiguration implements 
 		}
 		return fileName;
 	}
-	
+
 	@Override
 	public ITextHover getTextHover(ISourceViewer sourceViewer, String contentType) {
 		List<ITextHover> hovers = WebToolsPlugin.getDefault().getHoverRegistry().getAvailableHovers(sourceViewer,
@@ -271,17 +273,20 @@ public class HTMLConfiguration extends TextSourceViewerConfiguration implements 
 	 */
 	@Override
 	public IContentAssistant getContentAssistant(ISourceViewer sourceViewer) {
-		ContentAssistProcessorRegistry registry = WebToolsPlugin.getDefault().getContentAssistProcessorRegistry();
-		ContentTypeRelatedExtensionTracker<IContentAssistProcessor> contentAssistProcessorTracker = new ContentTypeRelatedExtensionTracker<IContentAssistProcessor>(
-				WebToolsPlugin.getDefault().getBundle().getBundleContext(), IContentAssistProcessor.class,
-				sourceViewer.getTextWidget().getDisplay());
-		Set<IContentType> types = getContentTypes(sourceViewer.getDocument());
-		contentAssistant = new EditorContentAssistant(contentAssistProcessorTracker,
-				registry.getContentAssistProcessors(sourceViewer, editor, types), types, fPreferenceStore);
-		if (this.document != null) {
-			associateTokenContentTypes(this.document);
+		try {
+			ContentAssistProcessorRegistry registry = WebToolsPlugin.getDefault().getContentAssistProcessorRegistry();
+			ContentTypeRelatedExtensionTracker<IContentAssistProcessor> contentAssistProcessorTracker = new ContentTypeRelatedExtensionTracker<IContentAssistProcessor>(
+					WebToolsPlugin.getDefault().getBundle().getBundleContext(), IContentAssistProcessor.class,
+					sourceViewer.getTextWidget().getDisplay());
+			Set<IContentType> types = getContentTypes(sourceViewer.getDocument());
+			contentAssistant = new EditorContentAssistant(contentAssistProcessorTracker,
+					registry.getContentAssistProcessors(sourceViewer, editor, types), types, fPreferenceStore);
+			if (this.document != null) {
+				associateTokenContentTypes(this.document);
+			}
+			watchDocument(sourceViewer.getDocument());
+		} catch (Exception e) {
 		}
-		watchDocument(sourceViewer.getDocument());
 		if (assistant == null) {
 			assistant = new ContentAssistant();
 			assistant.setInformationControlCreator(new IInformationControlCreator() {
@@ -297,8 +302,14 @@ public class HTMLConfiguration extends TextSourceViewerConfiguration implements 
 			assistant.setContentAssistProcessor(processor, HTMLPartitionScanner.HTML_TAG);
 			assistant.setContentAssistProcessor(processor, HTMLPartitionScanner.PREFIX_TAG);
 
-			//InnerJavaScriptAssistProcessor jsProcessor = getJavaScriptAssistProcessor();
-			assistant.setContentAssistProcessor(contentAssistant.getContentAssistProcessor(IDocument.DEFAULT_CONTENT_TYPE), HTMLPartitionScanner.JAVASCRIPT);
+			if (contentAssistant != null) {
+				assistant.setContentAssistProcessor(
+						contentAssistant.getContentAssistProcessor(IDocument.DEFAULT_CONTENT_TYPE),
+						HTMLPartitionScanner.JAVASCRIPT);
+			} else {
+				InnerJavaScriptAssistProcessor jsProcessor = getJavaScriptAssistProcessor();
+				assistant.setContentAssistProcessor(jsProcessor, HTMLPartitionScanner.JAVASCRIPT);
+			}
 
 			InnerCSSAssistProcessor cssProcessor = getCSSAssistProcessor();
 			assistant.setContentAssistProcessor(cssProcessor, HTMLPartitionScanner.HTML_CSS);

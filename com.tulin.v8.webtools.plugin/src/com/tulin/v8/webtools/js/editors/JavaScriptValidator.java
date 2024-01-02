@@ -25,7 +25,7 @@ import org.eclipse.jdt.launching.IVMRunner;
 import org.eclipse.jdt.launching.JavaRuntime;
 import org.eclipse.jdt.launching.VMRunnerConfiguration;
 
-import com.tulin.v8.webtools.HTMLProjectParams;
+import com.tulin.v8.webtools.ProjectParams;
 import com.tulin.v8.webtools.IOUtil;
 import com.tulin.v8.webtools.WebToolsPlugin;
 import com.tulin.v8.webtools.html.HTMLUtil;
@@ -55,7 +55,7 @@ public class JavaScriptValidator {
 		try {
 			file.deleteMarkers(IMarker.PROBLEM, false, 0);
 
-			HTMLProjectParams params = new HTMLProjectParams(file.getProject());
+			ProjectParams params = new ProjectParams(file.getProject());
 			if (!params.getValidateJavaScript()) {
 				return;
 			}

@@ -20,7 +20,7 @@ import com.tulin.v8.webtools.js.model.ModelManager;
 /**
  * This is a class to access and modify project preferences. 配置项
  */
-public class HTMLProjectParams {
+public class ProjectParams {
 
 	private String root = "/";
 	private boolean useDTD = true;
@@ -90,7 +90,7 @@ public class HTMLProjectParams {
 	/**
 	 * Create empty WebProjectParams.
 	 */
-	public HTMLProjectParams() {
+	public ProjectParams() {
 	}
 
 	/**
@@ -99,7 +99,7 @@ public class HTMLProjectParams {
 	 * @param javaProject Java project
 	 * @throws Exception
 	 */
-	public HTMLProjectParams(IProject project) throws Exception {
+	public ProjectParams(IProject project) throws Exception {
 		load(project);
 	}
 
@@ -302,13 +302,13 @@ public class HTMLProjectParams {
 		IProjectDescription description = project.getDescription();
 		String[] natures = description.getNatureIds();
 		for (int i = 0; i < natures.length; i++) {
-			if (natures[i].equals(HTMLProjectNature.HTML_NATURE_ID)) {
+			if (natures[i].equals(ProjectNature.HTML_NATURE_ID)) {
 				return;
 			}
 		}
 		String[] newNatures = new String[natures.length + 1];
 		System.arraycopy(natures, 0, newNatures, 0, natures.length);
-		newNatures[natures.length] = HTMLProjectNature.HTML_NATURE_ID;
+		newNatures[natures.length] = ProjectNature.HTML_NATURE_ID;
 		description.setNatureIds(newNatures);
 		project.setDescription(description, null);
 	}
@@ -318,7 +318,7 @@ public class HTMLProjectParams {
 		String[] natures = description.getNatureIds();
 		List<String> newNatures = new ArrayList<String>();
 		for (int i = 0; i < natures.length; i++) {
-			if (!natures[i].equals(HTMLProjectNature.HTML_NATURE_ID)) {
+			if (!natures[i].equals(ProjectNature.HTML_NATURE_ID)) {
 				newNatures.add(natures[i]);
 			}
 		}
@@ -491,7 +491,7 @@ public class HTMLProjectParams {
 		this.validateDTD = getBooleanValue(validateDTD, true);
 		this.validateJS = getBooleanValue(validateJS, true);
 		this.removeMarkers = getBooleanValue(removeMarkers, false);
-		this.detectTaskTag = project.hasNature(HTMLProjectNature.HTML_NATURE_ID);
+		this.detectTaskTag = project.hasNature(ProjectNature.HTML_NATURE_ID);
 
 		String[] dim = javaScripts.split("\n");
 		List<String> list = new ArrayList<String>();

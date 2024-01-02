@@ -119,7 +119,7 @@ public class CSSAssistProcessor {
 		if (path.startsWith("/")) {
 			return null;
 //			try {
-//				HTMLProjectParams params = new HTMLProjectParams(file.getProject());
+//				ProjectParams params = new ProjectParams(file.getProject());
 //				return file.getProject().getFile(new Path(params.getRoot()).append(path));
 //			} catch(Exception ex){
 //			}

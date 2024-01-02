@@ -18,7 +18,7 @@ import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IFileEditorInput;
 
-import com.tulin.v8.webtools.HTMLProjectParams;
+import com.tulin.v8.webtools.ProjectParams;
 import com.tulin.v8.webtools.WebToolsPlugin;
 
 public class JavaScriptLaunchShortcut implements ILaunchShortcut {
@@ -75,7 +75,7 @@ public class JavaScriptLaunchShortcut implements ILaunchShortcut {
 		wc.setAttribute(JavaScriptLaunchConstants.ATTR_JAVASCRIPT_FILE, fullPath);
 
 		try {
-			HTMLProjectParams params = new HTMLProjectParams(file.getProject());
+			ProjectParams params = new ProjectParams(file.getProject());
 			String[] javaScripts = params.getJavaScripts();
 			List<String> includes = new ArrayList<String>();
 			for (int i = 0; i < javaScripts.length; i++) {

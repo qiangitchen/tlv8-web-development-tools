@@ -84,7 +84,7 @@ public class HTMLEditor extends EditorPart implements IPaletteTarget {
 
 //			// replace absolute resource path
 //			IProject project = input.getFile().getProject();
-//			HTMLProjectParams param = new HTMLProjectParams();
+//			ProjectParams param = new ProjectParams();
 //			param.load(project);
 //			File projectDir = new File(project.getLocation().makeAbsolute().toString());
 //			File rootDir = new File(projectDir, param.getRoot());

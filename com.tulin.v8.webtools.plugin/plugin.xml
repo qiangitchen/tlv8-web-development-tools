@@ -72,6 +72,92 @@
             icon="icons/js.gif"
             id="com.tulin.v8.webtools.jseditor.editors.JavaScriptEditor"
             name="%plugin.editor.jseditor"/>
+            
+      <editor
+            class="com.tulin.v8.webtools.jsp.editors.JSPEditor"
+            contributorClass="com.tulin.v8.webtools.jsp.editors.JSPEditorContributor"
+            default="true"
+            extensions="jsp,jspf"
+            icon="icons/jsp_file.gif"
+            id="com.tulin.v8.webtools.jspeditor.editors.JSPEditor"
+            name="%plugin.editor.jspeditor"/>
+            
+      <editor
+            class="com.tulin.v8.webtools.xml.editors.XMLEditor"
+            contributorClass="com.tulin.v8.webtools.xml.editors.XMLEditorContributor"
+            default="true"
+            extensions="xml,tld,xsl"
+            icon="icons/xml.gif"
+            id="com.tulin.v8.webtools.xmleditor.editors.XMLEditor"
+            name="%plugin.editor.xmleditor">
+      </editor>
+   </extension>
+   
+   <!--====================================================-->
+   <!-- Preferences -->
+   <!--====================================================-->
+   <extension
+         point="org.eclipse.ui.preferencePages">
+      <page
+            class="com.tulin.v8.webtools.preferencePages.PreferencePage"
+            name="%plugin.preference.category"
+            category="com.tulin.v8.ide.preferences.StudioPreferencePage"
+            id="com.tulin.v8.webtools.category"/>
+      <page
+            class="com.tulin.v8.webtools.preferencePages.CustomAssistPreferencePage"
+            category="com.tulin.v8.webtools.AssistPreferencePage"
+            name="%plugin.preference.customassist"
+            id="com.tulin.v8.webtools.CustomAssistPreferencePage"/>
+      <page
+            class="com.tulin.v8.webtools.preferencePages.DTDPreferencePage"
+            category="com.tulin.v8.webtools.XMLPreferencePage"
+            name="%plugin.preference.dtd"
+            id="com.tulin.v8.webtools.DTDPreferencePage"/>
+      <page
+            class="com.tulin.v8.webtools.preferencePages.TLDPreferencePage"
+            category="com.tulin.v8.webtools.JSPEditorPreferencePage"
+            name="%plugin.preference.tld"
+            id="com.tulin.v8.webtools.TLDPreferencePage"/>
+      <page
+            class="com.tulin.v8.webtools.preferencePages.AssistPreferencePage"
+            category="com.tulin.v8.webtools.category"
+            name="%plugin.preference.codeassist"
+            id="com.tulin.v8.webtools.AssistPreferencePage"/>
+      <page
+            class="com.tulin.v8.webtools.preferencePages.CSSEditorPreferencePage"
+            category="com.tulin.v8.webtools.category"
+            name="%plugin.preference.csseditor"
+            id="com.tulin.v8.webtools.CSSEditorPreferencePage"/>
+      <page
+            class="com.tulin.v8.webtools.preferencePages.JSPEditorPreferencePage"
+            category="com.tulin.v8.webtools.category"
+            name="%plugin.preference.jspeditor"
+            id="com.tulin.v8.webtools.JSPEditorPreferencePage"/>
+      <page
+            class="com.tulin.v8.webtools.preferencePages.JavaScriptEditorPreferencePage"
+            category="com.tulin.v8.webtools.category"
+            name="%plugin.preference.jseditor"
+            id="com.tulin.v8.webtools.JavaScriptEditorPreferencePage"/>
+      <page
+            class="com.tulin.v8.webtools.preferencePages.XMLPreferencePage"
+            category="com.tulin.v8.webtools.category"
+            name="XML"
+            id="com.tulin.v8.webtools.XMLPreferencePage"/>
+      <page
+            class="com.tulin.v8.webtools.preferencePages.HTMLTaskTagPreferencePage"
+            category="com.tulin.v8.webtools.XMLPreferencePage"
+            name="%plugin.preference.tasktag"
+            id="com.tulin.v8.webtools.tasktag.HTMLTaskTagPreferencePage"/>
+      <page
+            class="com.tulin.v8.webtools.preferencePages.HTMLTemplatePreferencePage"
+            category="com.tulin.v8.webtools.AssistPreferencePage"
+            name="%plugin.preference.template"
+            id="com.tulin.v8.webtools.template.HTMLTemplatePreferencePage"/>
+      <page
+            class="com.tulin.v8.webtools.preferencePages.FormatterPreferencePage"
+            category="com.tulin.v8.webtools.category"
+            name="%plugin.preference.formatter"
+            id="com.tulin.v8.webtools.FormatterPreferencePage"/>
    </extension>
    
    <!-- Javascript File Editor-->

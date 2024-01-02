@@ -9,9 +9,9 @@ import org.eclipse.core.resources.IProjectDescription;
 import org.eclipse.core.resources.IProjectNature;
 import org.eclipse.core.runtime.CoreException;
 
-public class HTMLProjectNature implements IProjectNature {
-	public static final String HTML_NATURE_ID = "com.tulin.v8.webtools.HTMLProjectNature";
-	public static final String HTML_BUILDER_ID = "com.tulin.v8.webtools.HTMLProjectBuilder";
+public class ProjectNature implements IProjectNature {
+	public static final String HTML_NATURE_ID = "com.tulin.v8.webtools.ProjectNature";
+	public static final String HTML_BUILDER_ID = "com.tulin.v8.webtools.ProjectBuilder";
 	private IProject project;
 
 	public void configure() throws CoreException {

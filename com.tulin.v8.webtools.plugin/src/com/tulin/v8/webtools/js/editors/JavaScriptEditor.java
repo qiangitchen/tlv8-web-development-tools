@@ -59,7 +59,7 @@ import org.eclipse.ui.texteditor.ITextEditorActionDefinitionIds;
 import org.eclipse.ui.views.contentoutline.IContentOutlinePage;
 
 import com.tulin.v8.webtools.ColorProvider;
-import com.tulin.v8.webtools.HTMLProjectParams;
+import com.tulin.v8.webtools.ProjectParams;
 import com.tulin.v8.webtools.StringUtils;
 import com.tulin.v8.webtools.WebToolsPlugin;
 import com.tulin.v8.webtools.html.editors.FoldingInfo;
@@ -257,7 +257,7 @@ public class JavaScriptEditor extends TextEditor {
 					public void run(IProgressMonitor monitor) throws CoreException {
 						try {
 							IFileEditorInput input = (IFileEditorInput) getEditorInput();
-							HTMLProjectParams params = new HTMLProjectParams(input.getFile().getProject());
+							ProjectParams params = new ProjectParams(input.getFile().getProject());
 							if (params.getRemoveMarkers()) {
 								input.getFile().deleteMarkers(IMarker.PROBLEM, false, 0);
 							}
@@ -531,7 +531,7 @@ public class JavaScriptEditor extends TextEditor {
 		public void run() {
 			try {
 				IFileEditorInput input = (IFileEditorInput) getEditorInput();
-				HTMLProjectParams params = new HTMLProjectParams(input.getFile().getProject());
+				ProjectParams params = new ProjectParams(input.getFile().getProject());
 				StringBuilder buf = new StringBuilder();
 				buf.append(", {indent_size:　");
 				buf.append(params.getJavaScriptIndentSize());

@@ -2,10 +2,13 @@ package com.tulin.v8.webtools;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
+import java.util.Set;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
@@ -30,6 +33,9 @@ import com.tulin.v8.webtools.hover.TextHoverRegistry;
 import com.tulin.v8.webtools.html.editors.views.IPaletteContributer;
 import com.tulin.v8.webtools.js.launch.ClosureCompilerLaunchUtil;
 import com.tulin.v8.webtools.js.launch.JavaScriptLaunchUtil;
+import com.tulin.v8.webtools.jsp.editors.IJSPELAssistProcessor;
+import com.tulin.v8.webtools.jsp.editors.IJSPFilter;
+import com.tulin.v8.webtools.jsp.editors.ITLDLocator;
 
 public class WebToolsPlugin extends AbstractUIPlugin {
 	public static final String BUNDLE_ID = "com.tulin.v8.webtools";
@@ -151,6 +157,47 @@ public class WebToolsPlugin extends AbstractUIPlugin {
 	public static final String GROUP_SOURCE = "_menu_source";
 
 	public static final String[] SUPPORTED_IMAGE_TYPES = { "gif", "png", "jpg", "jpeg", "bmp" };
+
+	private static Map<String, String> innerDTD = new LinkedHashMap<String, String>();
+	static {
+		innerDTD.put("http://java.sun.com/j2ee/dtds/web-app_2_2.dtd", "/DTD/web-app_2_2.dtd");
+		innerDTD.put("http://java.sun.com/dtd/web-app_2_3.dtd", "/DTD/web-app_2_3.dtd");
+		innerDTD.put("http://java.sun.com/j2ee/dtds/web-jsptaglibrary_1_1.dtd", "/DTD/web-jsptaglibrary_1_1.dtd");
+		innerDTD.put("http://java.sun.com/dtd/web-jsptaglibrary_1_2.dtd", "/DTD/web-jsptaglibrary_1_2.dtd");
+		innerDTD.put("XMLSchema.dtd", "/DTD/XMLSchema.dtd");
+		innerDTD.put("datatypes.dtd", "/DTD/datatypes.dtd");
+
+//		innerDTD.put("http://java.sun.com/xml/ns/j2ee","/XSD/web-app_2_4.xsd");
+		innerDTD.put("http://java.sun.com/xml/ns/j2ee", "/XSD/web-app_3_0.xsd");
+		innerDTD.put("j2ee_1_4.xsd", "/XSD/j2ee_1_4.xsd");
+		innerDTD.put("j2ee_web_services_1_1.xsd", "/XSD/j2ee_web_services_1_1.xsd");
+		innerDTD.put("j2ee_web_services_client_1_1.xsd", "/XSD/j2ee_web_services_client_1_1.xsd");
+		innerDTD.put("jsp_2_0.xsd", "/XSD/jsp_2_0.xsd");
+		innerDTD.put("jspxml.xsd", "/XSD/jspxml.xsd");
+		innerDTD.put("web-app_2_4.xsd", "/XSD/web-app_2_4.xsd");
+		innerDTD.put("web-app_3_0.xsd", "/XSD/web-app_3_0.xsd");
+		innerDTD.put("web-app_3_1.xsd", "/XSD/web-app_3_1.xsd");
+		innerDTD.put("web-app_4_0.xsd", "/XSD/web-app_4_0.xsd");
+		innerDTD.put("web-jsptaglibrary_2_0.xsd", "/XSD/web-jsptaglibrary_2_0.xsd");
+		innerDTD.put("xml.xsd", "/XSD/xml.xsd");
+	}
+
+	private static Map<String, String> innerTLD = new LinkedHashMap<String, String>();
+	static {
+		innerTLD.put("http://java.sun.com/jstl/core_rt", "/TLD/c-1_0-rt.tld");
+		innerTLD.put("http://java.sun.com/jstl/core", "/TLD/c-1_0.tld");
+		innerTLD.put("http://java.sun.com/jsp/jstl/core", "/TLD/c.tld");
+		innerTLD.put("http://java.sun.com/jstl/fmt_rt", "/TLD/fmt-1_0-rt.tld");
+		innerTLD.put("http://java.sun.com/jstl/fmt", "/TLD/fmt-1_0.tld");
+		innerTLD.put("http://java.sun.com/jsp/jstl/fmt", "/TLD/fmt.tld");
+//		innerTLD.put("http://java.sun.com/jsp/jstl/functions","/TLD/fn.tld");
+		innerTLD.put("http://java.sun.com/jstl/sql_rt", "/TLD/sql-1_0-rt.tld");
+		innerTLD.put("http://java.sun.com/jstl/sql", "/TLD/sql-1_0.tld");
+		innerTLD.put("http://java.sun.com/jsp/jstl/sql", "/TLD/sql.tld");
+		innerTLD.put("http://java.sun.com/jstl/xml_rt", "/TLD/x-1_0-rt.tld");
+		innerTLD.put("http://java.sun.com/jstl/xml", "/TLD/x-1_0.tld");
+		innerTLD.put("http://java.sun.com/jsp/jstl/xml", "/TLD/x.tld");
+	}
 
 	/**
 	 * This method is called upon plug-in activation
@@ -283,6 +330,14 @@ public class WebToolsPlugin extends AbstractUIPlugin {
 		return this.colorProvider;
 	}
 
+	public static Map<String, String> getInnerDTD() {
+		return innerDTD;
+	}
+
+	public static Map<String, String> getInnerTLD() {
+		return innerTLD;
+	}
+
 	/**
 	 * Returns the string from the plugin's resource bundle, or 'key' if not found.
 	 */
@@ -382,6 +437,28 @@ public class WebToolsPlugin extends AbstractUIPlugin {
 		ex.printStackTrace();
 	}
 
+	private String[] noValidationNatureIds;
+
+	public String[] getNoValidationNatureId() {
+		if (noValidationNatureIds == null) {
+			List<String> list = new ArrayList<String>();
+			IExtensionRegistry registry = Platform.getExtensionRegistry();
+			IExtensionPoint point = registry.getExtensionPoint(getPluginId() + ".noValidationNatures");
+			IExtension[] extensions = point.getExtensions();
+			for (int i = 0; i < extensions.length; i++) {
+				IConfigurationElement[] elements = extensions[i].getConfigurationElements();
+				for (int j = 0; j < elements.length; j++) {
+					if ("noValidationNature".equals(elements[j].getName())) {
+						String natureId = elements[j].getAttribute("natureId");
+						list.add(natureId);
+					}
+				}
+			}
+			noValidationNatureIds = list.toArray(new String[list.size()]);
+		}
+		return noValidationNatureIds;
+	}
+
 	/** List of IPaletteContributer */
 	private Map<String, IPaletteContributer> palette = null;
 
@@ -431,6 +508,95 @@ public class WebToolsPlugin extends AbstractUIPlugin {
 		}
 	}
 
+	/** This contains URI and ICustomTagConverterContributer */
+	private Map<String, ICustomTagValidatorContributer> validatorContributers = null;
+
+	/**
+	 * Returns contributed <code>ICustomTagValidatorContributer</code>.
+	 */
+	public ICustomTagValidatorContributer getCustomTagValidatorContributer(String uri) {
+		try {
+			if (validatorContributers == null) {
+				validatorContributers = new HashMap<String, ICustomTagValidatorContributer>();
+				IExtensionRegistry registry = Platform.getExtensionRegistry();
+				IExtensionPoint point = registry.getExtensionPoint(getPluginId() + ".customTagValidator");
+				IExtension[] extensions = point.getExtensions();
+				for (int i = 0; i < extensions.length; i++) {
+					IConfigurationElement[] elements = extensions[i].getConfigurationElements();
+					for (int j = 0; j < elements.length; j++) {
+						if ("contributer".equals(elements[j].getName())) {
+							String contributerUri = elements[j].getAttribute("uri");
+							ICustomTagValidatorContributer validator = (ICustomTagValidatorContributer) elements[j]
+									.createExecutableExtension("class");
+							validatorContributers.put(contributerUri, validator);
+						}
+					}
+				}
+			}
+			return validatorContributers.get(uri);
+		} catch (Exception ex) {
+			logException(ex);
+			return null;
+		}
+	}
+
+	/** List of ITLDLocator */
+	private Set<ITLDLocator> tldlocators = null;
+
+	/**
+	 * Returns the array of contributed <code>ITLDLocator</code>s.
+	 */
+	public ITLDLocator[] getTLDLocatorContributions() {
+		if (tldlocators == null) {
+			loadTLDLocatorContributions();
+		}
+		return tldlocators.toArray(new ITLDLocator[tldlocators.size()]);
+	}
+
+	private void loadTLDLocatorContributions() {
+		try {
+			tldlocators = new HashSet<ITLDLocator>();
+			IExtensionRegistry registry = Platform.getExtensionRegistry();
+			IExtensionPoint point = registry.getExtensionPoint(getPluginId() + ".tldLocator");
+			IExtension[] extensions = point.getExtensions();
+			for (int i = 0; i < extensions.length; i++) {
+				IConfigurationElement[] elements = extensions[i].getConfigurationElements();
+				for (int j = 0; j < elements.length; j++) {
+					if ("contributer".equals(elements[j].getName())) {
+						// String group = elements[j].getAttribute("name");
+						ITLDLocator contributer = (ITLDLocator) elements[j].createExecutableExtension("class");
+						tldlocators.add(contributer);
+					}
+				}
+			}
+		} catch (Exception ex) {
+			logException(ex);
+		}
+	}
+
+	/*
+	 * Collect Filters contributed by other plugins
+	 * 
+	 * @since 2.0.5
+	 */
+	private IJSPFilter[] jspFilters = null;
+
+	/**
+	 * Returns the array of contributed <code>IJSPFilter</code>s.
+	 *
+	 * @since 2.0.5
+	 */
+	public IJSPFilter[] getJSPFilters() {
+		if (jspFilters != null) {
+			return jspFilters;
+		}
+
+		List<IJSPFilter> filters = loadContributedClasses("pagefilter", "jspfilter", IJSPFilter.class);
+		jspFilters = (IJSPFilter[]) filters.toArray(new IJSPFilter[filters.size()]);
+
+		return jspFilters;
+	}
+
 	/**
 	 * Returns contributed IFileAssistProcessor.
 	 */
@@ -438,6 +604,79 @@ public class WebToolsPlugin extends AbstractUIPlugin {
 		List<IFileAssistProcessor> list = loadContributedClasses("fileAssistProcessor", "processor",
 				IFileAssistProcessor.class);
 		return list.toArray(new IFileAssistProcessor[list.size()]);
+	}
+
+	/** This contains URI and ICustomTagConverterContributer */
+	private Map<String, ICustomTagConverterContributer> converterContributers = null;
+
+	/**
+	 * Returns contributed ICustomTagConverterContributer.
+	 */
+	public ICustomTagConverterContributer getCustomTagContributer(String uri) {
+		try {
+			if (converterContributers == null) {
+				converterContributers = new HashMap<String, ICustomTagConverterContributer>();
+				IExtensionRegistry registry = Platform.getExtensionRegistry();
+				IExtensionPoint point = registry.getExtensionPoint(getPluginId() + ".customTagConverter");
+				IExtension[] extensions = point.getExtensions();
+				for (int i = 0; i < extensions.length; i++) {
+					IConfigurationElement[] elements = extensions[i].getConfigurationElements();
+					for (int j = 0; j < elements.length; j++) {
+						if ("contributer".equals(elements[j].getName())) {
+							String contributerUri = elements[j].getAttribute("uri");
+							ICustomTagConverterContributer contributer = (ICustomTagConverterContributer) elements[j]
+									.createExecutableExtension("class");
+							converterContributers.put(contributerUri, contributer);
+						}
+					}
+				}
+			}
+			return converterContributers.get(uri);
+		} catch (Exception ex) {
+			logException(ex);
+			return null;
+		}
+	}
+
+	/** List of ICustomTagAttributeAssist */
+	private List<ICustomTagAttributeAssist> customTagAttrAssists = null;
+
+	/**
+	 * Returns contributed ICustomTagAttributeAssist.
+	 */
+	public ICustomTagAttributeAssist[] getCustomTagAttributeAssists() {
+		if (customTagAttrAssists == null) {
+			customTagAttrAssists = loadContributedClasses("customTagAttributeAssist", "customTagAttributeAssist",
+					ICustomTagAttributeAssist.class);
+		}
+		return customTagAttrAssists.toArray(new ICustomTagAttributeAssist[customTagAttrAssists.size()]);
+	}
+
+	/** List of IJSPELAssistProcessor */
+	private List<IJSPELAssistProcessor> jspelAssistProcessors = null;
+
+	/**
+	 * Returns contributed IJSPELAssistProcessor.
+	 */
+	public IJSPELAssistProcessor[] getJSPELAssists() {
+		if (jspelAssistProcessors == null) {
+			jspelAssistProcessors = loadContributedClasses("jspelAssistProcessor", "jspelAssistProcessor",
+					IJSPELAssistProcessor.class);
+		}
+		return jspelAssistProcessors.toArray(new IJSPELAssistProcessor[jspelAssistProcessors.size()]);
+	}
+
+	/** List of IHyperlinkProvider */
+	private List<IHyperlinkProvider> hyperlinkProviders = null;
+
+	/**
+	 * Returns contributed IHyperlinkProvider.
+	 */
+	public IHyperlinkProvider[] getHyperlinkProviders() {
+		if (hyperlinkProviders == null) {
+			hyperlinkProviders = loadContributedClasses("hyperlinkProvider", "provider", IHyperlinkProvider.class);
+		}
+		return hyperlinkProviders.toArray(new IHyperlinkProvider[hyperlinkProviders.size()]);
 	}
 
 	/**
@@ -463,9 +702,9 @@ public class WebToolsPlugin extends AbstractUIPlugin {
 		}
 		return result;
 	}
-	
+
 	private TextHoverRegistry textHoversRegistry;
-	
+
 	/**
 	 * @return the registry allowing to access contributed {@link ITextHover}s.
 	 * @since 1.0
@@ -476,9 +715,9 @@ public class WebToolsPlugin extends AbstractUIPlugin {
 		}
 		return this.textHoversRegistry;
 	}
-	
+
 	private ContentAssistProcessorRegistry contentAssistProcessorsRegistry;
-	
+
 	/**
 	 * @return the registry allowing to access contributed
 	 *         {@link IContentAssistProcessor}s.
