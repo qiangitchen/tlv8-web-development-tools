@@ -136,7 +136,7 @@ public class CSSAssistProcessor {
 		try {
 			CSSOMParser parser = new CSSOMParser();
 			InputSource is = new InputSource(new StringReader(css));
-			CSSStyleSheet stylesheet = parser.parseStyleSheet(is);
+			CSSStyleSheet stylesheet = parser.parseStyleSheet(is, null, null);
 			CSSRuleList list = stylesheet.getCssRules();
 //			ArrayList assists = new ArrayList();
 			for (int i = 0; i < list.getLength(); i++) {
@@ -166,7 +166,7 @@ public class CSSAssistProcessor {
 										rules.put(tagName, classes);
 //									} else {
 //										ArrayList classes = (ArrayList)rules.get(tagName);
-////										classes.add(new AssistInfo(attrCond.getValue()));
+//										classes.add(new AssistInfo(attrCond.getValue()));
 //										classes.add(attrCond.getValue());
 									}
 								}

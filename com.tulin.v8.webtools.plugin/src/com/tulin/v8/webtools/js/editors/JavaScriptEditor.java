@@ -1,9 +1,5 @@
 package com.tulin.v8.webtools.js.editors;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Stack;
-
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IMarker;
 import org.eclipse.core.resources.IResource;
@@ -34,7 +30,6 @@ import org.eclipse.jface.text.hyperlink.IHyperlinkDetector;
 import org.eclipse.jface.text.source.ISourceViewer;
 import org.eclipse.jface.text.source.IVerticalRuler;
 import org.eclipse.jface.text.source.MatchingCharacterPainter;
-import org.eclipse.jface.text.source.projection.ProjectionAnnotationModel;
 import org.eclipse.jface.text.source.projection.ProjectionSupport;
 import org.eclipse.jface.text.source.projection.ProjectionViewer;
 import org.eclipse.jface.util.PropertyChangeEvent;
@@ -62,7 +57,6 @@ import com.tulin.v8.webtools.ProjectParams;
 import com.tulin.v8.webtools.StringUtils;
 import com.tulin.v8.webtools.WebToolsPlugin;
 import com.tulin.v8.webtools.formatter.Formater;
-import com.tulin.v8.webtools.html.editors.FoldingInfo;
 import com.tulin.v8.webtools.html.editors.SoftTabVerifyListener;
 import com.tulin.v8.webtools.js.launch.JavaScriptLaunchUtil;
 
@@ -181,7 +175,6 @@ public class JavaScriptEditor extends TextEditor {
 		fProjectionSupport = new ProjectionSupport(viewer, getAnnotationAccess(), getSharedColors());
 		fProjectionSupport.install();
 		viewer.doOperation(ProjectionViewer.TOGGLE);
-		updateFolding();
 
 		StyledText widget = viewer.getTextWidget();
 		widget.setTabs(getPreferenceStore().getInt(AbstractDecoratedTextEditorPreferenceConstants.EDITOR_TAB_WIDTH));
@@ -220,7 +213,6 @@ public class JavaScriptEditor extends TextEditor {
 	protected void update() {
 		outlinePage.update();
 		outlinePage.setSelection(getSourceViewer().getTextWidget().getCaretOffset());
-		updateFolding();
 
 		if (getEditorInput() instanceof IFileEditorInput) {
 			doValidate();
@@ -361,104 +353,6 @@ public class JavaScriptEditor extends TextEditor {
 			return outlinePage;
 		}
 		return super.getAdapter(adapter);
-	}
-
-	/**
-	 * Update folding informations.
-	 */
-	private void updateFolding() {
-		try {
-			ProjectionViewer viewer = (ProjectionViewer) getSourceViewer();
-			if (viewer == null) {
-				return;
-			}
-			ProjectionAnnotationModel model = viewer.getProjectionAnnotationModel();
-			if (model == null) {
-				return;
-			}
-
-			IDocument doc = getDocumentProvider().getDocument(getEditorInput());
-			String source = doc.get();
-
-			List<FoldingInfo> list = new ArrayList<FoldingInfo>();
-			Stack<FoldingInfo> stack = new Stack<FoldingInfo>();
-			FoldingInfo prev = null;
-			char quote = 0;
-			boolean escape = false;
-
-			for (int i = 0; i < source.length(); i++) {
-				char c = source.charAt(i);
-				// skip string
-				if (quote != 0 && escape == true) {
-					escape = false;
-				} else if ((prev == null || !prev.getType().equals("comment")) && (c == '"' || c == '\'')) {
-					if (quote == 0) {
-						quote = c;
-					} else if (quote == c) {
-						quote = 0;
-					}
-				} else if (quote != 0 && (c == '\\')) {
-					escape = true;
-				} else if (quote != 0 && (c == '\n' || c == '\r')) {
-					quote = 0;
-					// start comment
-				} else if (c == '/' && source.length() > i + 1 && quote == 0) {
-					if (source.charAt(i + 1) == '*') {
-						prev = new FoldingInfo(i, -1, "comment");
-						stack.push(prev);
-						i++;
-					}
-					// end comment
-				} else if (c == '*' && source.length() > i + 1 && !stack.isEmpty() && quote == 0) {
-					if (source.charAt(i + 1) == '/' && prev.getType().equals("comment")) {
-						FoldingInfo info = (FoldingInfo) stack.pop();
-						if (doc.getLineOfOffset(info.getStart()) != doc.getLineOfOffset(i)) {
-							list.add(new FoldingInfo(info.getStart(),
-									i + 2 + FoldingInfo.countUpLineDelimiter(source, i + 2), "comment"));
-						}
-						prev = stack.isEmpty() ? null : (FoldingInfo) stack.get(stack.size() - 1);
-						i++;
-					}
-					// open blace
-				} else if (c == '{' && quote == 0) {
-					if (prev == null || !prev.getType().equals("comment")) {
-						if (findFunction(source, i)) {
-							prev = new FoldingInfo(i, -1, "function");
-						} else {
-							prev = new FoldingInfo(i, -1, "blace");
-						}
-						stack.push(prev);
-					}
-					// close blace
-				} else if (c == '}' && prev != null && !prev.getType().equals("comment") && quote == 0) {
-					FoldingInfo info = (FoldingInfo) stack.pop();
-					if (info.getType().equals("function")
-							&& doc.getLineOfOffset(info.getStart()) != doc.getLineOfOffset(i)) {
-						list.add(new FoldingInfo(info.getStart(),
-								i + 2 + FoldingInfo.countUpLineDelimiter(source, i + 2), "function"));
-					}
-					prev = stack.isEmpty() ? null : (FoldingInfo) stack.get(stack.size() - 1);
-				}
-			}
-
-			FoldingInfo.applyModifiedAnnotations(model, list);
-
-		} catch (Exception ex) {
-			WebToolsPlugin.logException(ex);
-		}
-	}
-
-	private boolean findFunction(String text, int pos) {
-		text = text.substring(0, pos);
-		int index1 = text.lastIndexOf("function");
-		int index2 = text.lastIndexOf("{");
-		if (index1 == -1) {
-			return false;
-		} else if (index1 > index2) {
-			return true;
-		} else {
-			return false;
-		}
 	}
 
 	/**

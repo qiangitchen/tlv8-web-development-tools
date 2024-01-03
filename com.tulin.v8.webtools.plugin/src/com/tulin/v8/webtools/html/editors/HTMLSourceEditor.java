@@ -1,11 +1,6 @@
 package com.tulin.v8.webtools.html.editors;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Stack;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import org.apache.commons.jrcs.diff.AddDelta;
 import org.apache.commons.jrcs.diff.ChangeDelta;
@@ -356,7 +351,6 @@ public class HTMLSourceEditor extends TextEditor {
 	 * the subclass.
 	 */
 	protected void update() {
-		updateFolding();
 		updateAssist();
 		outlinePage.update();
 		outlinePage.setSelection(getViewer().getTextWidget().getCaretOffset());
@@ -613,157 +607,6 @@ public class HTMLSourceEditor extends TextEditor {
 			return to;
 		}
 	}
-
-	/** Regular expression to search tags. */
-	private Pattern tagPattern = Pattern.compile("<([^<]*?)>");
-	private Pattern valuePattern = Pattern.compile("\".*?\"");
-
-	/**
-	 * Update folding informations.
-	 */
-	private void updateFolding() {
-		try {
-			ProjectionViewer viewer = (ProjectionViewer) getSourceViewer();
-			if (viewer == null) {
-				return;
-			}
-			ProjectionAnnotationModel model = viewer.getProjectionAnnotationModel();
-			if (model == null) {
-				return;
-			}
-
-			List<FoldingInfo> list = new ArrayList<FoldingInfo>();
-			Stack<FoldingInfo> stack = new Stack<FoldingInfo>();
-			IDocument doc = getDocumentProvider().getDocument(getEditorInput());
-
-			String xml = HTMLUtil.scriptlet2space(HTMLUtil.comment2space(doc.get(), true), true);
-
-			// trim attribute values
-			Matcher matcher = valuePattern.matcher(xml);
-			while (matcher.find()) {
-				int start = matcher.start(0);
-				int length = matcher.group(0).length();
-				StringBuffer sb = new StringBuffer();
-				for (int i = 0; i < length; i++) {
-					sb.append(" ");
-				}
-				xml = xml.substring(0, start) + sb.toString() + xml.substring(start + length);
-			}
-
-			matcher = tagPattern.matcher(xml);
-			while (matcher.find()) {
-				String text = matcher.group(1).trim();
-				// skip XML declaration
-				if (text.startsWith("?")) {
-					continue;
-				}
-				// DOCTYPE declaration
-				if (text.startsWith("!DOCTYPE")) {
-					// Don't fold if start offset and end offset are same line
-					if (doc.getLineOfOffset(matcher.start()) != doc.getLineOfOffset(matcher.end())) {
-						FoldingInfo info = new FoldingInfo(matcher.start(), matcher.end(), "!DOCTYPE");
-						info.setEnd(info.getEnd() + FoldingInfo.countUpLineDelimiter(xml, matcher.end()));
-						list.add(info);
-					}
-					continue;
-				}
-				// JSP (I think this shouldn't process in here)
-				if (text.startsWith("%")) {
-					// Don't fold if start offset and end offset are same line
-					if (doc.getLineOfOffset(matcher.start()) != doc.getLineOfOffset(matcher.end())) {
-						FoldingInfo info = new FoldingInfo(matcher.start(), matcher.end(), "%");
-						info.setEnd(info.getEnd() + FoldingInfo.countUpLineDelimiter(xml, matcher.end()));
-						list.add(info);
-					}
-					continue;
-				}
-				// comment
-				if (text.startsWith("!--")) {
-					// Don't fold if start offset and end offset are same line
-					if (doc.getLineOfOffset(matcher.start()) != doc.getLineOfOffset(matcher.end())) {
-						FoldingInfo info = new FoldingInfo(matcher.start(), matcher.end(), "!--");
-						info.setEnd(info.getEnd() + FoldingInfo.countUpLineDelimiter(xml, matcher.end()));
-						list.add(info);
-					}
-					continue;
-				}
-				// close tag
-				if (text.startsWith("/")) {
-					text = text.substring(1, text.length());
-					while (stack.size() != 0) {
-						FoldingInfo info = stack.pop();
-						if (info.getType().toLowerCase().equals(text.toLowerCase())) {
-							info.setEnd(matcher.end());
-							// Don't fold if start offset and end offset are same line
-							if (doc.getLineOfOffset(info.getStart()) != doc.getLineOfOffset(info.getEnd())) {
-								info.setEnd(info.getEnd() + FoldingInfo.countUpLineDelimiter(xml, matcher.end()));
-								list.add(info);
-							}
-							break;
-						}
-					}
-					continue;
-				}
-				// empty tag
-				if (text.endsWith("/")) {
-					// Don't fold if start offset and end offset are same line
-					if (doc.getLineOfOffset(matcher.start()) != doc.getLineOfOffset(matcher.end())) {
-						text.substring(0, text.length() - 1);
-						if (text.indexOf(" ") != -1) {
-							text = text.substring(0, text.indexOf(" "));
-						}
-						FoldingInfo info = new FoldingInfo(matcher.start(), matcher.end(), text);
-						info.setEnd(info.getEnd() + FoldingInfo.countUpLineDelimiter(xml, matcher.end()));
-						list.add(info);
-					}
-					continue;
-				}
-				// start tag (put to the stack)
-				text = text.replaceAll("[\\s\r\n]+", " ");
-				if (text.indexOf(" ") != -1) {
-					text = text.substring(0, text.indexOf(" "));
-				}
-				stack.push(new FoldingInfo(matcher.start(), 0, text));
-			}
-
-			FoldingInfo.applyModifiedAnnotations(model, list);
-
-		} catch (Exception ex) {
-			WebToolsPlugin.logException(ex);
-		}
-	}
-
-	////////////////////////////////////////////////////////////////////////////
-	// Drag & Drop
-	////////////////////////////////////////////////////////////////////////////
-	/*
-	 * private class HTMLDropListener extends DropTargetAdapter { public void
-	 * dragEnter(DropTargetEvent evt){ evt.detail = DND.DROP_COPY; setFocus(); } //
-	 * public void dragLeave(DropTargetEvent event) { // }
-	 * 
-	 * private Point calcLocation(Composite composite,Point point){ Point compPoint
-	 * = composite.getLocation(); Point nextPoint = new Point(compPoint.x + point.x
-	 * ,compPoint.y + point.y); Composite parent = composite.getParent();
-	 * if(parent!=null){ Point result = calcLocation(parent,nextPoint); return
-	 * result; } else { return new Point(nextPoint.x + 30, nextPoint.y + 48); } }
-	 * 
-	 * public void dragOver(DropTargetEvent event) { try { Point point =
-	 * calcLocation(getSourceViewer().getTextWidget().getParent(),new Point(0,0));
-	 * int x = event.x - point.x; int y = event.y - point.y; int offset =
-	 * getSourceViewer().getTextWidget().getOffsetAtLocation(new Point(x,y));
-	 * getSourceViewer().getTextWidget().setCaretOffset(offset); } catch(Exception
-	 * ex){ } } public void drop(DropTargetEvent evt){ for(int
-	 * i=0;i<evt.dataTypes.length;i++){ if
-	 * (TextTransfer.getInstance().isSupportedType(evt.dataTypes[i])){ String text =
-	 * (String)evt.data; } else if
-	 * (FileTransfer.getInstance().isSupportedType(evt.dataTypes[i])){ String[]
-	 * files = (String[])evt.data; for(int j=0;j<files.length;j++){ File file = new
-	 * File(files[j]); } } else if
-	 * (LocalSelectionTransfer.getInstance().isSupportedType(evt.dataTypes[i])){
-	 * IStructuredSelection sel = (IStructuredSelection)evt.data; Object obj =
-	 * sel.getFirstElement(); if(obj instanceof IPaletteItem){
-	 * ((IPaletteItem)obj).execute(HTMLSourceEditor.this); } } } } }
-	 */
 
 	public boolean isFileEditorInput() {
 		if (getEditorInput() instanceof IFileEditorInput) {

@@ -129,7 +129,6 @@ public class JavaScriptOutlinePage extends ContentOutlinePage {
 				setSelection(new StructuredSelection(context));
 				getTreeViewer().addSelectionChangedListener(selectionChangedListener);
 			} catch (Exception ex) {
-				;
 			}
 		}
 	}

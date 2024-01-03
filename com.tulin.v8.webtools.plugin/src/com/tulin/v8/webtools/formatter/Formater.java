@@ -5,6 +5,7 @@ import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.ITextSelection;
 import org.eclipse.ui.editors.text.TextEditor;
 
+import com.tulin.v8.webtools.css.editors.CSSEditor;
 import com.tulin.v8.webtools.html.editors.HTMLSourceEditor;
 import com.tulin.v8.webtools.js.editors.JavaScriptEditor;
 import com.tulin.v8.webtools.xml.editors.XMLEditor;
@@ -33,6 +34,22 @@ public class Formater {
 					return;
 				}
 				String text = JavascriptFormator.format(stext);
+				IDocument doc = editor.getDocumentProvider().getDocument(editor.getEditorInput());
+				doc.replace(sel.getOffset(), sel.getLength(), text);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else if (editor instanceof CSSEditor) {
+			try {
+				String tText = editor.getDocumentProvider().getDocument(editor.getEditorInput()).get();
+				ITextSelection sel = (ITextSelection) editor.getSelectionProvider().getSelection();
+				String stext = sel.getText().trim();
+				if (("".equals(stext)) || (stext == null)) {
+					String text = CSSFormator.format(tText);
+					editor.getDocumentProvider().getDocument(editor.getEditorInput()).set(text);
+					return;
+				}
+				String text = CSSFormator.format(stext);
 				IDocument doc = editor.getDocumentProvider().getDocument(editor.getEditorInput());
 				doc.replace(sel.getOffset(), sel.getLength(), text);
 			} catch (Exception e) {

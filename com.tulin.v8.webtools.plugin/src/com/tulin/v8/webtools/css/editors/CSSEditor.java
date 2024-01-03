@@ -1,8 +1,5 @@
 package com.tulin.v8.webtools.css.editors;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -14,10 +11,11 @@ import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.text.BadLocationException;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.ITextSelection;
-import org.eclipse.jface.text.source.projection.ProjectionAnnotationModel;
-import org.eclipse.jface.text.source.projection.ProjectionViewer;
 import org.eclipse.jface.util.PropertyChangeEvent;
+import org.eclipse.jface.viewers.ISelection;
+import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IFileEditorInput;
 import org.eclipse.ui.IStorageEditorInput;
@@ -32,7 +30,6 @@ import com.tulin.v8.webtools.ColorProvider;
 import com.tulin.v8.webtools.WebToolsPlugin;
 import com.tulin.v8.webtools.css.ChooseColorAction;
 import com.tulin.v8.webtools.formatter.Formater;
-import com.tulin.v8.webtools.html.editors.FoldingInfo;
 
 /**
  * CSS Editor
@@ -46,6 +43,8 @@ public class CSSEditor extends TextEditor {
 	public static final String ACTION_CHOOSE_COLOR = "_choose_color";
 	public static final String ACTION_COMMENT = "_comment";
 	public static final String ACTION_FORMAT = "_format";
+	
+	private EditorSelectionChangedListener selectionChangeListener;
 
 	public CSSEditor() {
 		super();
@@ -61,6 +60,12 @@ public class CSSEditor extends TextEditor {
 		setAction(ACTION_FORMAT, new FormatAction());
 
 		setEditorContextMenuId("#AmaterasCSSEditor");
+	}
+	
+	public void createPartControl(Composite parent) {
+		super.createPartControl(parent);
+		selectionChangeListener = new EditorSelectionChangedListener();
+		selectionChangeListener.install(getSelectionProvider());
 	}
 
 	@Override
@@ -112,15 +117,18 @@ public class CSSEditor extends TextEditor {
 	@Override
 	public void doSave(IProgressMonitor progressMonitor) {
 		super.doSave(progressMonitor);
-		outline.update();
-		updateFolding();
+		update();
 	}
 
 	@Override
 	public void doSaveAs() {
 		super.doSaveAs();
+		update();
+	}
+
+	protected void update() {
 		outline.update();
-		updateFolding();
+		outline.setSelection(getSourceViewer().getTextWidget().getCaretOffset());
 	}
 
 	@Override
@@ -147,85 +155,26 @@ public class CSSEditor extends TextEditor {
 		return super.getAdapter(adapter);
 	}
 
-	private static final int FOLDING_NONE = 0;
-	private static final int FOLDING_STYLE = 1;
-	private static final int FOLDING_COMMENT = 2;
+	public String getDocText() {
+		return getDocumentProvider().getDocument(getEditorInput()).get();
+	}
 
-	/**
-	 * Update folding informations.
-	 */
-	private void updateFolding() {
+	public int getStartLine() {
+		ITextSelection sel = (ITextSelection) getSelectionProvider().getSelection();
+		return sel.getStartLine();
+	}
+
+	public String getSelectionStartLineText() {
 		try {
-			ProjectionViewer viewer = (ProjectionViewer) getSourceViewer();
-			if (viewer == null) {
-				return;
-			}
-			ProjectionAnnotationModel model = viewer.getProjectionAnnotationModel();
-			if (model == null) {
-				return;
-			}
-
-			List<FoldingInfo> list = new ArrayList<FoldingInfo>();
 			IDocument doc = getDocumentProvider().getDocument(getEditorInput());
-			String source = doc.get();
-
-			int type = FOLDING_NONE;
-			int start = -1;
-			int startBackup = -1;
-
-			for (int i = 0; i < source.length(); i++) {
-				char c = source.charAt(i);
-				// start comment
-				if (c == '/' && type != FOLDING_COMMENT && source.length() > i + 1) {
-					if (source.charAt(i + 1) == '*') {
-						if (type == FOLDING_STYLE) {
-							startBackup = start;
-						}
-						type = FOLDING_COMMENT;
-						start = i;
-						i++;
-					}
-					// end comment
-				} else if (c == '*' && type == FOLDING_COMMENT && source.length() > i + 1) {
-					if (source.charAt(i + 1) == '/') {
-						if (doc.getLineOfOffset(start) != doc.getLineOfOffset(i)) {
-							list.add(new FoldingInfo(start, i + 2 + FoldingInfo.countUpLineDelimiter(source, i + 2)));
-						}
-						if (startBackup != -1) {
-							type = FOLDING_STYLE;
-							start = startBackup;
-						} else {
-							type = FOLDING_NONE;
-						}
-						startBackup = -1;
-						i++;
-					}
-					// start blace
-				} else if (c == '{' && type == FOLDING_NONE) {
-					if (type == FOLDING_COMMENT) {
-						startBackup = start;
-					}
-					start = i;
-					type = FOLDING_STYLE;
-					// end blace
-				} else if (type == FOLDING_STYLE && c == '}') {
-					if (doc.getLineOfOffset(start) != doc.getLineOfOffset(i)) {
-						list.add(new FoldingInfo(start, i + 1 + FoldingInfo.countUpLineDelimiter(source, i + 1)));
-					}
-					if (startBackup != -1) {
-						type = FOLDING_COMMENT;
-						start = startBackup;
-					}
-					startBackup = -1;
-					type = FOLDING_NONE;
-				}
-			}
-
-			FoldingInfo.applyModifiedAnnotations(model, list);
-
-		} catch (Exception ex) {
-			WebToolsPlugin.logException(ex);
+			int startline = getStartLine();
+			int offset = doc.getLineOffset(startline);
+			int length = doc.getLineLength(startline);
+			return doc.get(offset, length);
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
+		return null;
 	}
 
 	/** The action to comment out selection range. */
@@ -273,6 +222,21 @@ public class CSSEditor extends TextEditor {
 				e.printStackTrace();
 			}
 		}
+	}
+
+	private class EditorSelectionChangedListener extends AbstractSelectionChangedListener {
+
+		@Override
+		public void selectionChanged(SelectionChangedEvent event) {
+			ISelection selection = event.getSelection();
+			ITextSelection textSelection = (ITextSelection) selection;
+
+			// Selects the element in the outline view.
+			if (outline != null) {
+				outline.setSelection(textSelection.getOffset());
+			}
+		}
+
 	}
 
 }

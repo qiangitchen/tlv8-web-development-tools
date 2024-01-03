@@ -37,30 +37,30 @@ public class CSSPreviewView extends ViewPart implements IPartListener, IDocument
 	private ITextEditor currentEditor;
 	private Browser browser;
 
-	private void editorChanged(){
-		if(currentEditor!=null){
+	private void editorChanged() {
+		if (currentEditor != null) {
 			try {
-				currentEditor.getDocumentProvider().getDocument(
-						currentEditor.getEditorInput()).removeDocumentListener(this);
-			} catch(NullPointerException ex){
+				currentEditor.getDocumentProvider().getDocument(currentEditor.getEditorInput())
+						.removeDocumentListener(this);
+			} catch (NullPointerException ex) {
 				// ignore
 			}
 		}
 		IWorkbenchPage page = getSite().getPage();
-		if(page==null){
+		if (page == null) {
 			return;
 		}
 		IEditorPart editor = page.getActiveEditor();
-		if(editor==null){
+		if (editor == null) {
 			return;
 		}
-		if(editor.getEditorInput().getName().endsWith(".css")){
-			if(editor instanceof ITextEditor){
+		if (editor.getEditorInput().getName().endsWith(".css")) {
+			if (editor instanceof ITextEditor) {
 				currentEditor = (ITextEditor) editor;
 			} else {
 				currentEditor = (ITextEditor) editor.getAdapter(ITextEditor.class);
 			}
-			if(currentEditor!=null){
+			if (currentEditor != null) {
 				IDocument doc = currentEditor.getDocumentProvider().getDocument(currentEditor.getEditorInput());
 				doc.addDocumentListener(this);
 				refreshPreview();
@@ -68,10 +68,9 @@ public class CSSPreviewView extends ViewPart implements IPartListener, IDocument
 		}
 	}
 
-	private void refreshPreview(){
-		if(currentEditor!=null){
-			String source = currentEditor.getDocumentProvider().getDocument(
-					currentEditor.getEditorInput()).get();
+	private void refreshPreview() {
+		if (currentEditor != null) {
+			String source = currentEditor.getDocumentProvider().getDocument(currentEditor.getEditorInput()).get();
 			String html = buildHTML(source);
 			browser.setText(html);
 		}
@@ -83,22 +82,22 @@ public class CSSPreviewView extends ViewPart implements IPartListener, IDocument
 	 * @param source the CSS source
 	 * @return HTML
 	 */
-	private String buildHTML(String source){
+	private String buildHTML(String source) {
 		List<String> selectors = new ArrayList<String>();
 		try {
 			CSSOMParser parser = new CSSOMParser();
 			InputSource is = new InputSource(new StringReader(source));
-			CSSStyleSheet stylesheet = parser.parseStyleSheet(is);
+			CSSStyleSheet stylesheet = parser.parseStyleSheet(is, null, null);
 			CSSRuleList list = stylesheet.getCssRules();
-			for(int i=0;i<list.getLength();i++){
+			for (int i = 0; i < list.getLength(); i++) {
 				CSSRule rule = list.item(i);
-				if(rule instanceof CSSStyleRule){
-					CSSStyleRule styleRule = (CSSStyleRule)rule;
+				if (rule instanceof CSSStyleRule) {
+					CSSStyleRule styleRule = (CSSStyleRule) rule;
 					String selector = styleRule.getSelectorText();
 					selectors.add(selector);
 				}
 			}
-		} catch(IOException ex){
+		} catch (IOException ex) {
 			WebToolsPlugin.logException(ex);
 		}
 
@@ -109,45 +108,45 @@ public class CSSPreviewView extends ViewPart implements IPartListener, IDocument
 		sb.append("<html><head><style type=\"text/css\">\n");
 		sb.append(source);
 		sb.append("</style></head><body>\n");
-		for(int i=0;i<selectors.size();i++){
+		for (int i = 0; i < selectors.size(); i++) {
 			String selector = (String) selectors.get(i);
-			if(selector.indexOf(' ') >= 0){
+			if (selector.indexOf(' ') >= 0) {
 				// TODO descendant selector
 
-			} else if(selector.indexOf('>') >= 0){
+			} else if (selector.indexOf('>') >= 0) {
 				// TODO child selector
 
-			} else if(selector.indexOf('+') >= 0){
+			} else if (selector.indexOf('+') >= 0) {
 				// TODO adjacent sibling selector
 
-			} else if(selector.indexOf('[') >= 0){
+			} else if (selector.indexOf('[') >= 0) {
 				// TODO attribute selector
 
-			} else if(selector.indexOf('.') >= 0){
+			} else if (selector.indexOf('.') >= 0) {
 				// class selector
 				String[] dim = selector.split("\\.");
 				createElement(sb, selector, dim[0], dim[1], null);
 
-			} else if(selector.indexOf('#') >= 0){
+			} else if (selector.indexOf('#') >= 0) {
 				// id selector
 				String[] dim = selector.split("#");
 				createElement(sb, selector, dim[0], null, dim[1]);
 
-			} else if(selector.indexOf(":") >= 0){
+			} else if (selector.indexOf(":") >= 0) {
 				// pseudo-classes
 				String[] dim = selector.split(":");
-				if(!pseudo.contains(dim[0])){
+				if (!pseudo.contains(dim[0])) {
 					createElement(sb, dim[0], dim[0], null, null);
 					pseudo.add(dim[0]);
 				}
 			} else {
 				// type selector
-				if(selector.equals("body")){
+				if (selector.equals("body")) {
 					continue;
 				}
-				if(selector.equalsIgnoreCase("table") || selector.equalsIgnoreCase("tr") ||
-						selector.equalsIgnoreCase("th") || selector.equalsIgnoreCase("td")){
-					if(!table){
+				if (selector.equalsIgnoreCase("table") || selector.equalsIgnoreCase("tr")
+						|| selector.equalsIgnoreCase("th") || selector.equalsIgnoreCase("td")) {
+					if (!table) {
 						sb.append("<table>\n");
 						sb.append("  <tr>\n");
 						sb.append("    <th>header</th>\n");
@@ -176,30 +175,30 @@ public class CSSPreviewView extends ViewPart implements IPartListener, IDocument
 		return sb.toString();
 	}
 
-	private void createElement(StringBuffer sb, String selector, String elementName, String className, String idName){
-		if(elementName.equals("*")){
+	private void createElement(StringBuffer sb, String selector, String elementName, String className, String idName) {
+		if (elementName.equals("*")) {
 			elementName = "div";
 		}
-		if(elementName.equalsIgnoreCase("a")){
+		if (elementName.equalsIgnoreCase("a")) {
 			sb.append("<a href=\"#\"");
-			if(className!=null){
+			if (className != null) {
 				sb.append(" class=\"").append(className).append("\"");
 			}
-			if(idName!=null){
+			if (idName != null) {
 				sb.append(" id=\"").append(idName).append("\"");
 			}
 			sb.append(">Link</a>\n");
 
 		} else {
 			sb.append("<").append(elementName);
-			if(className!=null){
+			if (className != null) {
 				sb.append(" class=\"").append(className).append("\"");
 			}
-			if(idName!=null){
+			if (idName != null) {
 				sb.append(" id=\"").append(idName).append("\"");
 			}
 			sb.append(">");
-			if(elementName.equalsIgnoreCase("hr")){
+			if (elementName.equalsIgnoreCase("hr")) {
 				return;
 			}
 			sb.append(selector);

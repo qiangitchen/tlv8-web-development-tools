@@ -53,7 +53,6 @@ public class HTMLOutlinePage extends ContentOutlinePage implements IHTMLOutlineP
 				setSelection(new StructuredSelection(element));
 				getTreeViewer().addSelectionChangedListener(selectionChangedListener);
 			} catch (Exception ex) {
-				;
 			}
 		}
 	}

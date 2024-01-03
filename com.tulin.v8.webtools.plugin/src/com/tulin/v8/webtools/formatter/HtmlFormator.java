@@ -1,15 +1,11 @@
 package com.tulin.v8.webtools.formatter;
 
-import java.io.StringWriter;
-
 import javax.script.Invocable;
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 
-import org.dom4j.Document;
-import org.dom4j.DocumentHelper;
-import org.dom4j.io.HTMLWriter;
-import org.dom4j.io.OutputFormat;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
 
 public class HtmlFormator {
 	public static String format(String text) throws Exception {
@@ -30,17 +26,9 @@ public class HtmlFormator {
 	}
 
 	public static String formatHtml(String str) throws Exception {
-		Document document = null;
-		document = DocumentHelper.parseText(str);
-
-		OutputFormat format = OutputFormat.createPrettyPrint();
-		format.setEncoding("utf-8");
-		StringWriter writer = new StringWriter();
-
-		HTMLWriter htmlWriter = new HTMLWriter(writer, format);
-
-		htmlWriter.write(document);
-		htmlWriter.close();
-		return writer.toString();
+		Document doc = Jsoup.parse(str);
+		doc.outputSettings().indentAmount(4);
+		doc.outputSettings().prettyPrint(true);
+		return doc.html();
 	}
 }

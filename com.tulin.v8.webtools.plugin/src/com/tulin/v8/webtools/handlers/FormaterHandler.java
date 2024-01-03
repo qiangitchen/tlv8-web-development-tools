@@ -23,6 +23,7 @@ public class FormaterHandler extends AbstractHandler {
 
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
+		System.out.println("format handler");
 		IWorkbenchWindow window = null;
 		if (event == null)
 			window = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
