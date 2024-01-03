@@ -21,19 +21,33 @@ import com.tulin.v8.webtools.html.HTMLUtil;
 public class CSSAssistProcessor implements IContentAssistProcessor {
 
 	public ICompletionProposal[] computeCompletionProposals(ITextViewer viewer, int offset) {
-
 		String text = getSource(viewer).substring(0, offset);
 		String word = getLastWord(text);
-
 		List<ICompletionProposal> list = new ArrayList<ICompletionProposal>();
 		if (word != null) {
-			for (int i = 0; i < CSSDefinition.CSS_KEYWORDS.length; i++) {
-				if (CSSDefinition.CSS_KEYWORDS[i].getReplaceString().startsWith(word)) {
-					list.add(new CompletionProposal(CSSDefinition.CSS_KEYWORDS[i].getReplaceString(),
-							offset - word.length(), word.length(),
-							CSSDefinition.CSS_KEYWORDS[i].getReplaceString().length(),
-							WebToolsPlugin.getDefault().getImageRegistry().get(WebToolsPlugin.ICON_CSS_PROP),
-							CSSDefinition.CSS_KEYWORDS[i].getDisplayString(), null, null));
+			if (word.endsWith(":")) {
+				for (int i = 0; i < CSSDefinition.CSS_VALUES.length; i++) {
+					if (CSSDefinition.CSS_VALUES[i].getName().startsWith(word)) {
+						List<String> values = CSSDefinition.CSS_VALUES[i].getValues();
+						for (String value : values) {
+							list.add(new CompletionProposal(value + ";", offset, 0, value.length() + 1,
+									WebToolsPlugin.getDefault().getImageRegistry().get(WebToolsPlugin.ICON_CSS_PROP),
+									value, null, null));
+						}
+					}
+				}
+			} else {
+				for (int i = 0; i < CSSDefinition.CSS_KEYWORDS.length; i++) {
+					if (CSSDefinition.CSS_KEYWORDS[i].getReplaceString().startsWith(word)) {
+						String replaceString = CSSDefinition.CSS_KEYWORDS[i].getReplaceString();
+						if (replaceString.indexOf(":") < 0) {
+							replaceString += ": ";
+						}
+						list.add(new CompletionProposal(replaceString, offset - word.length(), word.length(),
+								replaceString.length(),
+								WebToolsPlugin.getDefault().getImageRegistry().get(WebToolsPlugin.ICON_CSS_PROP),
+								CSSDefinition.CSS_KEYWORDS[i].getDisplayString(), null, null));
+					}
 				}
 			}
 		}
