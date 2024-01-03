@@ -7,6 +7,7 @@ import org.eclipse.ui.editors.text.TextEditor;
 
 import com.tulin.v8.webtools.html.editors.HTMLSourceEditor;
 import com.tulin.v8.webtools.js.editors.JavaScriptEditor;
+import com.tulin.v8.webtools.xml.editors.XMLEditor;
 
 /**
  * 通用格式化
@@ -17,10 +18,9 @@ import com.tulin.v8.webtools.js.editors.JavaScriptEditor;
 public class Formater {
 
 	public void format(TextEditor editor) throws ExecutionException {
-//		if (editor instanceof XMLEditor) {
-//			new FormatXMLAction(editor).run();
-//		} else 
-		if (editor instanceof HTMLSourceEditor) {
+		if (editor instanceof XMLEditor) {
+			new FormatXMLAction(editor).run();
+		} else if (editor instanceof HTMLSourceEditor) {
 			new FormatHTMLAction(editor).run();
 		} else if (editor instanceof JavaScriptEditor) {
 			try {

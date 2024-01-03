@@ -3,13 +3,17 @@ package com.tulin.v8.webtools.css.editors;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.IMenuManager;
-import org.eclipse.jface.action.Separator;
+import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.preference.IPreferenceStore;
+import org.eclipse.jface.text.BadLocationException;
 import org.eclipse.jface.text.IDocument;
+import org.eclipse.jface.text.ITextSelection;
 import org.eclipse.jface.text.source.projection.ProjectionAnnotationModel;
 import org.eclipse.jface.text.source.projection.ProjectionViewer;
 import org.eclipse.jface.util.PropertyChangeEvent;
@@ -27,6 +31,7 @@ import org.eclipse.ui.views.contentoutline.IContentOutlinePage;
 import com.tulin.v8.webtools.ColorProvider;
 import com.tulin.v8.webtools.WebToolsPlugin;
 import com.tulin.v8.webtools.css.ChooseColorAction;
+import com.tulin.v8.webtools.formatter.Formater;
 import com.tulin.v8.webtools.html.editors.FoldingInfo;
 
 /**
@@ -39,6 +44,8 @@ public class CSSEditor extends TextEditor {
 
 	public static final String GROUP_CSS = "_css";
 	public static final String ACTION_CHOOSE_COLOR = "_choose_color";
+	public static final String ACTION_COMMENT = "_comment";
+	public static final String ACTION_FORMAT = "_format";
 
 	public CSSEditor() {
 		super();
@@ -50,6 +57,8 @@ public class CSSEditor extends TextEditor {
 		outline = new CSSOutlinePage(this);
 
 		setAction(ACTION_CHOOSE_COLOR, new ChooseColorAction(this));
+		setAction(ACTION_COMMENT, new CommentAction());
+		setAction(ACTION_FORMAT, new FormatAction());
 
 		setEditorContextMenuId("#AmaterasCSSEditor");
 	}
@@ -59,12 +68,33 @@ public class CSSEditor extends TextEditor {
 		return WebToolsPlugin.getIcon("css.gif");
 	}
 
+	protected void addContextMenuActions(IMenuManager menu) {
+		// menu.add(new Separator(GROUP_CSS));
+		menu.appendToGroup(ITextEditorActionConstants.GROUP_EDIT,
+				new MenuManager(WebToolsPlugin.getResourceString("PreferencePage.CSS"), GROUP_CSS));
+		addGroup(menu, ITextEditorActionConstants.GROUP_EDIT, GROUP_CSS);
+		addAction(menu, GROUP_CSS, ACTION_CHOOSE_COLOR);
+
+		menu.appendToGroup(ITextEditorActionConstants.GROUP_EDIT, new MenuManager(
+				WebToolsPlugin.getResourceString("SourceEditor.Menu.Source"), WebToolsPlugin.GROUP_SOURCE));
+		addAction(menu, WebToolsPlugin.GROUP_SOURCE, ACTION_COMMENT);
+		addAction(menu, WebToolsPlugin.GROUP_SOURCE, ACTION_FORMAT);
+	}
+
 	@Override
 	protected final void editorContextMenuAboutToShow(IMenuManager menu) {
 		super.editorContextMenuAboutToShow(menu);
-		menu.add(new Separator(GROUP_CSS));
-		addGroup(menu, ITextEditorActionConstants.GROUP_EDIT, GROUP_CSS);
-		addAction(menu, GROUP_CSS, ACTION_CHOOSE_COLOR);
+		addContextMenuActions(menu);
+	}
+
+	protected void updateSelectionDependentActions() {
+		super.updateSelectionDependentActions();
+		ITextSelection sel = (ITextSelection) getSelectionProvider().getSelection();
+		if (sel.getText().equals("")) {
+			getAction(ACTION_COMMENT).setEnabled(false);
+		} else {
+			getAction(ACTION_COMMENT).setEnabled(true);
+		}
 	}
 
 	@Override
@@ -195,6 +225,53 @@ public class CSSEditor extends TextEditor {
 
 		} catch (Exception ex) {
 			WebToolsPlugin.logException(ex);
+		}
+	}
+
+	/** The action to comment out selection range. */
+	private class CommentAction extends Action {
+
+		public CommentAction() {
+			super(WebToolsPlugin.getResourceString("SourceEditor.CommentAction"));
+			setEnabled(false);
+			setActionDefinitionId("tulin.command.comment");
+		}
+
+		public void run() {
+			ITextSelection sel = (ITextSelection) getSelectionProvider().getSelection();
+			IDocument doc = getDocumentProvider().getDocument(getEditorInput());
+			String text = sel.getText();
+			if ("".equals(text)) {
+				return;
+			}
+			try {
+				if (text.startsWith("/*") && text.indexOf("*/") > 3) {
+					text = text.replaceFirst("/\\*", "");
+					text = text.replaceFirst("\\*/", "");
+					doc.replace(sel.getOffset(), sel.getLength(), text);
+				} else {
+					doc.replace(sel.getOffset(), sel.getLength(), "/*" + sel.getText() + "*/");
+				}
+			} catch (BadLocationException e) {
+				WebToolsPlugin.logException(e);
+			}
+		}
+	}
+
+	private class FormatAction extends Action {
+		Formater formater = new Formater();
+
+		public FormatAction() {
+			super(WebToolsPlugin.getResourceString("HTMLEditor.Format"));
+			setActionDefinitionId("tulin.command.format");
+		}
+
+		public void run() {
+			try {
+				formater.format(CSSEditor.this);
+			} catch (ExecutionException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 

@@ -274,12 +274,13 @@ public class HTMLSourceEditor extends TextEditor {
 	protected void addContextMenuActions(IMenuManager menu) {
 		menu.appendToGroup(ITextEditorActionConstants.GROUP_EDIT,
 				new MenuManager(WebToolsPlugin.getResourceString("MultiPageHTMLEditor.html"), GROUP_HTML));
-		menu.appendToGroup(ITextEditorActionConstants.GROUP_EDIT, new MenuManager(
-				WebToolsPlugin.getResourceString("MultiPageHTMLEditor.Source"), WebToolsPlugin.GROUP_SOURCE));
 		addAction(menu, GROUP_HTML, ACTION_SEARCH_XPATH);
 		addAction(menu, GROUP_HTML, ACTION_CHOOSE_COLOR);
-		addAction(menu, GROUP_HTML, ACTION_OPEN_PALETTE);
+		// addAction(menu, GROUP_HTML, ACTION_OPEN_PALETTE);
 		addAction(menu, GROUP_HTML, ACTION_ESCAPE_HTML);
+
+		menu.appendToGroup(ITextEditorActionConstants.GROUP_EDIT, new MenuManager(
+				WebToolsPlugin.getResourceString("SourceEditor.Menu.Source"), WebToolsPlugin.GROUP_SOURCE));
 		addAction(menu, WebToolsPlugin.GROUP_SOURCE, ACTION_COMMENT);
 		addAction(menu, WebToolsPlugin.GROUP_SOURCE, ACTION_FORMAT_HTML);
 	}

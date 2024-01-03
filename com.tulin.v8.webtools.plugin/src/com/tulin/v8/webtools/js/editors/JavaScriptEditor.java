@@ -24,7 +24,7 @@ import org.eclipse.jdt.launching.VMRunnerConfiguration;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.IMenuManager;
-import org.eclipse.jface.action.Separator;
+import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.text.BadLocationException;
 import org.eclipse.jface.text.IDocument;
@@ -53,6 +53,7 @@ import org.eclipse.ui.editors.text.TextEditor;
 import org.eclipse.ui.texteditor.AbstractDecoratedTextEditorPreferenceConstants;
 import org.eclipse.ui.texteditor.ChainedPreferenceStore;
 import org.eclipse.ui.texteditor.ContentAssistAction;
+import org.eclipse.ui.texteditor.ITextEditorActionConstants;
 import org.eclipse.ui.texteditor.ITextEditorActionDefinitionIds;
 import org.eclipse.ui.views.contentoutline.IContentOutlinePage;
 
@@ -135,16 +136,25 @@ public class JavaScriptEditor extends TextEditor {
 		return viewer;
 	}
 
-	protected final void editorContextMenuAboutToShow(IMenuManager menu) {
-		super.editorContextMenuAboutToShow(menu);
-		menu.add(new Separator(GROUP_JAVASCRIPT));
-		addAction(menu, GROUP_JAVASCRIPT, ACTION_COMMENT);
-		addAction(menu, GROUP_JAVASCRIPT, ACTION_FORMAT);
+	protected void addContextMenuActions(IMenuManager menu) {
+		// menu.add(new Separator(GROUP_JAVASCRIPT));
+		menu.appendToGroup(ITextEditorActionConstants.GROUP_EDIT,
+				new MenuManager(WebToolsPlugin.getResourceString("PreferencePage.JavaScript"), GROUP_JAVASCRIPT));
 		addAction(menu, GROUP_JAVASCRIPT, ACTION_OUTLINE);
 
 		if (getEditorInput() instanceof IFileEditorInput) {
 			addAction(menu, GROUP_JAVASCRIPT, ACTION_DEBUGGER);
 		}
+
+		menu.appendToGroup(ITextEditorActionConstants.GROUP_EDIT, new MenuManager(
+				WebToolsPlugin.getResourceString("SourceEditor.Menu.Source"), WebToolsPlugin.GROUP_SOURCE));
+		addAction(menu, WebToolsPlugin.GROUP_SOURCE, ACTION_COMMENT);
+		addAction(menu, WebToolsPlugin.GROUP_SOURCE, ACTION_FORMAT);
+	}
+
+	protected final void editorContextMenuAboutToShow(IMenuManager menu) {
+		super.editorContextMenuAboutToShow(menu);
+		addContextMenuActions(menu);
 	}
 
 	protected void doSetInput(IEditorInput input) throws CoreException {
@@ -459,7 +469,7 @@ public class JavaScriptEditor extends TextEditor {
 		public CommentAction() {
 			super(WebToolsPlugin.getResourceString("JavaScriptEditor.CommentAction"));
 			setEnabled(false);
-			setAccelerator(SWT.CTRL | '/');
+			setActionDefinitionId("tulin.command.comment");
 		}
 
 		@Override
@@ -467,15 +477,17 @@ public class JavaScriptEditor extends TextEditor {
 			ITextSelection sel = (ITextSelection) getSelectionProvider().getSelection();
 			IDocument doc = getDocumentProvider().getDocument(getEditorInput());
 			String text = sel.getText();
-			text = text.replaceAll("[\r\n \t]+$", ""); // rtrim
-			int length = text.length();
+			if ("".equals(text)) {
+				return;
+			}
 			try {
-				if (text.startsWith("//")) {
-					text = text.replaceAll("(^|\r\n|\r|\n)//", "$1");
+				if (text.startsWith("/*") && text.indexOf("*/") > 3) {
+					text = text.replaceFirst("/\\*", "");
+					text = text.replaceFirst("\\*/", "");
+					doc.replace(sel.getOffset(), sel.getLength(), text);
 				} else {
-					text = text.replaceAll("(^|\r\n|\r|\n)", "$1//");
+					doc.replace(sel.getOffset(), sel.getLength(), "/*" + sel.getText() + "*/");
 				}
-				doc.replace(sel.getOffset(), length, text);
 			} catch (BadLocationException e) {
 				WebToolsPlugin.logException(e);
 			}
@@ -540,6 +552,7 @@ public class JavaScriptEditor extends TextEditor {
 
 		public QuickOutlineAction() {
 			super(WebToolsPlugin.getResourceString("JavaScriptEditor.QuickOutline"));
+			setAccelerator(SWT.CTRL | 'o');
 		}
 
 		@Override

@@ -13,6 +13,7 @@ import org.eclipse.ui.handlers.HandlerUtil;
 import org.eclipse.ui.part.MultiPageEditorPart;
 
 import com.tulin.v8.webtools.WebToolsPlugin;
+import com.tulin.v8.webtools.css.editors.CSSEditor;
 import com.tulin.v8.webtools.html.editors.HTMLEditor;
 import com.tulin.v8.webtools.html.editors.HTMLSourceEditor;
 import com.tulin.v8.webtools.js.editors.JavaScriptEditor;
@@ -40,6 +41,9 @@ public class MultilineCommentHandler extends AbstractHandler {
 			} else if (editor.getSelectedPage() instanceof JavaScriptEditor) {
 				JavaScriptEditor jseditor = (JavaScriptEditor) editor.getSelectedPage();
 				JSComment(jseditor);
+			} else if (editor.getSelectedPage() instanceof CSSEditor) {
+				CSSEditor jseditor = (CSSEditor) editor.getSelectedPage();
+				CSSComment(jseditor);
 			}
 		} else if (page.getActiveEditor() instanceof XMLEditor) {
 			XMLEditor editor = (XMLEditor) page.getActiveEditor();
@@ -50,11 +54,31 @@ public class MultilineCommentHandler extends AbstractHandler {
 		} else if (page.getActiveEditor() instanceof JavaScriptEditor) {
 			JavaScriptEditor editor = (JavaScriptEditor) page.getActiveEditor();
 			JSComment(editor);
+		} else if (page.getActiveEditor() instanceof CSSEditor) {
+			CSSEditor editor = (CSSEditor) page.getActiveEditor();
+			CSSComment(editor);
 		}
 		return null;
 	}
 
 	public static void JSComment(JavaScriptEditor editor) {
+		ITextSelection sel = (ITextSelection) editor.getSelectionProvider().getSelection();
+		IDocument doc = editor.getDocumentProvider().getDocument(editor.getEditorInput());
+		String text = sel.getText();
+		if ("".equals(text)) {
+			return;
+		}
+		try {
+			if (text.startsWith("/*") && text.indexOf("*/") > 3) {
+			} else {
+				doc.replace(sel.getOffset(), sel.getLength(), "/*" + sel.getText() + "*/");
+			}
+		} catch (BadLocationException e) {
+			WebToolsPlugin.logException(e);
+		}
+	}
+
+	public static void CSSComment(CSSEditor editor) {
 		ITextSelection sel = (ITextSelection) editor.getSelectionProvider().getSelection();
 		IDocument doc = editor.getDocumentProvider().getDocument(editor.getEditorInput());
 		String text = sel.getText();
