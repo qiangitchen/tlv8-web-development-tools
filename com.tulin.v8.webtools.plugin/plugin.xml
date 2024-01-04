@@ -52,7 +52,7 @@
       <editor
             class="com.tulin.v8.webtools.html.editors.HTMLEditor"
             contributorClass="com.tulin.v8.webtools.html.editors.HTMLEditorContributor"
-            extensions="html,xhtml"
+            extensions="htm,html,xhtml"
             icon="icons/html_file.gif"
             id="com.tulin.v8.webtools.editors.HTMLEditor"
             name="%plugin.editor.htmleditor"/>
