@@ -38,7 +38,7 @@ import com.tulin.v8.webtools.jsp.IJSPFilter;
 import com.tulin.v8.webtools.jsp.ITLDLocator;
 
 public class WebToolsPlugin extends AbstractUIPlugin {
-	public static final String BUNDLE_ID = "com.tulin.v8.webtools";
+	public static final String BUNDLE_ID = "com.tulin.v8.webtools.ide";
 	// The shared instance.
 	private static WebToolsPlugin plugin;
 	// Resource bundle.

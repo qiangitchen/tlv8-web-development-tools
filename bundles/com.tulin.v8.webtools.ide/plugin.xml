@@ -94,11 +94,11 @@
    </extension>
    
    <extension
-         point="com.tulin.v8.webtools.fileAssistProcessor">
+         point="com.tulin.v8.webtools.ide.fileAssistProcessor">
       <processor class="com.tulin.v8.webtools.assist.FileAssistProcessor"/>
    </extension>
    <extension
-         point="com.tulin.v8.webtools.customTagAttributeAssist">
+         point="com.tulin.v8.webtools.ide.customTagAttributeAssist">
       <customTagAttributeAssist
             class="com.tulin.v8.webtools.jsp.editors.JSTLAttributeAssist">
       </customTagAttributeAssist>

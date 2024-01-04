@@ -295,7 +295,7 @@ version(s), and exceptions or additional permissions here}.&quot;
    </license>
 
    <plugin
-         id="com.tulin.v8.webtools"
+         id="com.tulin.v8.webtools.ide"
          version="0.0.0"/>
 
 </feature>
