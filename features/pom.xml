@@ -10,7 +10,7 @@
   		<version>1.0.0-SNAPSHOT</version>
     </parent>
     
-     <modules>
+    <modules>
         <module>com.tulin.v8.webtools.feature</module>
     </modules>
 	

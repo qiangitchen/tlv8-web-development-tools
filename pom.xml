@@ -7,8 +7,6 @@
 	<artifactId>com.tulin.v8.webtools.root</artifactId>
 	<version>1.0.0-SNAPSHOT</version>
 	<packaging>pom</packaging>
-	<name>Eclipse TLv8 Web development tools - Parent</name>
-	<description>TLv8 Web development tools in the Eclipse IDE</description>
 
 	<properties>
 		<java.version>1.8</java.version>
