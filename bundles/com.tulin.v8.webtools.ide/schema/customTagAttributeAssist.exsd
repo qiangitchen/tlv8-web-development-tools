@@ -1,9 +1,9 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <!-- Schema file written by PDE -->
-<schema targetNamespace="com.tulin.v8.webtools" xmlns="http://www.w3.org/2001/XMLSchema">
+<schema targetNamespace="com.tulin.v8.webtools.ide" xmlns="http://www.w3.org/2001/XMLSchema">
 <annotation>
       <appinfo>
-         <meta.schema plugin="com.tulin.v8.webtools" id="customTagAttributeAssist" name="customTagAttributeAssist"/>
+         <meta.schema plugin="com.tulin.v8.webtools.ide" id="customTagAttributeAssist" name="customTagAttributeAssist"/>
       </appinfo>
       <documentation>
          
@@ -52,7 +52,7 @@
                   
                </documentation>
                <appinfo>
-                  <meta.attribute kind="java" basedOn=":com.tulin.v8.webtools.ICustomTagAttributeAssist"/>
+                  <meta.attribute kind="java" basedOn=":com.tulin.v8.webtools.ide.ICustomTagAttributeAssist"/>
                </appinfo>
             </annotation>
          </attribute>

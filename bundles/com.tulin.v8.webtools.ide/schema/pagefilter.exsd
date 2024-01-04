@@ -1,9 +1,9 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <!-- Schema file written by PDE -->
-<schema targetNamespace="com.tulin.v8.webtools" xmlns="http://www.w3.org/2001/XMLSchema">
+<schema targetNamespace="com.tulin.v8.webtools.ide" xmlns="http://www.w3.org/2001/XMLSchema">
 <annotation>
       <appInfo>
-         <meta.schema plugin="com.tulin.v8.webtools" id="pagefilter" name="pagefilter"/>
+         <meta.schema plugin="com.tulin.v8.webtools.ide" id="pagefilter" name="pagefilter"/>
       </appInfo>
       <documentation>
          
@@ -52,7 +52,7 @@
                   
                </documentation>
                <appInfo>
-                  <meta.attribute kind="java" basedOn="com.tulin.v8.webtools.jspeditor.editors.IJSPFilter"/>
+                  <meta.attribute kind="java" basedOn="com.tulin.v8.webtools.ide.jspeditor.editors.IJSPFilter"/>
                </appInfo>
             </annotation>
          </attribute>

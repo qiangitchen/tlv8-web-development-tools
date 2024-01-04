@@ -21,7 +21,7 @@
 	<!-- 初始配置 -->
 	<extension
          point="org.eclipse.core.runtime.preferences">
-      <initializer class="com.tulin.v8.webtools.PreferenceInitializer"/>
+      <initializer class="com.tulin.v8.webtools.ide.PreferenceInitializer"/>
    	</extension>
    
 	<!-- HTML File Editor-->
@@ -30,7 +30,7 @@
       <content-type
             base-type="org.eclipse.core.runtime.text"
             file-extensions="htm,html,xhtml"
-            id="com.tulin.v8.webtools.html"
+            id="com.tulin.v8.webtools.ide.html"
             name="HTML">
       </content-type>
    </extension>
@@ -38,69 +38,69 @@
    <extension
          point="org.eclipse.ui.editors">
       <editorContentTypeBinding
-            contentTypeId="com.tulin.v8.webtools.html"
+            contentTypeId="com.tulin.v8.webtools.ide.html"
             editorId="org.eclipse.ui.genericeditor.GenericEditor">
       </editorContentTypeBinding>
    </extension>
    <extension point="org.eclipse.ui.genericeditor.icons">
-    <icon contentType="com.tulin.v8.webtools.html" icon="icons/html.png"/>
+    <icon contentType="com.tulin.v8.webtools.ide.html" icon="icons/html.png"/>
    </extension>
    -->
    
    <extension
          point="org.eclipse.ui.editors">
       <editor
-            class="com.tulin.v8.webtools.html.editors.HTMLEditor"
-            contributorClass="com.tulin.v8.webtools.html.editors.HTMLEditorContributor"
+            class="com.tulin.v8.webtools.ide.html.editors.HTMLEditor"
+            contributorClass="com.tulin.v8.webtools.ide.html.editors.HTMLEditorContributor"
             extensions="htm,html,xhtml"
             icon="icons/html_file.gif"
-            id="com.tulin.v8.webtools.editors.HTMLEditor"
+            id="com.tulin.v8.webtools.ide.editors.HTMLEditor"
             name="%plugin.editor.htmleditor"/>
       <editor
-            class="com.tulin.v8.webtools.css.editors.CSSEditor"
+            class="com.tulin.v8.webtools.ide.css.editors.CSSEditor"
             contributorClass="org.eclipse.ui.editors.text.TextEditorActionContributor"
             default="true"
             extensions="css"
             icon="icons/css.gif"
-            id="com.tulin.v8.webtools.csseditor.editors.CSSEditor"
+            id="com.tulin.v8.webtools.ide.csseditor.editors.CSSEditor"
             name="%plugin.editor.csseditor"/>
       <editor
-            class="com.tulin.v8.webtools.js.editors.JavaScriptEditor"
-            contributorClass="com.tulin.v8.webtools.js.editors.JavaScriptEditorContributor"
+            class="com.tulin.v8.webtools.ide.js.editors.JavaScriptEditor"
+            contributorClass="com.tulin.v8.webtools.ide.js.editors.JavaScriptEditorContributor"
             default="true"
             extensions="js"
             icon="icons/js.gif"
-            id="com.tulin.v8.webtools.jseditor.editors.JavaScriptEditor"
+            id="com.tulin.v8.webtools.ide.jseditor.editors.JavaScriptEditor"
             name="%plugin.editor.jseditor"/>
             
       <editor
-            class="com.tulin.v8.webtools.jsp.editors.JSPEditor"
-            contributorClass="com.tulin.v8.webtools.jsp.editors.JSPEditorContributor"
+            class="com.tulin.v8.webtools.ide.jsp.editors.JSPEditor"
+            contributorClass="com.tulin.v8.webtools.ide.jsp.editors.JSPEditorContributor"
             default="true"
             extensions="jsp,jspf"
             icon="icons/jsp_file.gif"
-            id="com.tulin.v8.webtools.jspeditor.editors.JSPEditor"
+            id="com.tulin.v8.webtools.ide.jspeditor.editors.JSPEditor"
             name="%plugin.editor.jspeditor"/>
             
       <editor
-            class="com.tulin.v8.webtools.xml.editors.XMLEditor"
-            contributorClass="com.tulin.v8.webtools.xml.editors.XMLEditorContributor"
+            class="com.tulin.v8.webtools.ide.xml.editors.XMLEditor"
+            contributorClass="com.tulin.v8.webtools.ide.xml.editors.XMLEditorContributor"
             default="true"
             extensions="xml,tld,xsl"
             icon="icons/xml.gif"
-            id="com.tulin.v8.webtools.xmleditor.editors.XMLEditor"
+            id="com.tulin.v8.webtools.ide.xmleditor.editors.XMLEditor"
             name="%plugin.editor.xmleditor">
       </editor>
    </extension>
    
    <extension
          point="com.tulin.v8.webtools.ide.fileAssistProcessor">
-      <processor class="com.tulin.v8.webtools.assist.FileAssistProcessor"/>
+      <processor class="com.tulin.v8.webtools.ide.assist.FileAssistProcessor"/>
    </extension>
    <extension
          point="com.tulin.v8.webtools.ide.customTagAttributeAssist">
       <customTagAttributeAssist
-            class="com.tulin.v8.webtools.jsp.editors.JSTLAttributeAssist">
+            class="com.tulin.v8.webtools.ide.jsp.editors.JSTLAttributeAssist">
       </customTagAttributeAssist>
    </extension>
    
@@ -110,65 +110,65 @@
    <extension
          point="org.eclipse.ui.preferencePages">
       <page
-            class="com.tulin.v8.webtools.preferencePages.PreferencePage"
+            class="com.tulin.v8.webtools.ide.preferencePages.PreferencePage"
             name="%plugin.preference.category"
             category="com.tulin.v8.ide.preferences.StudioPreferencePage"
-            id="com.tulin.v8.webtools.category"/>
+            id="com.tulin.v8.webtools.ide.category"/>
       <page
-            class="com.tulin.v8.webtools.preferencePages.CustomAssistPreferencePage"
-            category="com.tulin.v8.webtools.AssistPreferencePage"
+            class="com.tulin.v8.webtools.ide.preferencePages.CustomAssistPreferencePage"
+            category="com.tulin.v8.webtools.ide.AssistPreferencePage"
             name="%plugin.preference.customassist"
-            id="com.tulin.v8.webtools.CustomAssistPreferencePage"/>
+            id="com.tulin.v8.webtools.ide.CustomAssistPreferencePage"/>
       <page
-            class="com.tulin.v8.webtools.preferencePages.DTDPreferencePage"
-            category="com.tulin.v8.webtools.XMLPreferencePage"
+            class="com.tulin.v8.webtools.ide.preferencePages.DTDPreferencePage"
+            category="com.tulin.v8.webtools.ide.XMLPreferencePage"
             name="%plugin.preference.dtd"
-            id="com.tulin.v8.webtools.DTDPreferencePage"/>
+            id="com.tulin.v8.webtools.ide.DTDPreferencePage"/>
       <page
-            class="com.tulin.v8.webtools.preferencePages.TLDPreferencePage"
-            category="com.tulin.v8.webtools.JSPEditorPreferencePage"
+            class="com.tulin.v8.webtools.ide.preferencePages.TLDPreferencePage"
+            category="com.tulin.v8.webtools.ide.JSPEditorPreferencePage"
             name="%plugin.preference.tld"
-            id="com.tulin.v8.webtools.TLDPreferencePage"/>
+            id="com.tulin.v8.webtools.ide.TLDPreferencePage"/>
       <page
-            class="com.tulin.v8.webtools.preferencePages.AssistPreferencePage"
-            category="com.tulin.v8.webtools.category"
+            class="com.tulin.v8.webtools.ide.preferencePages.AssistPreferencePage"
+            category="com.tulin.v8.webtools.ide.category"
             name="%plugin.preference.codeassist"
-            id="com.tulin.v8.webtools.AssistPreferencePage"/>
+            id="com.tulin.v8.webtools.ide.AssistPreferencePage"/>
       <page
-            class="com.tulin.v8.webtools.preferencePages.CSSEditorPreferencePage"
-            category="com.tulin.v8.webtools.category"
+            class="com.tulin.v8.webtools.ide.preferencePages.CSSEditorPreferencePage"
+            category="com.tulin.v8.webtools.ide.category"
             name="%plugin.preference.csseditor"
-            id="com.tulin.v8.webtools.CSSEditorPreferencePage"/>
+            id="com.tulin.v8.webtools.ide.CSSEditorPreferencePage"/>
       <page
-            class="com.tulin.v8.webtools.preferencePages.JSPEditorPreferencePage"
-            category="com.tulin.v8.webtools.category"
+            class="com.tulin.v8.webtools.ide.preferencePages.JSPEditorPreferencePage"
+            category="com.tulin.v8.webtools.ide.category"
             name="%plugin.preference.jspeditor"
-            id="com.tulin.v8.webtools.JSPEditorPreferencePage"/>
+            id="com.tulin.v8.webtools.ide.JSPEditorPreferencePage"/>
       <page
-            class="com.tulin.v8.webtools.preferencePages.JavaScriptEditorPreferencePage"
-            category="com.tulin.v8.webtools.category"
+            class="com.tulin.v8.webtools.ide.preferencePages.JavaScriptEditorPreferencePage"
+            category="com.tulin.v8.webtools.ide.category"
             name="%plugin.preference.jseditor"
-            id="com.tulin.v8.webtools.JavaScriptEditorPreferencePage"/>
+            id="com.tulin.v8.webtools.ide.JavaScriptEditorPreferencePage"/>
       <page
-            class="com.tulin.v8.webtools.preferencePages.XMLPreferencePage"
-            category="com.tulin.v8.webtools.category"
+            class="com.tulin.v8.webtools.ide.preferencePages.XMLPreferencePage"
+            category="com.tulin.v8.webtools.ide.category"
             name="XML"
-            id="com.tulin.v8.webtools.XMLPreferencePage"/>
+            id="com.tulin.v8.webtools.ide.XMLPreferencePage"/>
       <page
-            class="com.tulin.v8.webtools.preferencePages.HTMLTaskTagPreferencePage"
-            category="com.tulin.v8.webtools.XMLPreferencePage"
+            class="com.tulin.v8.webtools.ide.preferencePages.HTMLTaskTagPreferencePage"
+            category="com.tulin.v8.webtools.ide.XMLPreferencePage"
             name="%plugin.preference.tasktag"
-            id="com.tulin.v8.webtools.tasktag.HTMLTaskTagPreferencePage"/>
+            id="com.tulin.v8.webtools.ide.tasktag.HTMLTaskTagPreferencePage"/>
       <page
-            class="com.tulin.v8.webtools.preferencePages.HTMLTemplatePreferencePage"
-            category="com.tulin.v8.webtools.AssistPreferencePage"
+            class="com.tulin.v8.webtools.ide.preferencePages.HTMLTemplatePreferencePage"
+            category="com.tulin.v8.webtools.ide.AssistPreferencePage"
             name="%plugin.preference.template"
-            id="com.tulin.v8.webtools.template.HTMLTemplatePreferencePage"/>
+            id="com.tulin.v8.webtools.ide.template.HTMLTemplatePreferencePage"/>
       <page
-            class="com.tulin.v8.webtools.preferencePages.FormatterPreferencePage"
-            category="com.tulin.v8.webtools.category"
+            class="com.tulin.v8.webtools.ide.preferencePages.FormatterPreferencePage"
+            category="com.tulin.v8.webtools.ide.category"
             name="%plugin.preference.formatter"
-            id="com.tulin.v8.webtools.FormatterPreferencePage"/>
+            id="com.tulin.v8.webtools.ide.FormatterPreferencePage"/>
    </extension>
    
    <extension
@@ -203,19 +203,19 @@
          point="org.eclipse.ui.handlers">
       <handler
             commandId="tulin.command.comment"
-            class="com.tulin.v8.webtools.handlers.ToggleCommentHandler">
+            class="com.tulin.v8.webtools.ide.handlers.ToggleCommentHandler">
       </handler>
       <handler
             commandId="tulin.command.MultilineComment"
-            class="com.tulin.v8.webtools.handlers.MultilineCommentHandler">
+            class="com.tulin.v8.webtools.ide.handlers.MultilineCommentHandler">
       </handler>
       <handler
             commandId="tulin.command.UnMultilineComment"
-            class="com.tulin.v8.webtools.handlers.UnMultilineCommentHandler">
+            class="com.tulin.v8.webtools.ide.handlers.UnMultilineCommentHandler">
       </handler>
       <handler
             commandId="tulin.command.format"
-            class="com.tulin.v8.webtools.handlers.FormaterHandler">
+            class="com.tulin.v8.webtools.ide.handlers.FormaterHandler">
       </handler>
    </extension>
    
@@ -249,18 +249,18 @@
    <extension
          point="org.eclipse.ui.editors.templates">
       <contextType
-            class="com.tulin.v8.webtools.template.HTMLContextType"
+            class="com.tulin.v8.webtools.ide.template.HTMLContextType"
             name="HTML/JSP/XML"
-            id="com.tulin.v8.webtools.templateContextType.html"/>
+            id="com.tulin.v8.webtools.ide.templateContextType.html"/>
       <contextType
-            class="com.tulin.v8.webtools.template.JavaScriptContextType"
+            class="com.tulin.v8.webtools.ide.template.JavaScriptContextType"
             name="JavaScript"
-            id="com.tulin.v8.webtools.templateContextType.javascript"/>
+            id="com.tulin.v8.webtools.ide.templateContextType.javascript"/>
       <template
             autoinsert="false"
-            contextTypeId="com.tulin.v8.webtools.templateContextType.javascript"
+            contextTypeId="com.tulin.v8.webtools.ide.templateContextType.javascript"
             description="%plugin.template.js.catch"
-            id="com.tulin.v8.webtools.template.js.catch"
+            id="com.tulin.v8.webtools.ide.template.js.catch"
             name="catch">
          <pattern>
 catch (e) {
@@ -270,9 +270,9 @@ catch (e) {
       </template>
       <template
             autoinsert="false"
-            contextTypeId="com.tulin.v8.webtools.templateContextType.javascript"
+            contextTypeId="com.tulin.v8.webtools.ide.templateContextType.javascript"
             description="%plugin.template.js.do"
-            id="com.tulin.v8.webtools.template.js.do"
+            id="com.tulin.v8.webtools.ide.template.js.do"
             name="do">
          <pattern>
 do {
@@ -282,9 +282,9 @@ do {
       </template>
       <template
             autoinsert="false"
-            contextTypeId="com.tulin.v8.webtools.templateContextType.javascript"
+            contextTypeId="com.tulin.v8.webtools.ide.templateContextType.javascript"
             description="%plugin.template.js.else"
-            id="com.tulin.v8.webtools.template.js.else"
+            id="com.tulin.v8.webtools.ide.template.js.else"
             name="else">
          <pattern>
 else {
@@ -294,9 +294,9 @@ else {
       </template>
       <template
             autoinsert="false"
-            contextTypeId="com.tulin.v8.webtools.templateContextType.javascript"
+            contextTypeId="com.tulin.v8.webtools.ide.templateContextType.javascript"
             description="%plugin.template.js.elseif"
-            id="com.tulin.v8.webtools.template.js.elseif"
+            id="com.tulin.v8.webtools.ide.template.js.elseif"
             name="elseif">
          <pattern>
 else if (${condition}) {
@@ -306,9 +306,9 @@ else if (${condition}) {
       </template>
       <template
             autoinsert="false"
-            contextTypeId="com.tulin.v8.webtools.templateContextType.javascript"
+            contextTypeId="com.tulin.v8.webtools.ide.templateContextType.javascript"
             description="%plugin.template.js.for"
-            id="com.tulin.v8.webtools.template.js.for"
+            id="com.tulin.v8.webtools.ide.template.js.for"
             name="for">
          <pattern>
 for (var ${index} = 0; ${index} &lt; ${array}.length; ${index}++) {
@@ -318,9 +318,9 @@ for (var ${index} = 0; ${index} &lt; ${array}.length; ${index}++) {
       </template>
       <template
             autoinsert="false"
-            contextTypeId="com.tulin.v8.webtools.templateContextType.javascript"
+            contextTypeId="com.tulin.v8.webtools.ide.templateContextType.javascript"
             description="%plugin.template.js.forwithvar"
-            id="com.tulin.v8.webtools.template.js.forwithvar"
+            id="com.tulin.v8.webtools.ide.template.js.forwithvar"
             name="for">
          <pattern>
 for (var ${index} = 0; ${index} &lt; ${array}.length; ${index}++) {
@@ -331,9 +331,9 @@ for (var ${index} = 0; ${index} &lt; ${array}.length; ${index}++) {
       </template>
       <template
             autoinsert="false"
-            contextTypeId="com.tulin.v8.webtools.templateContextType.javascript"
+            contextTypeId="com.tulin.v8.webtools.ide.templateContextType.javascript"
             description="%plugin.template.js.forin"
-            id="com.tulin.v8.webtools.template.js.forin"
+            id="com.tulin.v8.webtools.ide.template.js.forin"
             name="forin">
          <pattern>
 for (var ${iterable_element} in ${iterable}) {
@@ -343,9 +343,9 @@ for (var ${iterable_element} in ${iterable}) {
       </template>
       <template
             autoinsert="false"
-            contextTypeId="com.tulin.v8.webtools.templateContextType.javascript"
+            contextTypeId="com.tulin.v8.webtools.ide.templateContextType.javascript"
             description="%plugin.template.js.function"
-            id="com.tulin.v8.webtools.template.js.function"
+            id="com.tulin.v8.webtools.ide.template.js.function"
             name="function">
          <pattern>
 function ${name}(${args}) {
@@ -355,9 +355,9 @@ function ${name}(${args}) {
       </template>
       <template
             autoinsert="false"
-            contextTypeId="com.tulin.v8.webtools.templateContextType.javascript"
+            contextTypeId="com.tulin.v8.webtools.ide.templateContextType.javascript"
             description="%plugin.template.js.anonymousFunction"
-            id="com.tulin.v8.webtools.template.js.anonymousFunction"
+            id="com.tulin.v8.webtools.ide.template.js.anonymousFunction"
             name="function">
          <pattern>
 function (${args}) {
@@ -367,9 +367,9 @@ function (${args}) {
       </template>
       <template
             autoinsert="false"
-            contextTypeId="com.tulin.v8.webtools.templateContextType.javascript"
+            contextTypeId="com.tulin.v8.webtools.ide.templateContextType.javascript"
             description="%plugin.template.js.if"
-            id="com.tulin.v8.webtools.template.js.if"
+            id="com.tulin.v8.webtools.ide.template.js.if"
             name="if">
          <pattern>
 if (${condition}) {
@@ -379,9 +379,9 @@ if (${condition}) {
       </template>
       <template
             autoinsert="false"
-            contextTypeId="com.tulin.v8.webtools.templateContextType.javascript"
+            contextTypeId="com.tulin.v8.webtools.ide.templateContextType.javascript"
             description="%plugin.template.js.ifelse"
-            id="com.tulin.v8.webtools.template.js.ifelse"
+            id="com.tulin.v8.webtools.ide.template.js.ifelse"
             name="ifelse">
          <pattern>
 if (${condition}) {
@@ -393,9 +393,9 @@ if (${condition}) {
       </template>
       <template
             autoinsert="false"
-            contextTypeId="com.tulin.v8.webtools.templateContextType.javascript"
+            contextTypeId="com.tulin.v8.webtools.ide.templateContextType.javascript"
             description="%plugin.template.js.lazy"
-            id="com.tulin.v8.webtools.template.js.lazy"
+            id="com.tulin.v8.webtools.ide.template.js.lazy"
             name="lazy">
          <pattern>
 if (${name:var} == null) {
@@ -408,9 +408,9 @@ return ${name};
       </template>
       <template
             autoinsert="false"
-            contextTypeId="com.tulin.v8.webtools.templateContextType.javascript"
+            contextTypeId="com.tulin.v8.webtools.ide.templateContextType.javascript"
             description="%plugin.template.js.new"
-            id="com.tulin.v8.webtools.template.js.new"
+            id="com.tulin.v8.webtools.ide.template.js.new"
             name="new">
          <pattern>
 new ${type}(${arguments});
@@ -418,9 +418,9 @@ new ${type}(${arguments});
       </template>
       <template
             autoinsert="false"
-            contextTypeId="com.tulin.v8.webtools.templateContextType.javascript"
+            contextTypeId="com.tulin.v8.webtools.ide.templateContextType.javascript"
             description="%plugin.template.js.newwithvar"
-            id="com.tulin.v8.webtools.template.js.newwithvar"
+            id="com.tulin.v8.webtools.ide.template.js.newwithvar"
             name="new">
          <pattern>
 var ${name} = new ${type}(${arguments});
@@ -428,9 +428,9 @@ var ${name} = new ${type}(${arguments});
       </template>
       <template
             autoinsert="false"
-            contextTypeId="com.tulin.v8.webtools.templateContextType.javascript"
+            contextTypeId="com.tulin.v8.webtools.ide.templateContextType.javascript"
             description="%plugin.template.js.require"
-            id="com.tulin.v8.webtools.template.js.require"
+            id="com.tulin.v8.webtools.ide.template.js.require"
             name="require">
          <pattern>
 require('${value}')
@@ -438,9 +438,9 @@ require('${value}')
       </template>
       <template
             autoinsert="false"
-            contextTypeId="com.tulin.v8.webtools.templateContextType.javascript"
+            contextTypeId="com.tulin.v8.webtools.ide.templateContextType.javascript"
             description="%plugin.template.js.requirewithvar"
-            id="com.tulin.v8.webtools.template.js.requirewithvar"
+            id="com.tulin.v8.webtools.ide.template.js.requirewithvar"
             name="require">
          <pattern>
 var ${name} = require('${value}');
@@ -448,9 +448,9 @@ var ${name} = require('${value}');
       </template>
       <template
             autoinsert="false"
-            contextTypeId="com.tulin.v8.webtools.templateContextType.javascript"
+            contextTypeId="com.tulin.v8.webtools.ide.templateContextType.javascript"
             description="%plugin.template.js.switch"
-            id="com.tulin.v8.webtools.template.js.switch"
+            id="com.tulin.v8.webtools.ide.template.js.switch"
             name="switch">
          <pattern>
 switch (${key}) {
@@ -465,9 +465,9 @@ switch (${key}) {
       </template>
       <template
             autoinsert="false"
-            contextTypeId="com.tulin.v8.webtools.templateContextType.javascript"
+            contextTypeId="com.tulin.v8.webtools.ide.templateContextType.javascript"
             description="%plugin.template.js.try"
-            id="com.tulin.v8.webtools.template.js.try"
+            id="com.tulin.v8.webtools.ide.template.js.try"
             name="try">
          <pattern>
 try {
@@ -479,9 +479,9 @@ try {
       </template>
       <template
             autoinsert="false"
-            contextTypeId="com.tulin.v8.webtools.templateContextType.javascript"
+            contextTypeId="com.tulin.v8.webtools.ide.templateContextType.javascript"
             description="%plugin.template.js.var"
-            id="com.tulin.v8.webtools.template.js.var"
+            id="com.tulin.v8.webtools.ide.template.js.var"
             name="var">
          <pattern>
 var ${name};
@@ -489,9 +489,9 @@ var ${name};
       </template>
       <template
             autoinsert="false"
-            contextTypeId="com.tulin.v8.webtools.templateContextType.javascript"
+            contextTypeId="com.tulin.v8.webtools.ide.templateContextType.javascript"
             description="%plugin.template.js.while"
-            id="com.tulin.v8.webtools.template.js.while"
+            id="com.tulin.v8.webtools.ide.template.js.while"
             name="while">
          <pattern>
 while (${condition}) {
@@ -507,7 +507,7 @@ while (${condition}) {
       <content-type
             base-type="org.eclipse.core.runtime.text"
             file-extensions="js"
-            id="com.tulin.v8.webtools.js"
+            id="com.tulin.v8.webtools.ide.js"
             name="Javascript">
       </content-type>
    </extension>
@@ -515,15 +515,15 @@ while (${condition}) {
    <extension
          point="org.eclipse.ui.editors">
       <editorContentTypeBinding
-            contentTypeId="com.tulin.v8.webtools.js"
+            contentTypeId="com.tulin.v8.webtools.ide.js"
             editorId="org.eclipse.ui.genericeditor.GenericEditor">
       </editorContentTypeBinding>
    </extension>
    <extension
          point="org.eclipse.ui.genericeditor.autoEditStrategies">
       <autoEditStrategy
-            class="com.tulin.v8.webtools.js.JavaScriptAutoEditStrategy"
-            contentType="com.tulin.v8.webtools.js">
+            class="com.tulin.v8.webtools.ide.js.JavaScriptAutoEditStrategy"
+            contentType="com.tulin.v8.webtools.ide.js">
       </autoEditStrategy>
    </extension>
    -->

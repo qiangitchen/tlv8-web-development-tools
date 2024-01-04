@@ -1,9 +1,9 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <!-- Schema file written by PDE -->
-<schema targetNamespace="com.tulin.v8.webtools" xmlns="http://www.w3.org/2001/XMLSchema">
+<schema targetNamespace="com.tulin.v8.webtools.ide" xmlns="http://www.w3.org/2001/XMLSchema">
 <annotation>
       <appinfo>
-         <meta.schema plugin="com.tulin.v8.webtools" id="fileAssistProcessor" name="fileAssistProcessor"/>
+         <meta.schema plugin="com.tulin.v8.webtools.ide" id="fileAssistProcessor" name="fileAssistProcessor"/>
       </appinfo>
       <documentation>
          
@@ -52,7 +52,7 @@
                   
                </documentation>
                <appinfo>
-                  <meta.attribute kind="java" basedOn=":com.tulin.v8.webtools.IFileAssistProcessor"/>
+                  <meta.attribute kind="java" basedOn=":com.tulin.v8.webtools.ide.IFileAssistProcessor"/>
                </appinfo>
             </annotation>
          </attribute>

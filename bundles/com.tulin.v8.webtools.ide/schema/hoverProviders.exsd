@@ -1,9 +1,9 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <!-- Schema file written by PDE -->
-<schema targetNamespace="com.tulin.v8.webtools" xmlns="http://www.w3.org/2001/XMLSchema">
+<schema targetNamespace="com.tulin.v8.webtools.ide" xmlns="http://www.w3.org/2001/XMLSchema">
 <annotation>
       <appinfo>
-         <meta.schema plugin="com.tulin.v8.webtools" id="hoverProviders" name="Hover providers"/>
+         <meta.schema plugin="com.tulin.v8.webtools.ide" id="hoverProviders" name="Hover providers"/>
       </appinfo>
       <documentation>
          This extension point is used to contribute hover providers for showing text hovers in a file with a given content type.
@@ -153,7 +153,7 @@ Plan is to have contributions are sorted according to that value and to have onl
          Below is an example using the hover provider extension point:
 
 &lt;pre&gt;
-&lt;extension point=&quot;com.tulin.v8.webtools.hoverProviders&quot;&gt;
+&lt;extension point=&quot;com.tulin.v8.webtools.ide.hoverProviders&quot;&gt;
    &lt;hoverProvider
        class=&quot;org.eclipse.ui.examples.TargetDefinitionHoverProvider&quot;
        contentType=&quot;org.eclipse.pde.targetFile&quot;&gt;

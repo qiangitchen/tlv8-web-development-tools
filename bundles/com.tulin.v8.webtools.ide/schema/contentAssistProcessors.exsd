@@ -1,9 +1,9 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <!-- Schema file written by PDE -->
-<schema targetNamespace="com.tulin.v8.webtools" xmlns="http://www.w3.org/2001/XMLSchema">
+<schema targetNamespace="com.tulin.v8.webtools.ide" xmlns="http://www.w3.org/2001/XMLSchema">
 <annotation>
       <appinfo>
-         <meta.schema plugin="com.tulin.v8.webtools" id="contentAssistProcessors" name="Content assist processors"/>
+         <meta.schema plugin="com.tulin.v8.webtools.ide" id="contentAssistProcessors" name="Content assist processors"/>
       </appinfo>
       <documentation>
          This extension point is used to contribute content assist processors for adding content assist support to a given content type.
@@ -124,13 +124,13 @@
          This is an example of a processor being registered for a target definition file type:
 
 &lt;pre&gt;
-&lt;extension point=&quot;com.tulin.v8.webtools.contentAssistProcessors&quot;&gt;
+&lt;extension point=&quot;com.tulin.v8.webtools.ide.contentAssistProcessors&quot;&gt;
    &lt;contentAssistProcessor
        class=&quot;org.eclipse.ui.examples.TargedDefinitionContentAssist&quot;
        contentType=&quot;org.eclipse.pde.targetFile&quot;&gt;
       &lt;enabledWhen&gt;
          &lt;with variable=&quot;editor&quot;&gt;
-            &lt;test property=&quot;com.tulin.v8.webtools.examples.TargetDefinitionPropertyTester&quot;&gt;
+            &lt;test property=&quot;com.tulin.v8.webtools.ide.examples.TargetDefinitionPropertyTester&quot;&gt;
             &lt;/test&gt;
          &lt;/with&gt;
       &lt;/enabledWhen&gt;
