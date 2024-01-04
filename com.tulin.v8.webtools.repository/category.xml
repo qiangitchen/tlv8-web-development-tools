@@ -3,5 +3,9 @@
    <feature id="com.tulin.v8.webtools.feature">
       <category name="TLv8_Web_Tools"/>
    </feature>
+   <feature id="tern.tulin.v8.webtools.feature">
+      <category name="tlv8_tern_js"/>
+   </feature>
    <category-def name="TLv8_Web_Tools" label="TLv8 Web Tools"/>
+   <category-def name="tlv8_tern_js" label="TLv8 Tern JS"/>
 </site>
