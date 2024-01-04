@@ -1,14 +1,13 @@
 package com.tulin.v8.webtools.xml.editors;
 
-import jp.aonir.fuzzyxml.FuzzyXMLDocument;
-import jp.aonir.fuzzyxml.FuzzyXMLElement;
-
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jdt.core.IType;
 import org.eclipse.jdt.core.JavaCore;
 
+import com.tulin.v8.fuzzyxml.FuzzyXMLDocument;
+import com.tulin.v8.fuzzyxml.FuzzyXMLElement;
 import com.tulin.v8.webtools.IHyperlinkProvider;
 import com.tulin.v8.webtools.html.editors.HTMLHyperlinkInfo;
 

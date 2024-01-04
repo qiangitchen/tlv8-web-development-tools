@@ -35,6 +35,10 @@ import org.eclipse.ui.IFileEditorInput;
 import org.eclipse.ui.texteditor.ITextEditorActionConstants;
 import org.xml.sax.InputSource;
 
+import com.tulin.v8.fuzzyxml.FuzzyXMLDocument;
+import com.tulin.v8.fuzzyxml.FuzzyXMLElement;
+import com.tulin.v8.fuzzyxml.FuzzyXMLNode;
+import com.tulin.v8.fuzzyxml.FuzzyXMLParser;
 import com.tulin.v8.webtools.ProjectParams;
 import com.tulin.v8.webtools.WebToolsPlugin;
 import com.tulin.v8.webtools.formatter.Formater;
@@ -47,11 +51,6 @@ import com.tulin.v8.webtools.xml.DTDResolver;
 import com.tulin.v8.webtools.xml.ElementSchemaMapping;
 import com.tulin.v8.webtools.xml.IDTDResolver;
 import com.tulin.v8.webtools.xml.SchemaGenerator;
-
-import jp.aonir.fuzzyxml.FuzzyXMLDocument;
-import jp.aonir.fuzzyxml.FuzzyXMLElement;
-import jp.aonir.fuzzyxml.FuzzyXMLNode;
-import jp.aonir.fuzzyxml.FuzzyXMLParser;
 
 /**
  * The XML editor.

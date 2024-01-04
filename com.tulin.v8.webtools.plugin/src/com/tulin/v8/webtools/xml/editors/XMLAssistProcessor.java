@@ -7,9 +7,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import jp.aonir.fuzzyxml.FuzzyXMLAttribute;
-import jp.aonir.fuzzyxml.FuzzyXMLElement;
-
 import org.apache.xerces.impl.xs.SchemaGrammar;
 import org.apache.xerces.impl.xs.XMLSchemaLoader;
 import org.apache.xerces.xni.parser.XMLInputSource;
@@ -27,6 +24,8 @@ import org.apache.xerces.xs.XSTerm;
 import org.apache.xerces.xs.XSTypeDefinition;
 import org.eclipse.ui.IFileEditorInput;
 
+import com.tulin.v8.fuzzyxml.FuzzyXMLAttribute;
+import com.tulin.v8.fuzzyxml.FuzzyXMLElement;
 import com.tulin.v8.webtools.WebToolsPlugin;
 import com.tulin.v8.webtools.assist.AssistInfo;
 import com.tulin.v8.webtools.assist.AttributeInfo;

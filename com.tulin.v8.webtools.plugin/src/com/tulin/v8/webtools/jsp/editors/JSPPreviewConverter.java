@@ -5,15 +5,14 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import jp.aonir.fuzzyxml.FuzzyXMLAttribute;
-import jp.aonir.fuzzyxml.FuzzyXMLDocument;
-import jp.aonir.fuzzyxml.FuzzyXMLElement;
-import jp.aonir.fuzzyxml.FuzzyXMLNode;
-import jp.aonir.fuzzyxml.FuzzyXMLParser;
-
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.ui.IFileEditorInput;
 
+import com.tulin.v8.fuzzyxml.FuzzyXMLAttribute;
+import com.tulin.v8.fuzzyxml.FuzzyXMLDocument;
+import com.tulin.v8.fuzzyxml.FuzzyXMLElement;
+import com.tulin.v8.fuzzyxml.FuzzyXMLNode;
+import com.tulin.v8.fuzzyxml.FuzzyXMLParser;
 import com.tulin.v8.webtools.ICustomTagConverter;
 import com.tulin.v8.webtools.ICustomTagConverterContributer;
 import com.tulin.v8.webtools.ProjectParams;

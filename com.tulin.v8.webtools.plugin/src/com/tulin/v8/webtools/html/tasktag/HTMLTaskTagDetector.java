@@ -1,11 +1,11 @@
 package com.tulin.v8.webtools.html.tasktag;
 
-import jp.aonir.fuzzyxml.FuzzyXMLComment;
-import jp.aonir.fuzzyxml.FuzzyXMLDocument;
-import jp.aonir.fuzzyxml.FuzzyXMLElement;
-import jp.aonir.fuzzyxml.FuzzyXMLNode;
-import jp.aonir.fuzzyxml.FuzzyXMLParser;
-import jp.aonir.fuzzyxml.FuzzyXMLText;
+import com.tulin.v8.fuzzyxml.FuzzyXMLComment;
+import com.tulin.v8.fuzzyxml.FuzzyXMLDocument;
+import com.tulin.v8.fuzzyxml.FuzzyXMLElement;
+import com.tulin.v8.fuzzyxml.FuzzyXMLNode;
+import com.tulin.v8.fuzzyxml.FuzzyXMLParser;
+import com.tulin.v8.fuzzyxml.FuzzyXMLText;
 
 /**
  * {@link ITaskTagDetector} implementation for HTML / XML / JSP. This detector

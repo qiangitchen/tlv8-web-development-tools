@@ -4,15 +4,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import jp.aonir.fuzzyxml.FuzzyXMLAttribute;
-import jp.aonir.fuzzyxml.FuzzyXMLDocument;
-import jp.aonir.fuzzyxml.FuzzyXMLElement;
-import jp.aonir.fuzzyxml.FuzzyXMLNode;
-import jp.aonir.fuzzyxml.XPath;
-
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IMarker;
 
+import com.tulin.v8.fuzzyxml.FuzzyXMLAttribute;
+import com.tulin.v8.fuzzyxml.FuzzyXMLDocument;
+import com.tulin.v8.fuzzyxml.FuzzyXMLElement;
+import com.tulin.v8.fuzzyxml.FuzzyXMLNode;
+import com.tulin.v8.fuzzyxml.XPath;
 import com.tulin.v8.webtools.ICustomTagValidator;
 import com.tulin.v8.webtools.ICustomTagValidatorContributer;
 import com.tulin.v8.webtools.WebToolsPlugin;

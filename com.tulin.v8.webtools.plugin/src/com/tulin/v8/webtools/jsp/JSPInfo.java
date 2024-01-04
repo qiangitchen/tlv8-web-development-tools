@@ -10,19 +10,18 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import jp.aonir.fuzzyxml.FuzzyXMLAttribute;
-import jp.aonir.fuzzyxml.FuzzyXMLDocument;
-import jp.aonir.fuzzyxml.FuzzyXMLElement;
-import jp.aonir.fuzzyxml.FuzzyXMLNode;
-import jp.aonir.fuzzyxml.FuzzyXMLParser;
-import jp.aonir.fuzzyxml.XPath;
-
 import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 
+import com.tulin.v8.fuzzyxml.FuzzyXMLAttribute;
+import com.tulin.v8.fuzzyxml.FuzzyXMLDocument;
+import com.tulin.v8.fuzzyxml.FuzzyXMLElement;
+import com.tulin.v8.fuzzyxml.FuzzyXMLNode;
+import com.tulin.v8.fuzzyxml.FuzzyXMLParser;
+import com.tulin.v8.fuzzyxml.XPath;
 import com.tulin.v8.webtools.IOUtil;
 import com.tulin.v8.webtools.ProjectParams;
 import com.tulin.v8.webtools.WebToolsPlugin;

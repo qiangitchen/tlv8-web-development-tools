@@ -3,14 +3,13 @@ package com.tulin.v8.webtools.jsp.editors;
 import java.util.ArrayList;
 import java.util.List;
 
-import jp.aonir.fuzzyxml.FuzzyXMLComment;
-import jp.aonir.fuzzyxml.FuzzyXMLDocType;
-import jp.aonir.fuzzyxml.FuzzyXMLElement;
-import jp.aonir.fuzzyxml.FuzzyXMLNode;
-import jp.aonir.fuzzyxml.FuzzyXMLText;
-
 import org.eclipse.swt.graphics.Image;
 
+import com.tulin.v8.fuzzyxml.FuzzyXMLComment;
+import com.tulin.v8.fuzzyxml.FuzzyXMLDocType;
+import com.tulin.v8.fuzzyxml.FuzzyXMLElement;
+import com.tulin.v8.fuzzyxml.FuzzyXMLNode;
+import com.tulin.v8.fuzzyxml.FuzzyXMLText;
 import com.tulin.v8.webtools.WebToolsPlugin;
 import com.tulin.v8.webtools.html.editors.HTMLOutlinePage;
 

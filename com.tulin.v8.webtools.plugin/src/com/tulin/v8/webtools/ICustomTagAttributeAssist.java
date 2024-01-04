@@ -1,9 +1,8 @@
 package com.tulin.v8.webtools;
 
+import com.tulin.v8.fuzzyxml.FuzzyXMLElement;
 import com.tulin.v8.webtools.assist.AssistInfo;
 import com.tulin.v8.webtools.assist.AttributeInfo;
-
-import jp.aonir.fuzzyxml.FuzzyXMLElement;
 
 /**
  * An interface to extend taglib completion in the JSP editor.

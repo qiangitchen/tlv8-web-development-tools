@@ -3,14 +3,6 @@ package com.tulin.v8.webtools.html.editors;
 import java.util.ArrayList;
 import java.util.List;
 
-import jp.aonir.fuzzyxml.FuzzyXMLAttribute;
-import jp.aonir.fuzzyxml.FuzzyXMLComment;
-import jp.aonir.fuzzyxml.FuzzyXMLDocType;
-import jp.aonir.fuzzyxml.FuzzyXMLDocument;
-import jp.aonir.fuzzyxml.FuzzyXMLElement;
-import jp.aonir.fuzzyxml.FuzzyXMLNode;
-import jp.aonir.fuzzyxml.FuzzyXMLParser;
-
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.ITreeContentProvider;
@@ -26,6 +18,13 @@ import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.views.contentoutline.ContentOutlinePage;
 
+import com.tulin.v8.fuzzyxml.FuzzyXMLAttribute;
+import com.tulin.v8.fuzzyxml.FuzzyXMLComment;
+import com.tulin.v8.fuzzyxml.FuzzyXMLDocType;
+import com.tulin.v8.fuzzyxml.FuzzyXMLDocument;
+import com.tulin.v8.fuzzyxml.FuzzyXMLElement;
+import com.tulin.v8.fuzzyxml.FuzzyXMLNode;
+import com.tulin.v8.fuzzyxml.FuzzyXMLParser;
 import com.tulin.v8.webtools.WebToolsPlugin;
 import com.tulin.v8.webtools.html.IHTMLOutlinePage;
 
@@ -34,7 +33,6 @@ import com.tulin.v8.webtools.html.IHTMLOutlinePage;
  * outline of HTML document.
  */
 public class HTMLOutlinePage extends ContentOutlinePage implements IHTMLOutlinePage {
-
 	private RootNode root;
 	private HTMLSourceEditor editor;
 	private FuzzyXMLDocument doc;

@@ -2,9 +2,8 @@ package com.tulin.v8.webtools;
 
 import java.util.Map;
 
+import com.tulin.v8.fuzzyxml.FuzzyXMLNode;
 import com.tulin.v8.webtools.jsp.JSPInfo;
-
-import jp.aonir.fuzzyxml.FuzzyXMLNode;
 
 /**
  * An interface to convert taglibs for HTML preview.

@@ -1,9 +1,8 @@
 package com.tulin.v8.webtools.html.editors;
 
-import jp.aonir.fuzzyxml.internal.FuzzyXMLUtil;
-
 import org.eclipse.jface.text.IDocument;
 
+import com.tulin.v8.fuzzyxml.internal.FuzzyXMLUtil;
 import com.tulin.v8.webtools.html.HTMLUtil;
 
 public class HTMLCharacterPairMatcher extends AbstractCharacterPairMatcher {

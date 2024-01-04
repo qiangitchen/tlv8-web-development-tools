@@ -3,11 +3,10 @@ package com.tulin.v8.webtools.jsp.editors;
 import java.util.ArrayList;
 import java.util.List;
 
-import jp.aonir.fuzzyxml.FuzzyXMLElement;
-
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IFileEditorInput;
 
+import com.tulin.v8.fuzzyxml.FuzzyXMLElement;
 import com.tulin.v8.webtools.ICustomTagAttributeAssist;
 import com.tulin.v8.webtools.IFileAssistProcessor;
 import com.tulin.v8.webtools.WebToolsPlugin;

@@ -1,10 +1,9 @@
 package com.tulin.v8.webtools.xml.editors;
 
-import jp.aonir.fuzzyxml.FuzzyXMLElement;
-import jp.aonir.fuzzyxml.FuzzyXMLNode;
-
 import org.eclipse.swt.graphics.Image;
 
+import com.tulin.v8.fuzzyxml.FuzzyXMLElement;
+import com.tulin.v8.fuzzyxml.FuzzyXMLNode;
 import com.tulin.v8.webtools.WebToolsPlugin;
 import com.tulin.v8.webtools.html.editors.HTMLOutlinePage;
 

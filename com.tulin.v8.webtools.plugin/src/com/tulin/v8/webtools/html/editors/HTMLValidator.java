@@ -6,16 +6,15 @@ import java.io.PrintWriter;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import jp.aonir.fuzzyxml.FuzzyXMLDocument;
-import jp.aonir.fuzzyxml.FuzzyXMLParser;
-import jp.aonir.fuzzyxml.event.FuzzyXMLErrorEvent;
-import jp.aonir.fuzzyxml.event.FuzzyXMLErrorListener;
-
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IMarker;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.w3c.tidy.Tidy;
 
+import com.tulin.v8.fuzzyxml.FuzzyXMLDocument;
+import com.tulin.v8.fuzzyxml.FuzzyXMLParser;
+import com.tulin.v8.fuzzyxml.event.FuzzyXMLErrorEvent;
+import com.tulin.v8.fuzzyxml.event.FuzzyXMLErrorListener;
 import com.tulin.v8.webtools.IOUtil;
 import com.tulin.v8.webtools.WebToolsPlugin;
 import com.tulin.v8.webtools.html.HTMLUtil;
