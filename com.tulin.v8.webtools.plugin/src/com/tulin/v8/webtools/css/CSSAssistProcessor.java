@@ -28,11 +28,12 @@ public class CSSAssistProcessor implements IContentAssistProcessor {
 			if (word.endsWith(":")) {
 				for (int i = 0; i < CSSDefinition.CSS_VALUES.length; i++) {
 					if (CSSDefinition.CSS_VALUES[i].getName().startsWith(word)) {
-						List<String> values = CSSDefinition.CSS_VALUES[i].getValues();
-						for (String value : values) {
-							list.add(new CompletionProposal(value + ";", offset, 0, value.length() + 1,
+						List<CSSInfo> values = CSSDefinition.CSS_VALUES[i].getValues();
+						for (CSSInfo value : values) {
+							list.add(new CompletionProposal(value.getReplaceString() + ";", offset, 0,
+									value.getReplaceString().length() + 1,
 									WebToolsPlugin.getDefault().getImageRegistry().get(WebToolsPlugin.ICON_CSS_PROP),
-									value, null, null));
+									value.getDisplayString(), null, null));
 						}
 					}
 				}

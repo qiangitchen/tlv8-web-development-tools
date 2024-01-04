@@ -8,7 +8,7 @@ import java.util.List;
  */
 public class CSSValue {
 	private String name;
-	private List<String> values = new ArrayList<>();
+	private List<CSSInfo> values = new ArrayList<>();
 
 	public CSSValue() {
 	}
@@ -17,9 +17,9 @@ public class CSSValue {
 		this.setName(name);
 	}
 
-	public CSSValue(String name, String[] value) {
+	public CSSValue(String name, CSSInfo[] value) {
 		this.setName(name);
-		for (String v : value) {
+		for (CSSInfo v : value) {
 			values.add(v);
 		}
 	}
@@ -32,22 +32,22 @@ public class CSSValue {
 		this.name = name;
 	}
 
-	public void setValues(String[] value) {
+	public void setValues(CSSInfo[] value) {
 		values.clear();
-		for (String v : value) {
+		for (CSSInfo v : value) {
 			values.add(v);
 		}
 	}
 
-	public void setValues(List<String> values) {
+	public void setValues(List<CSSInfo> values) {
 		this.values = values;
 	}
 
-	public void addValue(String value) {
+	public void addValue(CSSInfo value) {
 		values.add(value);
 	}
 
-	public List<String> getValues() {
+	public List<CSSInfo> getValues() {
 		return values;
 	}
 
