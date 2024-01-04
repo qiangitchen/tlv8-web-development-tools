@@ -389,9 +389,9 @@ public class HTMLUtil {
 		try {
 			IMarker marker = resource.createMarker(IMarker.PROBLEM);
 			Map<String, Object> map = new HashMap<String, Object>();
-			map.put(IMarker.SEVERITY, new Integer(type));
+			map.put(IMarker.SEVERITY, type);
 			map.put(IMarker.MESSAGE, message);
-			map.put(IMarker.LINE_NUMBER, new Integer(line));
+			map.put(IMarker.LINE_NUMBER, line);
 			marker.setAttributes(map);
 		} catch (CoreException ex) {
 			WebToolsPlugin.logException(ex);
@@ -412,9 +412,9 @@ public class HTMLUtil {
 		try {
 			IMarker marker = resource.createMarker(IMarker.TASK);
 			Map<String, Object> map = new HashMap<String, Object>();
-			map.put(IMarker.PRIORITY, new Integer(priority));
+			map.put(IMarker.PRIORITY, priority);
 			map.put(IMarker.MESSAGE, message);
-			map.put(IMarker.LINE_NUMBER, new Integer(line));
+			map.put(IMarker.LINE_NUMBER, line);
 			marker.setAttributes(map);
 		} catch (CoreException ex) {
 			WebToolsPlugin.logException(ex);
@@ -435,11 +435,11 @@ public class HTMLUtil {
 		try {
 			IMarker marker = resource.createMarker(IMarker.PROBLEM);
 			Map<String, Object> map = new HashMap<String, Object>();
-			map.put(IMarker.SEVERITY, new Integer(type));
+			map.put(IMarker.SEVERITY, type);
 			map.put(IMarker.MESSAGE, message);
-			map.put(IMarker.CHAR_START, new Integer(offset));
-			map.put(IMarker.CHAR_END, new Integer(offset + length));
-			map.put(IMarker.LINE_NUMBER, new Integer(line));
+			map.put(IMarker.CHAR_START, offset);
+			map.put(IMarker.CHAR_END, offset + length);
+			map.put(IMarker.LINE_NUMBER, line);
 			marker.setAttributes(map);
 		} catch (CoreException ex) {
 			WebToolsPlugin.logException(ex);
@@ -571,7 +571,7 @@ public class HTMLUtil {
 		if (editorPart instanceof MultiPageEditorPart) {
 			MultiPageEditorPart meditor = (MultiPageEditorPart) editorPart;
 			Object seditor = meditor.getSelectedPage();
-			if(seditor instanceof IEditorPart) {
+			if (seditor instanceof IEditorPart) {
 				return (IEditorPart) meditor.getSelectedPage();
 			}
 		}

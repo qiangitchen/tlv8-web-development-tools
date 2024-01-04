@@ -25,15 +25,19 @@ public class CSSAssistProcessor implements IContentAssistProcessor {
 		String word = getLastWord(text);
 		List<ICompletionProposal> list = new ArrayList<ICompletionProposal>();
 		if (word != null) {
-			if (word.endsWith(":")) {
+			if (word.indexOf(":") > 0) {
+				String prop = word.substring(0, word.indexOf(":"));
+				String vals = word.substring(word.indexOf(":") + 1).trim();
 				for (int i = 0; i < CSSDefinition.CSS_VALUES.length; i++) {
-					if (CSSDefinition.CSS_VALUES[i].getName().startsWith(word)) {
+					if (CSSDefinition.CSS_VALUES[i].getName().startsWith(prop)) {
 						List<CSSInfo> values = CSSDefinition.CSS_VALUES[i].getValues();
 						for (CSSInfo value : values) {
-							list.add(new CompletionProposal(value.getReplaceString() + ";", offset, 0,
-									value.getReplaceString().length() + 1,
-									WebToolsPlugin.getDefault().getImageRegistry().get(WebToolsPlugin.ICON_CSS_PROP),
-									value.getDisplayString(), null, null));
+							if (value.getReplaceString().startsWith(vals)) {
+								list.add(new CompletionProposal(value.getReplaceString() + ";", offset, 0,
+										value.getReplaceString().length() + 1, WebToolsPlugin.getDefault()
+												.getImageRegistry().get(WebToolsPlugin.ICON_CSS_PROP),
+										value.getDisplayString(), null, null));
+							}
 						}
 					}
 				}
