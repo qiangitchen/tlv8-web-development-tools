@@ -9,13 +9,12 @@ Eclipse插件体系结构
 
 #### 安装教程
 
-1.  xxxx
-2.  xxxx
-3.  xxxx
+1.  eclipse-Help-Install New Software-Add,Location填写：http://dl.tlv8.cn/twt/
+
 
 #### 使用说明
 
-1.  xxxx
-2.  xxxx
-3.  xxxx
+1.  Web开发编辑HTML、JS、CSS文件
+2.  JSP文件编辑支持
+3.  JS、CSS代码提示支持：Alt+/
 
