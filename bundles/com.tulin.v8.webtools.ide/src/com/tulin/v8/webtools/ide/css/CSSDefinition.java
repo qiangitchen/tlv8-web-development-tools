@@ -108,8 +108,8 @@ public class CSSDefinition {
 	 * @see https://www.w3cschool.cn/css/
 	 */
 	public static final CSSValue[] CSS_VALUES = {
-			new CSSValue("text-indent:", new CSSInfo[] {new CSSInfo("length","定义固定的缩进。默认值：0。"),new CSSInfo("%","定义基于父元素宽度的百分比的缩进。"),new CSSInfo("inherit","规定应该从父元素继承 text-indent 属性的值。")}),
-			new CSSValue("text-align:", new CSSInfo[] {new CSSInfo("left","把文本排列到左边。默认值：由浏览器决定。"),new CSSInfo("right","把文本排列到右边。"),new CSSInfo("center","把文本排列到中间。"),new CSSInfo("justify","实现两端对齐文本效果。"),new CSSInfo("inherit","规定应该从父元素继承 text-align 属性的值。")}),
+			new CSSValue("text-indent:", new CSSInfo[] {new CSSInfo("length",Messages.getString("text-indent.length")),new CSSInfo("%",Messages.getString("text-indent.%")),new CSSInfo("inherit",Messages.getString("text-indent.inherit"))}),
+			new CSSValue("text-align:", new CSSInfo[] {new CSSInfo("left",Messages.getString("text-align.left")),new CSSInfo("right",Messages.getString("text-align.right")),new CSSInfo("center",Messages.getString("text-align.center")),new CSSInfo("justify",Messages.getString("text-align.justify")),new CSSInfo("inherit",Messages.getString("text-align.inherit"))}),
 			new CSSValue("text-decoration:", new CSSInfo[] {new CSSInfo("none","默认。定义标准的文本。"),new CSSInfo("underline","定义文本下的一条线。"),new CSSInfo("overline","定义文本上的一条线。"),new CSSInfo("line-through","定义穿过文本下的一条线。"),new CSSInfo("blink","定义闪烁的文本。"),new CSSInfo("inherit","规定应该从父元素继承 text-decoration 属性的值。")}),
 			new CSSValue("text-shadow:", new CSSInfo[] {new CSSInfo("h-shadow","必需。水平阴影的位置。允许负值。"),new CSSInfo("v-shadow","必需。垂直阴影的位置。允许负值。"),new CSSInfo("blur","可选。模糊的距离。"),new CSSInfo("color","可选。阴影的颜色。")}),
 			new CSSValue("letter-spacing:", new CSSInfo[] {new CSSInfo("normal","默认。规定字符间没有额外的空间。"),new CSSInfo("length","定义字符间的固定空间（允许使用负值）。"),new CSSInfo("inherit","规定应该从父元素继承 letter-spacing 属性的值。")}),
