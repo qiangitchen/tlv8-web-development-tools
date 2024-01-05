@@ -635,7 +635,7 @@ public class Context {
 		checkLanguageVersion(version);
 		Object listeners = propertyListeners;
 		if (listeners != null && version != this.version) {
-			firePropertyChangeImpl(listeners, languageVersionProperty, new Integer(this.version), new Integer(version));
+			firePropertyChangeImpl(listeners, languageVersionProperty, this.version, version);
 		}
 		this.version = version;
 	}
