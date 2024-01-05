@@ -1,15 +1,16 @@
 package com.tulin.v8.webtools.ide.css;
 
+import java.util.Enumeration;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
-public class Messages {
+public class CSSStyles {
 
-	private static final String BUNDLE_NAME = "com.tulin.v8.webtools.ide.css.messages";
+	private static final String BUNDLE_NAME = "com.tulin.v8.webtools.ide.css.csssets";
 
 	private static final ResourceBundle RESOURCE_BUNDLE = ResourceBundle.getBundle(BUNDLE_NAME);
 
-	private Messages() {
+	private CSSStyles() {
 	}
 
 	public static String getString(String key) {
@@ -18,5 +19,9 @@ public class Messages {
 		} catch (MissingResourceException e) {
 			return '!' + key + '!';
 		}
+	}
+	
+	public static Enumeration<String> getKeys() {
+		return RESOURCE_BUNDLE.getKeys();
 	}
 }
