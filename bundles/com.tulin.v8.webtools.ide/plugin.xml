@@ -52,8 +52,9 @@
       <editor
             class="com.tulin.v8.webtools.ide.html.editors.HTMLEditor"
             contributorClass="com.tulin.v8.webtools.ide.html.editors.HTMLEditorContributor"
+            default="true"
             extensions="htm,html,xhtml"
-            icon="icons/html_file.gif"
+            icon="icons/tlv8_html.png"
             id="com.tulin.v8.webtools.ide.editors.HTMLEditor"
             name="%plugin.editor.htmleditor"/>
       <editor
@@ -61,7 +62,7 @@
             contributorClass="org.eclipse.ui.editors.text.TextEditorActionContributor"
             default="true"
             extensions="css"
-            icon="icons/css.gif"
+            icon="icons/tlv8_css.png"
             id="com.tulin.v8.webtools.ide.csseditor.editors.CSSEditor"
             name="%plugin.editor.csseditor"/>
       <editor
@@ -69,7 +70,7 @@
             contributorClass="com.tulin.v8.webtools.ide.js.editors.JavaScriptEditorContributor"
             default="true"
             extensions="js"
-            icon="icons/js.gif"
+            icon="icons/tlv8_js.png"
             id="com.tulin.v8.webtools.ide.jseditor.editors.JavaScriptEditor"
             name="%plugin.editor.jseditor"/>
             
@@ -78,7 +79,7 @@
             contributorClass="com.tulin.v8.webtools.ide.jsp.editors.JSPEditorContributor"
             default="true"
             extensions="jsp,jspf"
-            icon="icons/jsp_file.gif"
+            icon="icons/tlv8_jsp.png"
             id="com.tulin.v8.webtools.ide.jspeditor.editors.JSPEditor"
             name="%plugin.editor.jspeditor"/>
             
@@ -87,7 +88,7 @@
             contributorClass="com.tulin.v8.webtools.ide.xml.editors.XMLEditorContributor"
             default="true"
             extensions="xml,tld,xsl"
-            icon="icons/xml.gif"
+            icon="icons/tlv8_xml.png"
             id="com.tulin.v8.webtools.ide.xmleditor.editors.XMLEditor"
             name="%plugin.editor.xmleditor">
       </editor>
