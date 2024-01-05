@@ -18,6 +18,7 @@ import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.IDocumentPartitioningListener;
 import org.eclipse.jface.text.ITextDoubleClickStrategy;
 import org.eclipse.jface.text.ITextHover;
+import org.eclipse.jface.text.contentassist.ContentAssistant;
 import org.eclipse.jface.text.contentassist.IContentAssistProcessor;
 import org.eclipse.jface.text.contentassist.IContentAssistant;
 import org.eclipse.jface.text.presentation.IPresentationReconciler;
@@ -181,18 +182,28 @@ public class JavaScriptConfiguration extends TextSourceViewerConfiguration imple
 
 	@Override
 	public IContentAssistant getContentAssistant(ISourceViewer sourceViewer) {
-		ContentAssistProcessorRegistry registry = WebToolsPlugin.getDefault().getContentAssistProcessorRegistry();
-		ContentTypeRelatedExtensionTracker<IContentAssistProcessor> contentAssistProcessorTracker = new ContentTypeRelatedExtensionTracker<IContentAssistProcessor>(
-				WebToolsPlugin.getDefault().getBundle().getBundleContext(), IContentAssistProcessor.class,
-				sourceViewer.getTextWidget().getDisplay());
-		Set<IContentType> types = getContentTypes(sourceViewer.getDocument());
-		contentAssistant = new EditorContentAssistant(contentAssistProcessorTracker,
-				registry.getContentAssistProcessors(sourceViewer, editor, types), types, fPreferenceStore);
-		if (this.document != null) {
-			associateTokenContentTypes(this.document);
+		try {
+			ContentAssistProcessorRegistry registry = WebToolsPlugin.getDefault().getContentAssistProcessorRegistry();
+			ContentTypeRelatedExtensionTracker<IContentAssistProcessor> contentAssistProcessorTracker = new ContentTypeRelatedExtensionTracker<IContentAssistProcessor>(
+					WebToolsPlugin.getDefault().getBundle().getBundleContext(), IContentAssistProcessor.class,
+					sourceViewer.getTextWidget().getDisplay());
+			Set<IContentType> types = getContentTypes(sourceViewer.getDocument());
+			contentAssistant = new EditorContentAssistant(contentAssistProcessorTracker,
+					registry.getContentAssistProcessors(sourceViewer, editor, types), types, fPreferenceStore);
+			if (this.document != null) {
+				associateTokenContentTypes(this.document);
+			}
+			watchDocument(sourceViewer.getDocument());
+			return contentAssistant;
+		} catch (Exception e) {
+			ContentAssistant assistant = new ContentAssistant();
+			assistant.enableAutoInsert(true);
+			assistant.setContentAssistProcessor(getAssistProcessor(), IDocument.DEFAULT_CONTENT_TYPE);
+			assistant.setContentAssistProcessor(getJsDocAssistProcessor(), JavaScriptPartitionScanner.JS_JSDOC);
+			assistant.setInformationControlCreator(getInformationControlCreator(sourceViewer));
+			assistant.install(sourceViewer);
+			return assistant;
 		}
-		watchDocument(sourceViewer.getDocument());
-		return contentAssistant;
 	}
 
 	@Override
