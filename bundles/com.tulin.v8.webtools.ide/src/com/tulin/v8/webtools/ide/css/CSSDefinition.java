@@ -108,7 +108,7 @@ public class CSSDefinition {
 	 * @see https://www.w3cschool.cn/css/
 	 */
 	public static final CSSValue[] CSS_VALUES = {
-			new CSSValue("text-indent:", new CSSInfo[] {new CSSInfo("length",CSSStyles.getString("text-indent.length")),new CSSInfo("%",CSSStyles.getString("text-indent.%")),new CSSInfo("inherit",CSSStyles.getString("text-indent.inherit"))}),
+			new CSSValue("text-indent:", new CSSInfo[] {new CSSInfo("length",CSSStyles.getString("text-indent.length")),new CSSInfo("%",CSSStyles.getString("text-indent.percentage")),new CSSInfo("inherit",CSSStyles.getString("text-indent.inherit"))}),
 			new CSSValue("text-align:", new CSSInfo[] {new CSSInfo("left",CSSStyles.getString("text-align.left")),new CSSInfo("right",CSSStyles.getString("text-align.right")),new CSSInfo("center",CSSStyles.getString("text-align.center")),new CSSInfo("justify",CSSStyles.getString("text-align.justify")),new CSSInfo("inherit",CSSStyles.getString("text-align.inherit"))}),
 			new CSSValue("text-decoration:", new CSSInfo[] {new CSSInfo("none",CSSStyles.getString("text-decoration.none")),new CSSInfo("underline",CSSStyles.getString("text-decoration.underline")),new CSSInfo("overline",CSSStyles.getString("text-decoration.overline")),new CSSInfo("line-through",CSSStyles.getString("text-decoration.line-through")),new CSSInfo("blink",CSSStyles.getString("text-decoration.blink")),new CSSInfo("inherit",CSSStyles.getString("text-decoration.inherit"))}),
 			new CSSValue("text-shadow:", new CSSInfo[] {new CSSInfo("h-shadow",CSSStyles.getString("text-shadow.h-shadow")),new CSSInfo("v-shadow",CSSStyles.getString("text-shadow.v-shadow")),new CSSInfo("blur",CSSStyles.getString("text-shadow.blur")),new CSSInfo("color",CSSStyles.getString("text-shadow.color"))}),
