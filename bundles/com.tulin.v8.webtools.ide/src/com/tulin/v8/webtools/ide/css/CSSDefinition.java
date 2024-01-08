@@ -97,10 +97,40 @@ public class CSSDefinition {
 			new CSSInfo("outline-color"),
 			new CSSInfo("outline-style"),
 			new CSSInfo("outline"),
-			new CSSInfo("a:link"),
-			new CSSInfo("a:visited"),
-			new CSSInfo("a:hover"),
-			new CSSInfo("a:active")
+			new CSSInfo("border-radius"),
+			new CSSInfo("background-clip"),
+			new CSSInfo("background-origin"),
+			new CSSInfo("background-size"),
+			new CSSInfo("box-shadow"),
+			new CSSInfo("transform"),
+			new CSSInfo("animation"),
+			new CSSInfo("animation-name"),
+			new CSSInfo("animation-duration"),
+			new CSSInfo("animation-timing-function"),
+			new CSSInfo("animation-delay"),
+			new CSSInfo("animation-iteration-count"),
+			new CSSInfo("animation-direction"),
+			new CSSInfo("animation-fill-mode"),
+			new CSSInfo("animation-play-state"),
+			new CSSInfo("attr()"),
+			new CSSInfo("calc()"),
+			new CSSInfo("cubic-bezier()"),
+			new CSSInfo("conic-gradient()"),
+			new CSSInfo("counter()"),
+			new CSSInfo("hsl()"),
+			new CSSInfo("hsla()"),
+			new CSSInfo("linear-gradient()"),
+			new CSSInfo("max()"),
+			new CSSInfo("min()"),
+			new CSSInfo("radial-gradient()"),
+			new CSSInfo("repeating-linear-gradient()"),
+			new CSSInfo("repeating-radial-gradient()"),
+			new CSSInfo("repeating-conic-gradient()"),
+			new CSSInfo("rgb()"),
+			new CSSInfo("rgba()"),
+			new CSSInfo("var()"),
+			new CSSInfo("repeat()"),
+			new CSSInfo("minmax()"),
 	};
 	
 	/**
@@ -118,7 +148,7 @@ public class CSSDefinition {
 			new CSSValue("white-space:", new CSSInfo[] {new CSSInfo("normal",""),new CSSInfo("pre",""),new CSSInfo("nowrap",""),new CSSInfo("pre-wrap",""),new CSSInfo("pre-line",""),new CSSInfo("inherit","")}),
 			new CSSValue("color:", new CSSInfo[] {new CSSInfo("red",CSSStyles.getString("color.red")),new CSSInfo("blue",CSSStyles.getString("color.blue")),new CSSInfo("green",CSSStyles.getString("color.green")),new CSSInfo("#",CSSStyles.getString("color.16")),new CSSInfo("rgb(255,0,0)",CSSStyles.getString("color.rgb")),new CSSInfo("inherit",CSSStyles.getString("color.inherit"))}),
 			new CSSValue("background-color:", new CSSInfo[] {new CSSInfo("red",""),new CSSInfo("blue",""),new CSSInfo("green",""),new CSSInfo("#",""),new CSSInfo("rgb(255,0,0)","")}),
-			new CSSValue("background-image:", new CSSInfo[] {new CSSInfo("url('')",CSSStyles.getString("background-image.url")),new CSSInfo("none",CSSStyles.getString("background-image.none")),new CSSInfo("inherit",CSSStyles.getString("background-image.inherit"))}),
+			new CSSValue("background-image:", new CSSInfo[] {new CSSInfo("url('')",CSSStyles.getString("background-image.url")),new CSSInfo("none",CSSStyles.getString("background-image.none")),new CSSInfo("inherit",CSSStyles.getString("background-image.inherit")),new CSSInfo("linear-gradient(direction, color-stop1, color-stop2, ...)",CSSStyles.getString("background-image.linear-gradient"))}),
 			new CSSValue("background-repeat:", new CSSInfo[] {new CSSInfo("repeat",CSSStyles.getString("background-repeat.repeat")),new CSSInfo("repeat-x",CSSStyles.getString("background-repeat.repeat-x")),new CSSInfo("repeat-y",CSSStyles.getString("background-repeat.repeat-y")),new CSSInfo("no-repeat",CSSStyles.getString("background-repeat.no-repeat")),new CSSInfo("inherit",CSSStyles.getString("background-repeat.inherit"))}),
 			new CSSValue("background-attachment:", new CSSInfo[] {new CSSInfo("scroll",CSSStyles.getString("background-attachment.scroll")),new CSSInfo("fixed",CSSStyles.getString("background-attachment.fixed")),new CSSInfo("local",CSSStyles.getString("background-attachment.local")),new CSSInfo("initial",CSSStyles.getString("background-attachment.initial")),new CSSInfo("inherit",CSSStyles.getString("background-attachment.inherit"))}),
 			new CSSValue("background-position:", new CSSInfo[] {new CSSInfo("left top",CSSStyles.getString("background-position.left")), new CSSInfo("x% y%",CSSStyles.getString("background-position.xy")), new CSSInfo("xpos ypos",CSSStyles.getString("background-position.xpyp")), new CSSInfo("inherit",CSSStyles.getString("background-position.inherit"))}),
@@ -196,7 +226,8 @@ public class CSSDefinition {
 			new CSSValue("outline-width:"),
 			new CSSValue("outline-color:"),
 			new CSSValue("outline-style:"),
-			new CSSValue("outline:")
+			new CSSValue("outline:"),
+			new CSSValue("transform:", new CSSInfo[] {new CSSInfo("translate()"),new CSSInfo("rotate()"),new CSSInfo("scale()"),new CSSInfo("skew()"),new CSSInfo("matrix()")})
 	};
 	
 //	static {

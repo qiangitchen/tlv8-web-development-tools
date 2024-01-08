@@ -17,10 +17,10 @@ public class CSSStyles {
 		try {
 			return RESOURCE_BUNDLE.getString(key);
 		} catch (MissingResourceException e) {
-			return '!' + key + '!';
+			return key;
 		}
 	}
-	
+
 	public static Enumeration<String> getKeys() {
 		return RESOURCE_BUNDLE.getKeys();
 	}

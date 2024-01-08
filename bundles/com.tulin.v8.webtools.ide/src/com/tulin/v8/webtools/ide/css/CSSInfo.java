@@ -9,7 +9,10 @@ public class CSSInfo {
 
 	public CSSInfo(String replaceString) {
 		this.replaceString = replaceString;
-		this.displayString = replaceString;
+		this.displayString = CSSStyles.getString(replaceString);
+		if (!replaceString.equals(displayString)) {
+			this.displayString = replaceString + "  -->[" + displayString + "]";
+		}
 	}
 
 	public CSSInfo(String replaceString, String displayString) {
