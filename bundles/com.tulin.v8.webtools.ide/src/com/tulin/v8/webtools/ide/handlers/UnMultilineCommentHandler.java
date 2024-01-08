@@ -3,6 +3,7 @@ package com.tulin.v8.webtools.ide.handlers;
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
+import org.eclipse.core.commands.IHandler;
 import org.eclipse.jface.text.BadLocationException;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.ITextSelection;
@@ -19,7 +20,7 @@ import com.tulin.v8.webtools.ide.html.editors.HTMLSourceEditor;
 import com.tulin.v8.webtools.ide.js.editors.JavaScriptEditor;
 import com.tulin.v8.webtools.ide.xml.editors.XMLEditor;
 
-public class UnMultilineCommentHandler extends AbstractHandler {
+public class UnMultilineCommentHandler extends AbstractHandler implements IHandler{
 
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {

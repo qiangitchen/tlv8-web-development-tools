@@ -220,28 +220,36 @@
       </handler>
    </extension>
    
+   <extension point="org.eclipse.ui.contexts">
+	   <context
+          description="TLv8 Web Files Context"
+          id="com.tulin.v8.source"
+          name="TLv8 Context"
+          parentId="org.eclipse.ui.textEditorScope"/>
+	</extension>
+   
    <extension
          point="org.eclipse.ui.bindings">
       <key
             commandId="tulin.command.comment"
-            contextId="org.eclipse.ui.contexts.window"
-            sequence="M1+/"
-            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>
+            contextId="com.tulin.v8.source"
+            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+            sequence="M1+/"/>
       <key
             commandId="tulin.command.MultilineComment"
-            contextId="org.eclipse.ui.contexts.window"
-            sequence="M1+M2+/"
-            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>
+            contextId="com.tulin.v8.source"
+            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+            sequence="M1+M2+/"/>
       <key
             commandId="tulin.command.UnMultilineComment"
-            contextId="org.eclipse.ui.contexts.window"
-            sequence="M1+M2+\"
-            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>
+            contextId="com.tulin.v8.source"
+            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+            sequence="M1+M2+\"/>
       <key
             commandId="tulin.command.format"
-            contextId="org.eclipse.ui.contexts.window"
-            sequence="M1+M2+F"
-            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>
+            contextId="com.tulin.v8.source"
+            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+            sequence="M1+M2+F"/>
    </extension>
    
    <!--====================================================-->

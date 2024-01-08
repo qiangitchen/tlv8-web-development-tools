@@ -408,7 +408,7 @@ public class XMLEditor extends HTMLSourceEditor {
 	@Override
 	protected void addContextMenuActions(IMenuManager menu) {
 		menu.appendToGroup(ITextEditorActionConstants.GROUP_EDIT,
-				new MenuManager(WebToolsPlugin.getResourceString("HTMLEditorPreferencePage.XML"), GROUP_HTML));
+				new MenuManager(WebToolsPlugin.getResourceString("PreferencePage.XML"), GROUP_HTML));
 		menu.appendToGroup(ITextEditorActionConstants.GROUP_EDIT, new MenuManager(
 				WebToolsPlugin.getResourceString("MultiPageHTMLEditor.Source"), WebToolsPlugin.GROUP_SOURCE));
 		addAction(menu, GROUP_HTML, ACTION_SEARCH_XPATH);
