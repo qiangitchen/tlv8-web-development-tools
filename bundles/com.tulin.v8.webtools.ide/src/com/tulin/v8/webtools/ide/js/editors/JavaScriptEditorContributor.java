@@ -6,7 +6,6 @@ public class JavaScriptEditorContributor extends HTMLSourceEditorContributer {
 
 	public JavaScriptEditorContributor() {
 		addActionId(JavaScriptEditor.ACTION_COMMENT);
-		addActionId(JavaScriptEditor.ACTION_FORMAT);
 		addActionId(JavaScriptEditor.ACTION_OUTLINE);
 	}
 

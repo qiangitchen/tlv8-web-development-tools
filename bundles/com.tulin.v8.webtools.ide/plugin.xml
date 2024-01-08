@@ -172,6 +172,16 @@
             id="com.tulin.v8.webtools.ide.FormatterPreferencePage"/>
    </extension>
    
+   <!-- Keybinding scope for source editor -->
+	<extension point="org.eclipse.ui.contexts">
+		<context
+			name="TLv8 Web Source"
+			parentId="org.eclipse.ui.textEditorScope"
+			description="TLv8 Web File Source"
+			id="com.tulin.v8.webtools.ide.sourceEditorScope">
+		</context>
+	</extension>
+   
    <extension
          point="org.eclipse.ui.commands">
       <category
@@ -194,7 +204,7 @@
             name="%menu.label.umcomment">
       </command>
       <command
-      		categoryId="tulin.commands.category"
+            categoryId="tulin.commands.category"
             id="tulin.command.format"
             name="%menu.label.fortmat">
       </command>
@@ -220,34 +230,26 @@
       </handler>
    </extension>
    
-   <extension point="org.eclipse.ui.contexts">
-	   <context
-          description="TLv8 Web Files Context"
-          id="com.tulin.v8.source"
-          name="TLv8 Context"
-          parentId="org.eclipse.ui.textEditorScope"/>
-	</extension>
-   
    <extension
          point="org.eclipse.ui.bindings">
       <key
             commandId="tulin.command.comment"
-            contextId="com.tulin.v8.source"
+            contextId="com.tulin.v8.webtools.ide.sourceEditorScope"
             schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
             sequence="M1+/"/>
       <key
             commandId="tulin.command.MultilineComment"
-            contextId="com.tulin.v8.source"
+            contextId="com.tulin.v8.webtools.ide.sourceEditorScope"
             schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
             sequence="M1+M2+/"/>
       <key
             commandId="tulin.command.UnMultilineComment"
-            contextId="com.tulin.v8.source"
+            contextId="com.tulin.v8.webtools.ide.sourceEditorScope"
             schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
             sequence="M1+M2+\"/>
       <key
             commandId="tulin.command.format"
-            contextId="com.tulin.v8.source"
+            contextId="com.tulin.v8.webtools.ide.sourceEditorScope"
             schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
             sequence="M1+M2+F"/>
    </extension>
@@ -520,6 +522,60 @@ while (${condition}) {
             name="Javascript">
       </content-type>
    </extension>
+   
+   <extension point="org.eclipse.core.expressions.definitions">
+		<definition id="com.tulin.v8.webtools.ide.sseActiveContext.definition">
+            <with variable="activeContexts">
+	           <iterate operator="or">
+	              <equals value="com.tulin.v8.webtools.ide.sourceEditorScope"/>
+	           </iterate>
+            </with>
+		</definition>
+	</extension>
+   
+    <extension
+          point="org.eclipse.ui.menus">
+       <menuContribution
+             locationURI="menu:org.eclipse.ui.main.menu?after=edit">
+          <menu
+                id="com.tulin.v8.webtools.ide.menus.source"
+                label="%menu.label.source">
+             <command
+                   commandId="tulin.command.comment"
+                   id="com.tulin.v8.webtools.ide.menus.comment"
+                   style="push">
+                   <visibleWhen checkEnabled="false">
+						<reference definitionId="com.tulin.v8.webtools.ide.sseActiveContext.definition"></reference>
+				   </visibleWhen>
+             </command>
+             <command
+                   commandId="tulin.command.MultilineComment"
+                   id="com.tulin.v8.webtools.ide.menus.MultilineComment"
+                   style="push">
+                   <visibleWhen checkEnabled="false">
+						<reference definitionId="com.tulin.v8.webtools.ide.sseActiveContext.definition"></reference>
+				   </visibleWhen>
+             </command>
+             <command
+                   commandId="tulin.command.UnMultilineComment"
+                   id="com.tulin.v8.webtools.ide.menus.UnMultilineComment"
+                   style="push">
+                   <visibleWhen checkEnabled="false">
+						<reference definitionId="com.tulin.v8.webtools.ide.sseActiveContext.definition"></reference>
+				   </visibleWhen>
+             </command>
+             <command
+                   commandId="tulin.command.format"
+                   id="com.tulin.v8.webtools.ide.menus.format"
+                   style="push">
+                   <visibleWhen checkEnabled="false">
+						<reference definitionId="com.tulin.v8.webtools.ide.sseActiveContext.definition"></reference>
+				   </visibleWhen>
+             </command>
+          </menu>
+       </menuContribution>
+    </extension>
+    
    <!--
    <extension
          point="org.eclipse.ui.editors">

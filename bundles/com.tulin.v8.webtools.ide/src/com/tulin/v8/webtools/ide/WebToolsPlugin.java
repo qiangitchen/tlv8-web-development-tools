@@ -38,6 +38,9 @@ import com.tulin.v8.webtools.ide.jsp.IJSPFilter;
 import com.tulin.v8.webtools.ide.jsp.ITLDLocator;
 
 public class WebToolsPlugin extends AbstractUIPlugin {
+	/** Non-NLS strings */
+	public static final String EDITOR_KEYBINDING_SCOPE_ID = "com.tulin.v8.webtools.ide.sourceEditorScope";
+	
 	// The shared instance.
 	private static WebToolsPlugin plugin;
 	// Resource bundle.

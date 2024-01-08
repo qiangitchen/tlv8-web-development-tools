@@ -46,6 +46,7 @@ import org.eclipse.ui.IFileEditorInput;
 import org.eclipse.ui.IStorageEditorInput;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.contexts.IContextService;
 import org.eclipse.ui.editors.text.TextEditor;
 import org.eclipse.ui.part.FileEditorInput;
 import org.eclipse.ui.texteditor.AbstractDecoratedTextEditorPreferenceConstants;
@@ -155,6 +156,10 @@ public class HTMLSourceEditor extends TextEditor {
 	}
 
 	public void createPartControl(Composite parent) {
+		IContextService contextService = getSite().getService(IContextService.class);
+		if (contextService != null)
+			contextService.activateContext(WebToolsPlugin.EDITOR_KEYBINDING_SCOPE_ID);
+		
 		super.createPartControl(parent);
 
 		ProjectionViewer projectionViewer = (ProjectionViewer) getSourceViewer();

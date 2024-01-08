@@ -16,6 +16,7 @@ import org.eclipse.ui.IFileEditorInput;
 import org.eclipse.ui.IPropertyListener;
 import org.eclipse.ui.IWorkbenchPartSite;
 import org.eclipse.ui.PartInitException;
+import org.eclipse.ui.contexts.IContextService;
 import org.eclipse.ui.part.EditorPart;
 
 import com.tulin.v8.webtools.ide.WebToolsPlugin;
@@ -116,6 +117,10 @@ public class HTMLEditor extends EditorPart implements IPaletteTarget {
 	}
 
 	public void createPartControl(Composite parent) {
+		IContextService contextService = getSite().getService(IContextService.class);
+		if (contextService != null)
+			contextService.activateContext(WebToolsPlugin.EDITOR_KEYBINDING_SCOPE_ID);
+		
 		editor.createPartControl(parent);
 	}
 
