@@ -1438,6 +1438,62 @@ public class TagDefinition {
 		wbr.addAttributeInfo(new AttributeInfo("style", true));
 		wbr.addAttributeInfo(new AttributeInfo("title", true));
 		addTagInfo(wbr);
+		
+		TagInfo canvas = new TagInfo("canvas", false);
+		canvas.addAttributeInfo(new AttributeInfo("width", true));
+		canvas.addAttributeInfo(new AttributeInfo("height", true));
+		canvas.addAttributeInfo(new AttributeInfo("class", true, AttributeInfo.CSS));
+		canvas.addAttributeInfo(new AttributeInfo("accesskey", true));
+		canvas.addAttributeInfo(new AttributeInfo("contenteditable", true));
+		canvas.addAttributeInfo(new AttributeInfo("contextmenu", true));
+		canvas.addAttributeInfo(new AttributeInfo("data-*", true));
+		canvas.addAttributeInfo(new AttributeInfo("dir", true));
+		canvas.addAttributeInfo(new AttributeInfo("draggable", true));
+		canvas.addAttributeInfo(new AttributeInfo("dropzone", true));
+		canvas.addAttributeInfo(new AttributeInfo("hidden", false));
+		canvas.addAttributeInfo(new AttributeInfo("id", true));
+		canvas.addAttributeInfo(new AttributeInfo("lang", true));
+		canvas.addAttributeInfo(new AttributeInfo("spellcheck", true));
+		canvas.addAttributeInfo(new AttributeInfo("style", true));
+		canvas.addAttributeInfo(new AttributeInfo("tabindex", true));
+		canvas.addAttributeInfo(new AttributeInfo("title", true));
+		canvas.addAttributeInfo(new AttributeInfo("translate", true));
+		addTagInfo(canvas);
+		
+		TagInfo audio = new TagInfo("audio", false);
+		audio.addAttributeInfo(new AttributeInfo("autoplay", false));
+		audio.addAttributeInfo(new AttributeInfo("controls", false));
+		audio.addAttributeInfo(new AttributeInfo("loop", false));
+		audio.addAttributeInfo(new AttributeInfo("muted", false));
+		audio.addAttributeInfo(new AttributeInfo("preload", true));
+		audio.addAttributeInfo(new AttributeInfo("src", true));
+		addTagInfo(audio);
+		
+		TagInfo video = new TagInfo("video", false);
+		video.addAttributeInfo(new AttributeInfo("autoplay", false));
+		video.addAttributeInfo(new AttributeInfo("controls", false));
+		video.addAttributeInfo(new AttributeInfo("height", true));
+		video.addAttributeInfo(new AttributeInfo("loop", false));
+		video.addAttributeInfo(new AttributeInfo("muted", false));
+		video.addAttributeInfo(new AttributeInfo("poster", true));
+		video.addAttributeInfo(new AttributeInfo("preload", true));
+		video.addAttributeInfo(new AttributeInfo("src", true));
+		video.addAttributeInfo(new AttributeInfo("width", true));
+		addTagInfo(video);
+		
+		TagInfo source = new TagInfo("source", false);
+		source.addAttributeInfo(new AttributeInfo("media", true));
+		source.addAttributeInfo(new AttributeInfo("src", true));
+		source.addAttributeInfo(new AttributeInfo("type", true));
+		addTagInfo(source);
+		
+		TagInfo track = new TagInfo("track", false);
+		track.addAttributeInfo(new AttributeInfo("default", true));
+		track.addAttributeInfo(new AttributeInfo("kind", true));
+		track.addAttributeInfo(new AttributeInfo("label", true));
+		track.addAttributeInfo(new AttributeInfo("src", true));
+		track.addAttributeInfo(new AttributeInfo("srclang", true));
+		addTagInfo(track);
 	}
 
 }

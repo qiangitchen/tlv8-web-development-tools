@@ -97,16 +97,13 @@ public class JSPSourceEditor extends HTMLSourceEditor {
 
 	@Override
 	protected void addContextMenuActions(IMenuManager menu) {
+		super.addContextMenuActions(menu);
 		menu.appendToGroup(ITextEditorActionConstants.GROUP_EDIT,
 				new MenuManager(WebToolsPlugin.getResourceString("PreferencePage.JSP"), GROUP_HTML));
-		menu.appendToGroup(ITextEditorActionConstants.GROUP_EDIT, new MenuManager(
-				WebToolsPlugin.getResourceString("MultiPageHTMLEditor.Source"), WebToolsPlugin.GROUP_SOURCE));
 		addAction(menu, GROUP_HTML, ACTION_CHOOSE_COLOR);
 		addAction(menu, GROUP_HTML, ACTION_OPEN_PALETTE);
 		addAction(menu, WebToolsPlugin.GROUP_SOURCE, ACTION_ESCAPE_HTML);
-		addAction(menu, WebToolsPlugin.GROUP_SOURCE, ACTION_COMMENT);
 		addAction(menu, WebToolsPlugin.GROUP_SOURCE, ACTION_JSP_COMMENT);
-		addAction(menu, WebToolsPlugin.GROUP_SOURCE, ACTION_FORMAT);
 	}
 
 	@Override

@@ -78,7 +78,7 @@
             class="com.tulin.v8.webtools.ide.jsp.editors.JSPEditor"
             contributorClass="com.tulin.v8.webtools.ide.jsp.editors.JSPEditorContributor"
             default="true"
-            extensions="jsp,jspf"
+            extensions="jsp,jspf,jspx"
             icon="icons/tlv8_jsp.png"
             id="com.tulin.v8.webtools.ide.jspeditor.editors.JSPEditor"
             name="%plugin.editor.jspeditor"/>
