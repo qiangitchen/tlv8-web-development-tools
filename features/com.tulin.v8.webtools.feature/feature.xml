@@ -4,7 +4,7 @@
       label="Web Tools feature"
       version="1.0.0.qualifier"
       provider-name="TuLin"
-      plugin="com.tulin.v8.webtools">
+      plugin="com.tulin.v8.webtools.ide">
 
    <description>
       TLv8 Web development tools in the Eclipse IDE
