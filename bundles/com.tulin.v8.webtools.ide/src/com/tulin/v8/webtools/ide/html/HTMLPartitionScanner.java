@@ -44,8 +44,8 @@ public class HTMLPartitionScanner extends RuleBasedPartitionScanner {
 		rules.add(new MultiLineRule("<%", "%>", htmlScript));
 		rules.add(new MultiLineRule("<![CDATA[", "]]>", htmlDoctype));
 		rules.add(new MultiLineRule("<?xml", "?>", htmlDoctype));
-		rules.add(new MultiLineRule("<script", "</script>", javaScript));
-		rules.add(new MultiLineRule("<style", "</style>", htmlCss));
+		rules.add(new HTMLInnerRule("<script", "</script>", javaScript));
+		rules.add(new HTMLInnerRule("<style", "</style>", htmlCss));
 		rules.add(new TagRule(prefixTag, TagRule.PREFIX));
 		rules.add(new TagRule(htmlTag, TagRule.NO_PREFIX));
 

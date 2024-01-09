@@ -53,6 +53,41 @@ public class TagDefinition {
 		tagInfo.addAttributeInfo(new AttributeInfo("onkeypress", true));
 		tagInfo.addAttributeInfo(new AttributeInfo("onkeydown", true));
 		tagInfo.addAttributeInfo(new AttributeInfo("onkeyup", true));
+		tagInfo.addAttributeInfo(new AttributeInfo("ondrag", true));// New
+		tagInfo.addAttributeInfo(new AttributeInfo("ondragend", true));// New
+		tagInfo.addAttributeInfo(new AttributeInfo("ondragenter", true));// New
+		tagInfo.addAttributeInfo(new AttributeInfo("ondragleave", true));// New
+		tagInfo.addAttributeInfo(new AttributeInfo("ondragover", true));// New
+		tagInfo.addAttributeInfo(new AttributeInfo("ondragstart", true));// New
+		tagInfo.addAttributeInfo(new AttributeInfo("ondrop", true));// New
+		tagInfo.addAttributeInfo(new AttributeInfo("onmousewheel", true));// New
+		tagInfo.addAttributeInfo(new AttributeInfo("onscroll", true));// New
+	}
+
+	private static void addMediaEventAttr(TagInfo tagInfo) {
+		tagInfo.addAttributeInfo(new AttributeInfo("onabort", true));
+		tagInfo.addAttributeInfo(new AttributeInfo("oncanplay", true));
+		tagInfo.addAttributeInfo(new AttributeInfo("oncanplaythrough", true));
+		tagInfo.addAttributeInfo(new AttributeInfo("ondurationchange", true));
+		tagInfo.addAttributeInfo(new AttributeInfo("onemptied", true));
+		tagInfo.addAttributeInfo(new AttributeInfo("onended", true));
+		tagInfo.addAttributeInfo(new AttributeInfo("onerror", true));
+		tagInfo.addAttributeInfo(new AttributeInfo("onloadeddata", true));
+		tagInfo.addAttributeInfo(new AttributeInfo("onloadedmetadata", true));
+		tagInfo.addAttributeInfo(new AttributeInfo("onloadstart", true));
+		tagInfo.addAttributeInfo(new AttributeInfo("onpause", true));
+		tagInfo.addAttributeInfo(new AttributeInfo("onplay", true));
+		tagInfo.addAttributeInfo(new AttributeInfo("onplaying", true));
+		tagInfo.addAttributeInfo(new AttributeInfo("onprogress", true));
+		tagInfo.addAttributeInfo(new AttributeInfo("onratechange", true));
+		tagInfo.addAttributeInfo(new AttributeInfo("onreadystatechange", true));
+		tagInfo.addAttributeInfo(new AttributeInfo("onseeked", true));
+		tagInfo.addAttributeInfo(new AttributeInfo("onseeking", true));
+		tagInfo.addAttributeInfo(new AttributeInfo("onstalled", true));
+		tagInfo.addAttributeInfo(new AttributeInfo("onsuspend", true));
+		tagInfo.addAttributeInfo(new AttributeInfo("ontimeupdate", true));
+		tagInfo.addAttributeInfo(new AttributeInfo("onvolumechange", true));
+		tagInfo.addAttributeInfo(new AttributeInfo("onwaiting", true));
 	}
 
 	/**
@@ -894,6 +929,7 @@ public class TagDefinition {
 		meta.addAttributeInfo(new AttributeInfo("dir", true));
 		meta.addAttributeInfo(new AttributeInfo("lang", true));
 		meta.addAttributeInfo(new AttributeInfo("title", true));
+		meta.addAttributeInfo(new AttributeInfo("charset", true));
 		addTagInfo(meta);
 
 		TagInfo nobr = new TagInfo("nobr", true);
@@ -1438,8 +1474,8 @@ public class TagDefinition {
 		wbr.addAttributeInfo(new AttributeInfo("style", true));
 		wbr.addAttributeInfo(new AttributeInfo("title", true));
 		addTagInfo(wbr);
-		
-		TagInfo canvas = new TagInfo("canvas", false);
+
+		TagInfo canvas = new TagInfo("canvas", true);
 		canvas.addAttributeInfo(new AttributeInfo("width", true));
 		canvas.addAttributeInfo(new AttributeInfo("height", true));
 		canvas.addAttributeInfo(new AttributeInfo("class", true, AttributeInfo.CSS));
@@ -1459,17 +1495,23 @@ public class TagDefinition {
 		canvas.addAttributeInfo(new AttributeInfo("title", true));
 		canvas.addAttributeInfo(new AttributeInfo("translate", true));
 		addTagInfo(canvas);
-		
-		TagInfo audio = new TagInfo("audio", false);
+		addEventAttr(canvas);
+
+		TagInfo audio = new TagInfo("audio", true);
 		audio.addAttributeInfo(new AttributeInfo("autoplay", false));
 		audio.addAttributeInfo(new AttributeInfo("controls", false));
 		audio.addAttributeInfo(new AttributeInfo("loop", false));
 		audio.addAttributeInfo(new AttributeInfo("muted", false));
 		audio.addAttributeInfo(new AttributeInfo("preload", true));
-		audio.addAttributeInfo(new AttributeInfo("src", true));
+		audio.addAttributeInfo(new AttributeInfo("src", true, AttributeInfo.FILE));
+		audio.addAttributeInfo(new AttributeInfo("id", true));
+		audio.addAttributeInfo(new AttributeInfo("style", true));
+		audio.addAttributeInfo(new AttributeInfo("title", true));
 		addTagInfo(audio);
-		
-		TagInfo video = new TagInfo("video", false);
+		addEventAttr(audio);
+		addMediaEventAttr(audio);
+
+		TagInfo video = new TagInfo("video", true);
 		video.addAttributeInfo(new AttributeInfo("autoplay", false));
 		video.addAttributeInfo(new AttributeInfo("controls", false));
 		video.addAttributeInfo(new AttributeInfo("height", true));
@@ -1477,21 +1519,26 @@ public class TagDefinition {
 		video.addAttributeInfo(new AttributeInfo("muted", false));
 		video.addAttributeInfo(new AttributeInfo("poster", true));
 		video.addAttributeInfo(new AttributeInfo("preload", true));
-		video.addAttributeInfo(new AttributeInfo("src", true));
+		video.addAttributeInfo(new AttributeInfo("src", true, AttributeInfo.FILE));
 		video.addAttributeInfo(new AttributeInfo("width", true));
+		video.addAttributeInfo(new AttributeInfo("id", true));
+		video.addAttributeInfo(new AttributeInfo("style", true));
+		video.addAttributeInfo(new AttributeInfo("title", true));
 		addTagInfo(video);
-		
+		addEventAttr(video);
+		addMediaEventAttr(video);
+
 		TagInfo source = new TagInfo("source", false);
 		source.addAttributeInfo(new AttributeInfo("media", true));
-		source.addAttributeInfo(new AttributeInfo("src", true));
+		source.addAttributeInfo(new AttributeInfo("src", true, AttributeInfo.FILE));
 		source.addAttributeInfo(new AttributeInfo("type", true));
 		addTagInfo(source);
-		
+
 		TagInfo track = new TagInfo("track", false);
 		track.addAttributeInfo(new AttributeInfo("default", true));
 		track.addAttributeInfo(new AttributeInfo("kind", true));
 		track.addAttributeInfo(new AttributeInfo("label", true));
-		track.addAttributeInfo(new AttributeInfo("src", true));
+		track.addAttributeInfo(new AttributeInfo("src", true, AttributeInfo.FILE));
 		track.addAttributeInfo(new AttributeInfo("srclang", true));
 		addTagInfo(track);
 	}

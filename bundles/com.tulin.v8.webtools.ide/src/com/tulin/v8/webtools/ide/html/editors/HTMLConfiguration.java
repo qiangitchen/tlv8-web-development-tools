@@ -256,15 +256,18 @@ public class HTMLConfiguration extends AbsTextSourceViewerConfiguration {
 
 	@Override
 	public ITextHover getTextHover(ISourceViewer sourceViewer, String contentType) {
-		List<ITextHover> hovers = WebToolsPlugin.getDefault().getHoverRegistry().getAvailableHovers(sourceViewer,
-				editor, getContentTypes(sourceViewer.getDocument()));
-		if (hovers == null || hovers.isEmpty()) {
-			return null;
-		} else if (hovers.size() == 1) {
-			return hovers.get(0);
-		} else {
-			return new CompositeTextHover(hovers);
+		if (contentType.equals(HTMLPartitionScanner.JAVASCRIPT)) {
+			List<ITextHover> hovers = WebToolsPlugin.getDefault().getHoverRegistry().getAvailableHovers(sourceViewer,
+					editor, getContentTypes(sourceViewer.getDocument()));
+			if (hovers == null || hovers.isEmpty()) {
+				return null;
+			} else if (hovers.size() == 1) {
+				return hovers.get(0);
+			} else {
+				return new CompositeTextHover(hovers);
+			}
 		}
+		return null;
 	}
 
 	/**
