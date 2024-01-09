@@ -7,7 +7,6 @@ import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.MenuManager;
-import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.text.BadLocationException;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.ITextSelection;
@@ -19,40 +18,29 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IFileEditorInput;
 import org.eclipse.ui.IStorageEditorInput;
-import org.eclipse.ui.contexts.IContextService;
-import org.eclipse.ui.editors.text.TextEditor;
-import org.eclipse.ui.texteditor.ChainedPreferenceStore;
 import org.eclipse.ui.texteditor.ContentAssistAction;
 import org.eclipse.ui.texteditor.ITextEditorActionConstants;
 import org.eclipse.ui.texteditor.ITextEditorActionDefinitionIds;
 import org.eclipse.ui.views.contentoutline.IContentOutlinePage;
 
-import com.tulin.v8.webtools.ide.ColorProvider;
 import com.tulin.v8.webtools.ide.WebToolsPlugin;
 import com.tulin.v8.webtools.ide.css.ChooseColorAction;
 import com.tulin.v8.webtools.ide.formatter.Formater;
+import com.tulin.v8.webtools.ide.text.WebSourceEditor;
 
 /**
  * CSS Editor
  */
-public class CSSEditor extends TextEditor {
-
-	private ColorProvider colorProvider;
+public class CSSEditor extends WebSourceEditor {
 	private CSSOutlinePage outline;
 
 	public static final String GROUP_CSS = "_css";
 	public static final String ACTION_CHOOSE_COLOR = "_choose_color";
-	public static final String ACTION_COMMENT = "_comment";
-	public static final String ACTION_FORMAT = "_format";
-	
-	private EditorSelectionChangedListener selectionChangeListener;
 
 	public CSSEditor() {
 		super();
 		colorProvider = WebToolsPlugin.getDefault().getColorProvider();
 		setSourceViewerConfiguration(new CSSConfiguration(colorProvider));
-		setPreferenceStore(new ChainedPreferenceStore(
-				new IPreferenceStore[] { getPreferenceStore(), WebToolsPlugin.getDefault().getPreferenceStore() }));
 
 		outline = new CSSOutlinePage(this);
 
@@ -62,12 +50,8 @@ public class CSSEditor extends TextEditor {
 
 		setEditorContextMenuId("#AmaterasCSSEditor");
 	}
-	
+
 	public void createPartControl(Composite parent) {
-		IContextService contextService = getSite().getService(IContextService.class);
-		if (contextService != null)
-			contextService.activateContext(WebToolsPlugin.EDITOR_KEYBINDING_SCOPE_ID);
-		
 		super.createPartControl(parent);
 		selectionChangeListener = new EditorSelectionChangedListener();
 		selectionChangeListener.install(getSelectionProvider());
@@ -79,22 +63,11 @@ public class CSSEditor extends TextEditor {
 	}
 
 	protected void addContextMenuActions(IMenuManager menu) {
-		// menu.add(new Separator(GROUP_CSS));
+		super.addContextMenuActions(menu);
 		menu.appendToGroup(ITextEditorActionConstants.GROUP_EDIT,
 				new MenuManager(WebToolsPlugin.getResourceString("PreferencePage.CSS"), GROUP_CSS));
 		addGroup(menu, ITextEditorActionConstants.GROUP_EDIT, GROUP_CSS);
 		addAction(menu, GROUP_CSS, ACTION_CHOOSE_COLOR);
-
-		menu.appendToGroup(ITextEditorActionConstants.GROUP_EDIT, new MenuManager(
-				WebToolsPlugin.getResourceString("SourceEditor.Menu.Source"), WebToolsPlugin.GROUP_SOURCE));
-		addAction(menu, WebToolsPlugin.GROUP_SOURCE, ACTION_COMMENT);
-		addAction(menu, WebToolsPlugin.GROUP_SOURCE, ACTION_FORMAT);
-	}
-
-	@Override
-	protected final void editorContextMenuAboutToShow(IMenuManager menu) {
-		super.editorContextMenuAboutToShow(menu);
-		addContextMenuActions(menu);
 	}
 
 	protected void updateSelectionDependentActions() {

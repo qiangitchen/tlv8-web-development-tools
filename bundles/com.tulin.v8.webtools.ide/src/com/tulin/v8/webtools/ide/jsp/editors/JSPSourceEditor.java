@@ -106,7 +106,7 @@ public class JSPSourceEditor extends HTMLSourceEditor {
 		addAction(menu, WebToolsPlugin.GROUP_SOURCE, ACTION_ESCAPE_HTML);
 		addAction(menu, WebToolsPlugin.GROUP_SOURCE, ACTION_COMMENT);
 		addAction(menu, WebToolsPlugin.GROUP_SOURCE, ACTION_JSP_COMMENT);
-		addAction(menu, WebToolsPlugin.GROUP_SOURCE, ACTION_FORMAT_HTML);
+		addAction(menu, WebToolsPlugin.GROUP_SOURCE, ACTION_FORMAT);
 	}
 
 	@Override

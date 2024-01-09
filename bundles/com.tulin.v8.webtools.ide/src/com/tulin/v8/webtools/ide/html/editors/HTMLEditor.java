@@ -83,19 +83,6 @@ public class HTMLEditor extends EditorPart implements IPaletteTarget {
 			String charset = input.getFile().getCharset();
 			String html = editor.getSourceEditor().getDocumentProvider().getDocument(input).get();
 
-//			// replace absolute resource path
-//			IProject project = input.getFile().getProject();
-//			ProjectParams param = new ProjectParams();
-//			param.load(project);
-//			File projectDir = new File(project.getLocation().makeAbsolute().toString());
-//			File rootDir = new File(projectDir, param.getRoot());
-//			String basePath = rootDir.getAbsolutePath();
-//			if(basePath.endsWith("\\") || basePath.endsWith("/")){
-//				basePath = basePath.substring(basePath.length() - 1);
-//			}
-//			html = html.replace("href=\"/", "href=\"" + basePath + "/");
-//			html = html.replace("src=\"/", "src=\"" + basePath + "/");
-
 			File tmpFile = editor.getSourceEditor().getTempFile();
 			FileOutputStream out = new FileOutputStream(tmpFile);
 			PrintWriter pw = new PrintWriter(new OutputStreamWriter(out, charset), true);
@@ -120,7 +107,7 @@ public class HTMLEditor extends EditorPart implements IPaletteTarget {
 		IContextService contextService = getSite().getService(IContextService.class);
 		if (contextService != null)
 			contextService.activateContext(WebToolsPlugin.EDITOR_KEYBINDING_SCOPE_ID);
-		
+
 		editor.createPartControl(parent);
 	}
 
@@ -138,10 +125,6 @@ public class HTMLEditor extends EditorPart implements IPaletteTarget {
 		editor.doSaveAs();
 		// updateFlag = true;
 	}
-
-//	public boolean equals(Object arg0) {
-//		return editor.equals(arg0);
-//	}
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public Object getAdapter(Class adapter) {

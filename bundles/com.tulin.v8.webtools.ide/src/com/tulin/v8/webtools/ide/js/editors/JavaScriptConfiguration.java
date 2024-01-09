@@ -15,7 +15,6 @@ import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.content.IContentType;
 import org.eclipse.jface.text.IAutoEditStrategy;
 import org.eclipse.jface.text.IDocument;
-import org.eclipse.jface.text.IDocumentPartitioningListener;
 import org.eclipse.jface.text.ITextDoubleClickStrategy;
 import org.eclipse.jface.text.ITextHover;
 import org.eclipse.jface.text.contentassist.ContentAssistant;
@@ -26,7 +25,6 @@ import org.eclipse.jface.text.presentation.PresentationReconciler;
 import org.eclipse.jface.text.rules.DefaultDamagerRepairer;
 import org.eclipse.jface.text.rules.RuleBasedScanner;
 import org.eclipse.jface.text.source.ISourceViewer;
-import org.eclipse.ui.editors.text.TextSourceViewerConfiguration;
 import org.eclipse.ui.texteditor.ITextEditor;
 
 import com.tulin.v8.webtools.ide.ColorProvider;
@@ -37,11 +35,12 @@ import com.tulin.v8.webtools.ide.assist.EditorContentAssistant;
 import com.tulin.v8.webtools.ide.hover.CompositeTextHover;
 import com.tulin.v8.webtools.ide.js.JavaScriptAssistProcessor;
 import com.tulin.v8.webtools.ide.js.JavaScriptScanner;
+import com.tulin.v8.webtools.ide.text.AbsTextSourceViewerConfiguration;
 
 /**
  * SourceViewerConfiguration implementation for JavaScriptEditor.
  */
-public class JavaScriptConfiguration extends TextSourceViewerConfiguration implements IDocumentPartitioningListener {
+public class JavaScriptConfiguration extends AbsTextSourceViewerConfiguration {
 	private ITextEditor editor;
 	private ColorProvider colorProvider;
 	private RuleBasedScanner commentScanner;
@@ -246,7 +245,7 @@ public class JavaScriptConfiguration extends TextSourceViewerConfiguration imple
 
 	private IDocument document;
 
-	void watchDocument(IDocument document) {
+	public void watchDocument(IDocument document) {
 		if (this.document == document) {
 			return;
 		}

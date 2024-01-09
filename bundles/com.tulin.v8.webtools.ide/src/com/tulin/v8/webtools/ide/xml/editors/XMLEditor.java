@@ -56,7 +56,6 @@ import com.tulin.v8.webtools.ide.xml.SchemaGenerator;
  * The XML editor.
  */
 public class XMLEditor extends HTMLSourceEditor {
-
 	private List<IDTDResolver> resolvers = new ArrayList<IDTDResolver>();
 
 	public static final String GROUP_XML = "_xml";
@@ -64,7 +63,6 @@ public class XMLEditor extends HTMLSourceEditor {
 	public static final String ACTION_GEN_XSD = "_generate_xsd";
 	public static final String ACTION_ESCAPE_XML = "_escape_xml";
 //	public static final String ACTION_XPATH = "_search_xpath";
-	public static final String ACTION_FORMAT_XML = "_format_xml";
 
 	private String[] classNameAttributes = null;
 	private List<ElementSchemaMapping> schemaMappings = null;
@@ -93,7 +91,7 @@ public class XMLEditor extends HTMLSourceEditor {
 		setAction(ACTION_GEN_XSD, new GenerateXSDAction());
 		setAction(ACTION_ESCAPE_XML, new EscapeXMLAction());
 //		setAction(ACTION_XPATH, new SearchXPathAction());
-		setAction(ACTION_FORMAT_XML, new FormatAction());
+		setAction(ACTION_FORMAT, new FormatAction());
 	}
 
 	/** This method is called when configuration is changed. */
@@ -185,25 +183,6 @@ public class XMLEditor extends HTMLSourceEditor {
 							xml = removeMatched(xml, matcher.start(), matcher.end());
 						}
 					}
-
-//					SAXParser parser = new SAXParser();
-//					String dtd = getDTD(xml, false);
-//					String[] xsd = getXSD(xml, false);
-//					if ((dtd == null && xsd == null) || !params.getUseDTD()) {
-//						parser.setFeature("http://xml.org/sax/features/validation", false);
-//					} else {
-//						parser.setFeature("http://xml.org/sax/features/validation", true);
-//						parser.setFeature("http://apache.org/xml/features/continue-after-fatal-error", true);
-//					}
-//					if (xsd != null && params.getUseDTD()) {
-//						parser.setFeature("http://apache.org/xml/features/validation/schema", true);
-//						parser.setFeature("http://xml.org/sax/features/namespaces", true);
-//					}
-//					parser.setFeature("http://xml.org/sax/features/use-entity-resolver2", true);
-//					parser.setEntityResolver(new DTDResolver(getDTDResolvers(),
-//							input.getFile().getLocation().makeAbsolute().toFile().getParentFile()));
-//					parser.setErrorHandler(new XMLValidationHandler(resource));
-//					parser.parse(new InputSource(new StringReader(xml))); 
 
 					SAXParser saxParser = new SAXParser();
 					saxParser.setErrorHandler(new XMLValidationHandler(resource));
@@ -407,14 +386,11 @@ public class XMLEditor extends HTMLSourceEditor {
 
 	@Override
 	protected void addContextMenuActions(IMenuManager menu) {
+		super.addContextMenuActions(menu);
 		menu.appendToGroup(ITextEditorActionConstants.GROUP_EDIT,
 				new MenuManager(WebToolsPlugin.getResourceString("PreferencePage.XML"), GROUP_HTML));
-		menu.appendToGroup(ITextEditorActionConstants.GROUP_EDIT, new MenuManager(
-				WebToolsPlugin.getResourceString("MultiPageHTMLEditor.Source"), WebToolsPlugin.GROUP_SOURCE));
 		addAction(menu, GROUP_HTML, ACTION_SEARCH_XPATH);
 		addAction(menu, GROUP_HTML, ACTION_ESCAPE_XML);
-		addAction(menu, WebToolsPlugin.GROUP_SOURCE, ACTION_COMMENT);
-		addAction(menu, WebToolsPlugin.GROUP_SOURCE, ACTION_FORMAT_XML);
 
 		menu.add(new Separator(GROUP_XML));
 		addGroup(menu, GROUP_HTML, GROUP_XML);
@@ -433,18 +409,6 @@ public class XMLEditor extends HTMLSourceEditor {
 			getAction(ACTION_ESCAPE_XML).setEnabled(true);
 		}
 	}
-
-//	private class SearchXPathAction extends Action {
-//		public SearchXPathAction(){
-//			super(WebToolsPlugin.getResourceString("XMLEditor.XPathSearch"));
-//		}
-//
-//		@Override public void run(){
-//			SearchXPathDialog dialog = new SearchXPathDialog(
-//					getEditorSite().getShell(), XMLEditor.this);
-//			dialog.open();
-//		}
-//	}
 
 	/**
 	 * The action to escape XML special chars in the selection.

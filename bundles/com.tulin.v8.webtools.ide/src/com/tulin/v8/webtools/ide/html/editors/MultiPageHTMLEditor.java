@@ -51,10 +51,6 @@ public class MultiPageHTMLEditor extends MultiPageEditorPart implements IResourc
 		return editor;
 	}
 
-//	protected IEditorSite createSite(IEditorPart editor) {
-//		return new SourceEditorSite(this,editor,getEditorSite());
-//	}
-
 	private void createPage0() {
 		try {
 			int index = addPage(editor, getEditorInput());
@@ -158,42 +154,5 @@ public class MultiPageHTMLEditor extends MultiPageEditorPart implements IResourc
 		super.firePropertyChange(propertyId);
 		wrapper.firePropertyChange2(propertyId);
 	}
-
-//	/** IEditorSite for the source editor. */
-//	private static class SourceEditorSite extends MultiPageEditorSite {
-//		
-//		private HTMLSourceEditor editor = null;
-//		private IEditorSite site;
-//		private ArrayList menuExtenders;
-//		
-//		public SourceEditorSite(MultiPageEditorPart multiPageEditor,IEditorPart editor,IEditorSite site) {
-//			super(multiPageEditor, editor);
-//			this.site = site;
-//			this.editor = (HTMLSourceEditor)editor;
-//		}
-//		
-//		public IEditorActionBarContributor getActionBarContributor() {
-//			return site.getActionBarContributor();
-//		}
-//		
-//		public void registerContextMenu(String menuId, MenuManager menuManager, ISelectionProvider selectionProvider) {
-//			if(editor != null){
-//				if (menuExtenders == null) {
-//					menuExtenders = new ArrayList(1);
-//				}
-//				menuExtenders.add(new PopupMenuExtender(menuId, menuManager, selectionProvider, editor));
-//			}
-//		}
-//		
-//		public void dispose(){
-//			if (menuExtenders != null) {
-//				for (int i = 0; i < menuExtenders.size(); i++) {
-//					((PopupMenuExtender)menuExtenders.get(i)).dispose();
-//				}
-//				menuExtenders = null;
-//			}
-//			super.dispose();
-//		}
-//	}
 
 }

@@ -46,8 +46,6 @@ import org.eclipse.ui.IFileEditorInput;
 import org.eclipse.ui.IStorageEditorInput;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
-import org.eclipse.ui.contexts.IContextService;
-import org.eclipse.ui.editors.text.TextEditor;
 import org.eclipse.ui.part.FileEditorInput;
 import org.eclipse.ui.texteditor.AbstractDecoratedTextEditorPreferenceConstants;
 import org.eclipse.ui.texteditor.ChainedPreferenceStore;
@@ -57,7 +55,6 @@ import org.eclipse.ui.texteditor.ITextEditorActionConstants;
 import org.eclipse.ui.texteditor.ITextEditorActionDefinitionIds;
 import org.eclipse.ui.views.contentoutline.IContentOutlinePage;
 
-import com.tulin.v8.webtools.ide.ColorProvider;
 import com.tulin.v8.webtools.ide.ProjectParams;
 import com.tulin.v8.webtools.ide.SearchXPathDialog;
 import com.tulin.v8.webtools.ide.WebToolsPlugin;
@@ -68,26 +65,21 @@ import com.tulin.v8.webtools.ide.handlers.ToggleCommentHandler;
 import com.tulin.v8.webtools.ide.html.HTMLUtil;
 import com.tulin.v8.webtools.ide.html.HtmlAutoEditStrategy;
 import com.tulin.v8.webtools.ide.html.IHTMLOutlinePage;
+import com.tulin.v8.webtools.ide.text.WebSourceEditor;
 
 /**
  * HTML source editor.
  */
-public class HTMLSourceEditor extends TextEditor {
-	private ColorProvider colorProvider;
+public class HTMLSourceEditor extends WebSourceEditor {
 	private IHTMLOutlinePage outlinePage;
 	private HTMLCharacterPairMatcher pairMatcher;
 	private SoftTabVerifyListener softTabListener;
-	private EditorSelectionChangedListener selectionChangeListener;
-
-	protected HTMLConfiguration configuration;
 
 	public static final String GROUP_HTML = "_html";
 	public static final String ACTION_ESCAPE_HTML = "_escape_html";
-	public static final String ACTION_COMMENT = "_comment";
 	public static final String ACTION_OPEN_PALETTE = "_open_palette";
 	public static final String ACTION_CHOOSE_COLOR = "_choose_color";
 	public static final String ACTION_COMPLETION = "ContentAssistProposal";
-	public static final String ACTION_FORMAT_HTML = "_format";
 	public static final String ACTION_SEARCH_XPATH = "_search_xpath";
 
 //	private boolean useSoftTab;
@@ -106,7 +98,7 @@ public class HTMLSourceEditor extends TextEditor {
 		setAction(ACTION_COMMENT, new CommentAction());
 		setAction(ACTION_OPEN_PALETTE, new OpenPaletteAction());
 		setAction(ACTION_CHOOSE_COLOR, new ChooseColorAction(this));
-		setAction(ACTION_FORMAT_HTML, new FormatAction());
+		setAction(ACTION_FORMAT, new FormatAction());
 		setAction(ACTION_SEARCH_XPATH, new SearchXPathAction());
 
 		IPreferenceStore store = WebToolsPlugin.getDefault().getPreferenceStore();
@@ -135,13 +127,6 @@ public class HTMLSourceEditor extends TextEditor {
 		return new HTMLOutlinePage(this);
 	}
 
-//	/**
-//	 * TODO Move to SourceViewerConfiguration!!
-//	 */
-//	protected final HTMLHyperlinkDetector createHyperlinkSupport(){
-//		return new HTMLHyperlinkDetector();
-//	}
-
 	private ProjectionSupport fProjectionSupport;
 
 	protected ISourceViewer createSourceViewer(Composite parent, IVerticalRuler ruler, int styles) {
@@ -156,10 +141,6 @@ public class HTMLSourceEditor extends TextEditor {
 	}
 
 	public void createPartControl(Composite parent) {
-		IContextService contextService = getSite().getService(IContextService.class);
-		if (contextService != null)
-			contextService.activateContext(WebToolsPlugin.EDITOR_KEYBINDING_SCOPE_ID);
-		
 		super.createPartControl(parent);
 
 		ProjectionViewer projectionViewer = (ProjectionViewer) getSourceViewer();
@@ -168,11 +149,6 @@ public class HTMLSourceEditor extends TextEditor {
 		projectionViewer.doOperation(ProjectionViewer.TOGGLE);
 		projectionViewer.getTextWidget()
 				.setTabs(getPreferenceStore().getInt(AbstractDecoratedTextEditorPreferenceConstants.EDITOR_TAB_WIDTH));
-
-//		projectionViewer.setHyperlinkDetectors(new IHyperlinkDetector[]{
-//				new URLHyperlinkDetector(projectionViewer),
-//				createHyperlinkSupport()
-//		}, SWT.CTRL);
 
 		ITextViewerExtension2 extension = (ITextViewerExtension2) getSourceViewer();
 		pairMatcher = new HTMLCharacterPairMatcher();
@@ -186,14 +162,6 @@ public class HTMLSourceEditor extends TextEditor {
 
 		update();
 	}
-
-//	public void addTextListener(ITextListener l){
-//		getSourceViewer().addTextListener(l);
-//	}
-//
-//	public void removeTextListener(ITextListener l){
-//		getSourceViewer().removeTextListener(l);
-//	}
 
 	/** This method is called when configuration is changed. */
 	protected boolean affectsTextPresentation(PropertyChangeEvent event) {
@@ -272,22 +240,13 @@ public class HTMLSourceEditor extends TextEditor {
 	 * @param menu IMenuManager
 	 */
 	protected void addContextMenuActions(IMenuManager menu) {
+		super.addContextMenuActions(menu);
 		menu.appendToGroup(ITextEditorActionConstants.GROUP_EDIT,
 				new MenuManager(WebToolsPlugin.getResourceString("MultiPageHTMLEditor.html"), GROUP_HTML));
 		addAction(menu, GROUP_HTML, ACTION_SEARCH_XPATH);
 		addAction(menu, GROUP_HTML, ACTION_CHOOSE_COLOR);
 		// addAction(menu, GROUP_HTML, ACTION_OPEN_PALETTE);
 		addAction(menu, GROUP_HTML, ACTION_ESCAPE_HTML);
-
-		menu.appendToGroup(ITextEditorActionConstants.GROUP_EDIT, new MenuManager(
-				WebToolsPlugin.getResourceString("SourceEditor.Menu.Source"), WebToolsPlugin.GROUP_SOURCE));
-		addAction(menu, WebToolsPlugin.GROUP_SOURCE, ACTION_COMMENT);
-		addAction(menu, WebToolsPlugin.GROUP_SOURCE, ACTION_FORMAT_HTML);
-	}
-
-	protected final void editorContextMenuAboutToShow(IMenuManager menu) {
-		super.editorContextMenuAboutToShow(menu);
-		addContextMenuActions(menu);
 	}
 
 	protected void updateSelectionDependentActions() {
@@ -363,52 +322,23 @@ public class HTMLSourceEditor extends TextEditor {
 		if (validation && isFileEditorInput()) {
 			doValidate();
 		}
-
-//		HTMLHyperlinkDetector hyperlinkDetector = ((HTMLConfiguration) getSourceViewerConfiguration())
-//				.getHyperlinkDetector();
-//		hyperlinkDetector.setEditor(this);
 	}
 
 	/**
 	 * Update informations about code-completion.
 	 */
 	protected void updateAssist() {
-//		final String html = getDocumentProvider().getDocument(getEditorInput()).get();
-
 		// Update AssistProcessors
 		new Job("Update Content Assist Information") {
 			@Override
 			protected IStatus run(IProgressMonitor monitor) {
-//				HTMLAssistProcessor processor = ((HTMLConfiguration) getSourceViewerConfiguration())
-//						.getAssistProcessor();
-//				processor.update(HTMLSourceEditor.this, html);
-
 				if (!isFileEditorInput()) {
 					return Status.OK_STATUS;
 				}
-
-//				((HTMLConfiguration) getSourceViewerConfiguration()).getJavaScriptAssistProcessor();
-
 				return Status.OK_STATUS;
 			}
 		}.schedule();
 	}
-
-	/*
-	 * protected void initializeDragAndDrop(ISourceViewer viewer) {
-	 * super.initializeDragAndDrop(viewer);
-	 * 
-	 * DropTarget target = new
-	 * DropTarget(viewer.getTextWidget(),DND.DROP_DEFAULT|DND.DROP_COPY);
-	 * LocalSelectionTransfer selTransfer = LocalSelectionTransfer.getInstance(); //
-	 * FileTransfer fileTransfer = FileTransfer.getInstance(); // TextTransfer
-	 * textTransfer = TextTransfer.getInstance(); // Transfer[] types = new
-	 * Transfer[]{fileTransfer,textTransfer}; Transfer[] types = new
-	 * Transfer[]{selTransfer}; target.setTransfer(types);
-	 * target.addDropListener(new HTMLDropListener()); //
-	 * getSourceViewer().getTextWidget().addMouseMoveListener(new
-	 * HTMLDropMouseMoveListener()); }
-	 */
 
 	public void dispose() {
 		if (selectionChangeListener != null) {

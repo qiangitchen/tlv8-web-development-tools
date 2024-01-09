@@ -44,40 +44,32 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IFileEditorInput;
 import org.eclipse.ui.IStorageEditorInput;
-import org.eclipse.ui.contexts.IContextService;
-import org.eclipse.ui.editors.text.TextEditor;
 import org.eclipse.ui.texteditor.AbstractDecoratedTextEditorPreferenceConstants;
-import org.eclipse.ui.texteditor.ChainedPreferenceStore;
 import org.eclipse.ui.texteditor.ContentAssistAction;
 import org.eclipse.ui.texteditor.ITextEditorActionConstants;
 import org.eclipse.ui.texteditor.ITextEditorActionDefinitionIds;
 import org.eclipse.ui.views.contentoutline.IContentOutlinePage;
 
-import com.tulin.v8.webtools.ide.ColorProvider;
 import com.tulin.v8.webtools.ide.ProjectParams;
 import com.tulin.v8.webtools.ide.StringUtils;
 import com.tulin.v8.webtools.ide.WebToolsPlugin;
 import com.tulin.v8.webtools.ide.formatter.Formater;
 import com.tulin.v8.webtools.ide.html.editors.SoftTabVerifyListener;
 import com.tulin.v8.webtools.ide.js.launch.JavaScriptLaunchUtil;
+import com.tulin.v8.webtools.ide.text.WebSourceEditor;
 
 /**
  * The JavaScript editor.
  */
-public class JavaScriptEditor extends TextEditor {
-	private ColorProvider colorProvider;
+public class JavaScriptEditor extends WebSourceEditor {
 	private SoftTabVerifyListener softTabListener;
 	private JavaScriptOutlinePage outlinePage;
 	private JavaScriptCharacterPairMatcher pairMatcher;
 	private ProjectionSupport fProjectionSupport;
 	private JavaScriptHyperlinkDetector hyperlinkDetector;
-	private EditorSelectionChangedListener selectionChangeListener;
 
 	public static final String GROUP_JAVASCRIPT = "_javascript";
-	public static final String ACTION_COMMENT = "_comment";
 	public static final String ACTION_DEBUGGER = "_launch_debugger";
-	public static final String ACTION_FORMAT = "_format";
-	public static final String ACTION_OUTLINE = "_outline";
 	public static final String ACTION_TOGGLE_BREAKPOINT = "_toggle_breakpoint";
 
 	private JavaScriptConfiguration configuration;
@@ -87,11 +79,8 @@ public class JavaScriptEditor extends TextEditor {
 	 */
 	public JavaScriptEditor() {
 		super();
-		colorProvider = WebToolsPlugin.getDefault().getColorProvider();
 		configuration = new JavaScriptConfiguration(this, colorProvider);
 		setSourceViewerConfiguration(configuration);
-		setPreferenceStore(new ChainedPreferenceStore(
-				new IPreferenceStore[] { getPreferenceStore(), WebToolsPlugin.getDefault().getPreferenceStore() }));
 
 		outlinePage = new JavaScriptOutlinePage(this);
 
@@ -132,24 +121,13 @@ public class JavaScriptEditor extends TextEditor {
 	}
 
 	protected void addContextMenuActions(IMenuManager menu) {
-		// menu.add(new Separator(GROUP_JAVASCRIPT));
+		super.addContextMenuActions(menu);
 		menu.appendToGroup(ITextEditorActionConstants.GROUP_EDIT,
 				new MenuManager(WebToolsPlugin.getResourceString("PreferencePage.JavaScript"), GROUP_JAVASCRIPT));
 		addAction(menu, GROUP_JAVASCRIPT, ACTION_OUTLINE);
-
 		if (getEditorInput() instanceof IFileEditorInput) {
 			addAction(menu, GROUP_JAVASCRIPT, ACTION_DEBUGGER);
 		}
-
-		menu.appendToGroup(ITextEditorActionConstants.GROUP_EDIT, new MenuManager(
-				WebToolsPlugin.getResourceString("SourceEditor.Menu.Source"), WebToolsPlugin.GROUP_SOURCE));
-		addAction(menu, WebToolsPlugin.GROUP_SOURCE, ACTION_COMMENT);
-		addAction(menu, WebToolsPlugin.GROUP_SOURCE, ACTION_FORMAT);
-	}
-
-	protected final void editorContextMenuAboutToShow(IMenuManager menu) {
-		super.editorContextMenuAboutToShow(menu);
-		addContextMenuActions(menu);
 	}
 
 	protected void doSetInput(IEditorInput input) throws CoreException {
@@ -170,10 +148,6 @@ public class JavaScriptEditor extends TextEditor {
 	}
 
 	public void createPartControl(Composite parent) {
-		IContextService contextService = getSite().getService(IContextService.class);
-		if (contextService != null)
-			contextService.activateContext(WebToolsPlugin.EDITOR_KEYBINDING_SCOPE_ID);
-		
 		super.createPartControl(parent);
 
 		ProjectionViewer viewer = (ProjectionViewer) getSourceViewer();

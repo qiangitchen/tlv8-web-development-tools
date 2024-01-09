@@ -18,7 +18,6 @@ import org.eclipse.jface.text.DefaultInformationControl;
 import org.eclipse.jface.text.DocumentEvent;
 import org.eclipse.jface.text.IAutoEditStrategy;
 import org.eclipse.jface.text.IDocument;
-import org.eclipse.jface.text.IDocumentPartitioningListener;
 import org.eclipse.jface.text.IInformationControl;
 import org.eclipse.jface.text.IInformationControlCreator;
 import org.eclipse.jface.text.IRegion;
@@ -37,7 +36,6 @@ import org.eclipse.jface.text.rules.ITokenScanner;
 import org.eclipse.jface.text.rules.RuleBasedScanner;
 import org.eclipse.jface.text.source.ISourceViewer;
 import org.eclipse.swt.widgets.Shell;
-import org.eclipse.ui.editors.text.TextSourceViewerConfiguration;
 
 import com.tulin.v8.webtools.ide.ColorProvider;
 import com.tulin.v8.webtools.ide.ContentTypeRelatedExtensionTracker;
@@ -55,11 +53,12 @@ import com.tulin.v8.webtools.ide.html.HTMLTagScanner;
 import com.tulin.v8.webtools.ide.html.HtmlAutoEditStrategy;
 import com.tulin.v8.webtools.ide.html.InnerCSSScanner;
 import com.tulin.v8.webtools.ide.html.InnerJavaScriptScanner;
+import com.tulin.v8.webtools.ide.text.AbsTextSourceViewerConfiguration;
 
 /**
  * <code>SourceViewerConfiguration</code> for <code>HTMLSourceEditor</code>.
  */
-public class HTMLConfiguration extends TextSourceViewerConfiguration implements IDocumentPartitioningListener {
+public class HTMLConfiguration extends AbsTextSourceViewerConfiguration {
 	private HTMLDoubleClickStrategy doubleClickStrategy;
 
 	private HTMLScanner scanner;
@@ -82,7 +81,7 @@ public class HTMLConfiguration extends TextSourceViewerConfiguration implements 
 	private HTMLHyperlinkDetector hyperlinkDetector;
 
 	protected HTMLSourceEditor editor;
-	
+
 	private Set<IContentType> resolvedContentTypes;
 	private Set<IContentType> fallbackContentTypes;
 	private EditorContentAssistant contentAssistant;
@@ -560,7 +559,7 @@ public class HTMLConfiguration extends TextSourceViewerConfiguration implements 
 
 	private IDocument document;
 
-	void watchDocument(IDocument document) {
+	public void watchDocument(IDocument document) {
 		if (this.document == document) {
 			return;
 		}
