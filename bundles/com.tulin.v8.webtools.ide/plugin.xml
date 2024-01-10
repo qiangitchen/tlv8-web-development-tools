@@ -1,40 +1,614 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <plugin>
 	<!--====================================================-->
-   <!-- Extention points -->
-   <!--====================================================-->
-   <extension-point id="customTagConverter" name="customTagConverter" schema="schema/customTagConverter.exsd"/>
-   <extension-point id="customTagAttributeAssist" name="customTagAttributeAssist" schema="schema/customTagAttributeAssist.exsd"/>
-   <extension-point id="paletteItem" name="paletteItem" schema="schema/paletteItem.exsd"/>
-   <extension-point id="noValidationNatures" name="noValidationNatures" schema="schema/noValidationNatures.exsd"/>
-   <extension-point id="fileAssistProcessor" name="fileAssistProcessor" schema="schema/fileAssistProcessor.exsd"/>
-   <extension-point id="hyperlinkProvider" name="hyperlinkProvider" schema="schema/hyperlinkProvider.exsd"/>
-   <extension-point id="tldLocator" name="tldLocator" schema="schema/tldLocator.exsd"/>
-   <extension-point id="customTagValidator" name="customTagValidator" schema="schema/customTagValidator.exsd"/>
-   <extension-point id="preferenceContributer" name="preferenceContributer" schema="schema/preferenceContributer.exsd"/>
-   <extension-point id="pagefilter" name="pagefilter" schema="schema/pagefilter.exsd"/>
-   <extension-point id="javaScriptCompleter" name="javaScriptCompleter" schema="schema/javaScriptCompleter.exsd"/>
-   <extension-point id="jspelAssistProcessor" name="jspelAssistProcessor" schema="schema/jspelAssistProcessor.exsd"/>
-   <extension-point id="contentAssistProcessors" name="contentAssistProcessors" schema="schema/contentAssistProcessors.exsd"/>
-   <extension-point id="hoverProviders" name="hoverProviders" schema="schema/hoverProviders.exsd"/>
-   
+	<!-- Extention points -->
+	<!--====================================================-->
+	<extension-point id="customTagConverter" name="customTagConverter"
+		schema="schema/customTagConverter.exsd" />
+	<extension-point id="customTagAttributeAssist"
+		name="customTagAttributeAssist"
+		schema="schema/customTagAttributeAssist.exsd" />
+	<extension-point id="paletteItem" name="paletteItem"
+		schema="schema/paletteItem.exsd" />
+	<extension-point id="noValidationNatures" name="noValidationNatures"
+		schema="schema/noValidationNatures.exsd" />
+	<extension-point id="fileAssistProcessor" name="fileAssistProcessor"
+		schema="schema/fileAssistProcessor.exsd" />
+	<extension-point id="hyperlinkProvider" name="hyperlinkProvider"
+		schema="schema/hyperlinkProvider.exsd" />
+	<extension-point id="tldLocator" name="tldLocator"
+		schema="schema/tldLocator.exsd" />
+	<extension-point id="customTagValidator" name="customTagValidator"
+		schema="schema/customTagValidator.exsd" />
+	<extension-point id="preferenceContributer" name="preferenceContributer"
+		schema="schema/preferenceContributer.exsd" />
+	<extension-point id="pagefilter" name="pagefilter"
+		schema="schema/pagefilter.exsd" />
+	<extension-point id="javaScriptCompleter" name="javaScriptCompleter"
+		schema="schema/javaScriptCompleter.exsd" />
+	<extension-point id="jspelAssistProcessor" name="jspelAssistProcessor"
+		schema="schema/jspelAssistProcessor.exsd" />
+	<extension-point id="contentAssistProcessors" name="contentAssistProcessors"
+		schema="schema/contentAssistProcessors.exsd" />
+	<extension-point id="hoverProviders" name="hoverProviders"
+		schema="schema/hoverProviders.exsd" />
+
 	<!-- 初始配置 -->
 	<extension
-         point="org.eclipse.core.runtime.preferences">
-      <initializer class="com.tulin.v8.webtools.ide.PreferenceInitializer"/>
-   	</extension>
-   
-	<!-- HTML File Editor-->
-   <extension
-         point="org.eclipse.core.contenttype.contentTypes">
-      <content-type
-            base-type="org.eclipse.core.runtime.text"
-            file-extensions="htm,html,xhtml"
-            id="com.tulin.v8.webtools.ide.html"
-            name="HTML">
-      </content-type>
-   </extension>
-   <!--
+		point="org.eclipse.core.runtime.preferences">
+		<initializer class="com.tulin.v8.webtools.ide.PreferenceInitializer" />
+	</extension>
+
+	<!-- 文件类型 -->
+	<extension
+		point="org.eclipse.core.contenttype.contentTypes">
+		<!-- HTML File Editor-->
+		<content-type
+			base-type="org.eclipse.core.runtime.text"
+			file-extensions="htm,html,xhtml"
+			id="com.tulin.v8.webtools.ide.html"
+			name="HTML">
+		</content-type>
+		<!-- JSP File Editor-->
+		<content-type
+			base-type="org.eclipse.core.runtime.text"
+			file-extensions="jsp,jspf,jspx"
+			id="com.tulin.v8.webtools.ide.jsp"
+			name="JSP">
+		</content-type>
+		<!-- Javascript File Editor-->
+		<content-type
+			base-type="org.eclipse.core.runtime.text"
+			file-extensions="js"
+			id="com.tulin.v8.webtools.ide.js"
+			name="Javascript">
+		</content-type>
+		<!-- CSS File Editor-->
+		<content-type
+			base-type="org.eclipse.core.runtime.text"
+			file-extensions="css"
+			id="com.tulin.v8.webtools.ide.css"
+			name="CSS">
+		</content-type>
+		<!-- XML File Editor-->
+		<content-type
+			base-type="org.eclipse.core.runtime.text"
+			file-extensions="xml,tld,xsl"
+			id="com.tulin.v8.webtools.ide.xml"
+			name="XML">
+		</content-type>
+	</extension>
+
+	<extension
+		point="org.eclipse.ui.editors">
+		<editor
+			class="com.tulin.v8.webtools.ide.html.editors.HTMLEditor"
+			contributorClass="com.tulin.v8.webtools.ide.html.editors.HTMLEditorContributor"
+			default="true"
+			icon="icons/tlv8_html.png"
+			id="com.tulin.v8.webtools.ide.editors.HTMLEditor"
+			name="%plugin.editor.htmleditor">
+			<contentTypeBinding contentTypeId="com.tulin.v8.webtools.ide.html" />
+		</editor>
+		<editor
+			class="com.tulin.v8.webtools.ide.css.editors.CSSEditor"
+			contributorClass="org.eclipse.ui.editors.text.TextEditorActionContributor"
+			default="true"
+			icon="icons/tlv8_css.png"
+			id="com.tulin.v8.webtools.ide.csseditor.editors.CSSEditor"
+			name="%plugin.editor.csseditor">
+			<contentTypeBinding contentTypeId="com.tulin.v8.webtools.ide.css" />
+		</editor>
+		<editor
+			class="com.tulin.v8.webtools.ide.js.editors.JavaScriptEditor"
+			contributorClass="com.tulin.v8.webtools.ide.js.editors.JavaScriptEditorContributor"
+			default="true"
+			icon="icons/tlv8_js.png"
+			id="com.tulin.v8.webtools.ide.jseditor.editors.JavaScriptEditor"
+			name="%plugin.editor.jseditor">
+			<contentTypeBinding contentTypeId="com.tulin.v8.webtools.ide.js" />
+		</editor>
+		<editor
+			class="com.tulin.v8.webtools.ide.jsp.editors.JSPEditor"
+			contributorClass="com.tulin.v8.webtools.ide.jsp.editors.JSPEditorContributor"
+			default="true"
+			icon="icons/tlv8_jsp.png"
+			id="com.tulin.v8.webtools.ide.jspeditor.editors.JSPEditor"
+			name="%plugin.editor.jspeditor">
+			<contentTypeBinding contentTypeId="com.tulin.v8.webtools.ide.jsp" />
+		</editor>
+		<editor
+        class="com.tulin.v8.webtools.ide.xml.editors.XMLEditor"
+        contributorClass="com.tulin.v8.webtools.ide.xml.editors.XMLEditorContributor"
+        default="true"
+        extensions="xml,tld,xsl"
+        icon="icons/tlv8_xml.png"
+        id="com.tulin.v8.webtools.ide.xmleditor.editors.XMLEditor"
+        name="%plugin.editor.xmleditor">
+			<contentTypeBinding contentTypeId="com.tulin.v8.webtools.ide.xml" />
+		</editor>
+	</extension>
+
+	<extension
+		point="com.tulin.v8.webtools.ide.fileAssistProcessor">
+		<processor class="com.tulin.v8.webtools.ide.assist.FileAssistProcessor" />
+	</extension>
+	<extension
+		point="com.tulin.v8.webtools.ide.customTagAttributeAssist">
+		<customTagAttributeAssist
+			class="com.tulin.v8.webtools.ide.jsp.editors.JSTLAttributeAssist">
+		</customTagAttributeAssist>
+	</extension>
+
+	<!--====================================================-->
+	<!-- Preferences -->
+	<!--====================================================-->
+	<extension
+		point="org.eclipse.ui.preferencePages">
+		<page
+			class="com.tulin.v8.webtools.ide.preferencePages.PreferencePage"
+			name="%plugin.preference.category"
+			category="com.tulin.v8.ide.preferences.StudioPreferencePage"
+			id="com.tulin.v8.webtools.ide.category" />
+		<page
+			class="com.tulin.v8.webtools.ide.preferencePages.CustomAssistPreferencePage"
+			category="com.tulin.v8.webtools.ide.AssistPreferencePage"
+			name="%plugin.preference.customassist"
+			id="com.tulin.v8.webtools.ide.CustomAssistPreferencePage" />
+		<page
+			class="com.tulin.v8.webtools.ide.preferencePages.DTDPreferencePage"
+			category="com.tulin.v8.webtools.ide.XMLPreferencePage"
+			name="%plugin.preference.dtd"
+			id="com.tulin.v8.webtools.ide.DTDPreferencePage" />
+		<page
+			class="com.tulin.v8.webtools.ide.preferencePages.TLDPreferencePage"
+			category="com.tulin.v8.webtools.ide.JSPEditorPreferencePage"
+			name="%plugin.preference.tld"
+			id="com.tulin.v8.webtools.ide.TLDPreferencePage" />
+		<page
+			class="com.tulin.v8.webtools.ide.preferencePages.AssistPreferencePage"
+			category="com.tulin.v8.webtools.ide.category"
+			name="%plugin.preference.codeassist"
+			id="com.tulin.v8.webtools.ide.AssistPreferencePage" />
+		<page
+			class="com.tulin.v8.webtools.ide.preferencePages.CSSEditorPreferencePage"
+			category="com.tulin.v8.webtools.ide.category"
+			name="%plugin.preference.csseditor"
+			id="com.tulin.v8.webtools.ide.CSSEditorPreferencePage" />
+		<page
+			class="com.tulin.v8.webtools.ide.preferencePages.JSPEditorPreferencePage"
+			category="com.tulin.v8.webtools.ide.category"
+			name="%plugin.preference.jspeditor"
+			id="com.tulin.v8.webtools.ide.JSPEditorPreferencePage" />
+		<page
+			class="com.tulin.v8.webtools.ide.preferencePages.JavaScriptEditorPreferencePage"
+			category="com.tulin.v8.webtools.ide.category"
+			name="%plugin.preference.jseditor"
+			id="com.tulin.v8.webtools.ide.JavaScriptEditorPreferencePage" />
+		<page
+			class="com.tulin.v8.webtools.ide.preferencePages.XMLPreferencePage"
+			category="com.tulin.v8.webtools.ide.category"
+			name="XML"
+			id="com.tulin.v8.webtools.ide.XMLPreferencePage" />
+		<page
+			class="com.tulin.v8.webtools.ide.preferencePages.HTMLTaskTagPreferencePage"
+			category="com.tulin.v8.webtools.ide.XMLPreferencePage"
+			name="%plugin.preference.tasktag"
+			id="com.tulin.v8.webtools.ide.tasktag.HTMLTaskTagPreferencePage" />
+		<page
+			class="com.tulin.v8.webtools.ide.preferencePages.HTMLTemplatePreferencePage"
+			category="com.tulin.v8.webtools.ide.AssistPreferencePage"
+			name="%plugin.preference.template"
+			id="com.tulin.v8.webtools.ide.template.HTMLTemplatePreferencePage" />
+		<page
+			class="com.tulin.v8.webtools.ide.preferencePages.FormatterPreferencePage"
+			category="com.tulin.v8.webtools.ide.category"
+			name="%plugin.preference.formatter"
+			id="com.tulin.v8.webtools.ide.FormatterPreferencePage" />
+	</extension>
+
+	<!-- Keybinding scope for source editor -->
+	<extension point="org.eclipse.ui.contexts">
+		<context
+			name="TLv8 Web Source"
+			parentId="org.eclipse.ui.textEditorScope"
+			description="TLv8 Web File Source"
+			id="com.tulin.v8.webtools.ide.sourceEditorScope">
+		</context>
+	</extension>
+
+	<!-- 工具栏菜单 -->
+	<extension
+		point="org.eclipse.ui.commands">
+		<category
+			name="%category.label.source"
+			id="tulin.commands.category">
+		</category>
+		<command
+			categoryId="tulin.commands.category"
+			id="tulin.command.comment"
+			name="%menu.label.comment">
+		</command>
+		<command
+			categoryId="tulin.commands.category"
+			id="tulin.command.MultilineComment"
+			name="%menu.label.mcomment">
+		</command>
+		<command
+			categoryId="tulin.commands.category"
+			id="tulin.command.UnMultilineComment"
+			name="%menu.label.umcomment">
+		</command>
+		<command
+			categoryId="tulin.commands.category"
+			id="tulin.command.format"
+			name="%menu.label.fortmat">
+		</command>
+	</extension>
+
+	<extension
+		point="org.eclipse.ui.handlers">
+		<handler
+			commandId="tulin.command.comment"
+			class="com.tulin.v8.webtools.ide.handlers.ToggleCommentHandler">
+		</handler>
+		<handler
+			commandId="tulin.command.MultilineComment"
+			class="com.tulin.v8.webtools.ide.handlers.MultilineCommentHandler">
+		</handler>
+		<handler
+			commandId="tulin.command.UnMultilineComment"
+			class="com.tulin.v8.webtools.ide.handlers.UnMultilineCommentHandler">
+		</handler>
+		<handler
+			commandId="tulin.command.format"
+			class="com.tulin.v8.webtools.ide.handlers.FormaterHandler">
+		</handler>
+	</extension>
+
+	<extension
+		point="org.eclipse.ui.bindings">
+		<key
+			commandId="tulin.command.comment"
+			contextId="com.tulin.v8.webtools.ide.sourceEditorScope"
+			schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+			sequence="M1+/" />
+		<key
+			commandId="tulin.command.MultilineComment"
+			contextId="com.tulin.v8.webtools.ide.sourceEditorScope"
+			schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+			sequence="M1+M2+/" />
+		<key
+			commandId="tulin.command.UnMultilineComment"
+			contextId="com.tulin.v8.webtools.ide.sourceEditorScope"
+			schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+			sequence="M1+M2+\" />
+		<key
+			commandId="tulin.command.format"
+			contextId="com.tulin.v8.webtools.ide.sourceEditorScope"
+			schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+			sequence="M1+M2+F" />
+	</extension>
+
+	<!--====================================================-->
+	<!-- Template -->
+	<!--====================================================-->
+	<extension
+		point="org.eclipse.ui.editors.templates">
+		<contextType
+			class="com.tulin.v8.webtools.ide.template.HTMLContextType"
+			name="HTML/JSP/XML"
+			id="com.tulin.v8.webtools.ide.templateContextType.html" />
+		<contextType
+			class="com.tulin.v8.webtools.ide.template.JavaScriptContextType"
+			name="JavaScript"
+			id="com.tulin.v8.webtools.ide.templateContextType.javascript" />
+		<template
+			autoinsert="false"
+			contextTypeId="com.tulin.v8.webtools.ide.templateContextType.javascript"
+			description="%plugin.template.js.catch"
+			id="com.tulin.v8.webtools.ide.template.js.catch"
+			name="catch">
+			<pattern>
+				catch (e) {
+				${cursor}// ${todo}: handle exception
+				}
+			</pattern>
+		</template>
+		<template
+			autoinsert="false"
+			contextTypeId="com.tulin.v8.webtools.ide.templateContextType.javascript"
+			description="%plugin.template.js.do"
+			id="com.tulin.v8.webtools.ide.template.js.do"
+			name="do">
+			<pattern>
+				do {
+				${line_selection}${cursor}
+				} while (${condition});
+			</pattern>
+		</template>
+		<template
+			autoinsert="false"
+			contextTypeId="com.tulin.v8.webtools.ide.templateContextType.javascript"
+			description="%plugin.template.js.else"
+			id="com.tulin.v8.webtools.ide.template.js.else"
+			name="else">
+			<pattern>
+				else {
+				${cursor}
+				}
+			</pattern>
+		</template>
+		<template
+			autoinsert="false"
+			contextTypeId="com.tulin.v8.webtools.ide.templateContextType.javascript"
+			description="%plugin.template.js.elseif"
+			id="com.tulin.v8.webtools.ide.template.js.elseif"
+			name="elseif">
+			<pattern>
+				else if (${condition}) {
+				${cursor}
+				}
+			</pattern>
+		</template>
+		<template
+			autoinsert="false"
+			contextTypeId="com.tulin.v8.webtools.ide.templateContextType.javascript"
+			description="%plugin.template.js.for"
+			id="com.tulin.v8.webtools.ide.template.js.for"
+			name="for">
+			<pattern>
+				for (var ${index} = 0; ${index} &lt; ${array}.length;
+				${index}++) {
+				${line_selection}${cursor}
+				}
+			</pattern>
+		</template>
+		<template
+			autoinsert="false"
+			contextTypeId="com.tulin.v8.webtools.ide.templateContextType.javascript"
+			description="%plugin.template.js.forwithvar"
+			id="com.tulin.v8.webtools.ide.template.js.forwithvar"
+			name="for">
+			<pattern>
+				for (var ${index} = 0; ${index} &lt; ${array}.length;
+				${index}++) {
+				var ${array_element} = ${array}[${index}];
+				${cursor}
+				}
+			</pattern>
+		</template>
+		<template
+			autoinsert="false"
+			contextTypeId="com.tulin.v8.webtools.ide.templateContextType.javascript"
+			description="%plugin.template.js.forin"
+			id="com.tulin.v8.webtools.ide.template.js.forin"
+			name="forin">
+			<pattern>
+				for (var ${iterable_element} in ${iterable}) {
+				${cursor}
+				}
+			</pattern>
+		</template>
+		<template
+			autoinsert="false"
+			contextTypeId="com.tulin.v8.webtools.ide.templateContextType.javascript"
+			description="%plugin.template.js.function"
+			id="com.tulin.v8.webtools.ide.template.js.function"
+			name="function">
+			<pattern>
+				function ${name}(${args}) {
+				${cursor}
+				}
+			</pattern>
+		</template>
+		<template
+			autoinsert="false"
+			contextTypeId="com.tulin.v8.webtools.ide.templateContextType.javascript"
+			description="%plugin.template.js.anonymousFunction"
+			id="com.tulin.v8.webtools.ide.template.js.anonymousFunction"
+			name="function">
+			<pattern>
+				function (${args}) {
+				${cursor}
+				}
+			</pattern>
+		</template>
+		<template
+			autoinsert="false"
+			contextTypeId="com.tulin.v8.webtools.ide.templateContextType.javascript"
+			description="%plugin.template.js.if"
+			id="com.tulin.v8.webtools.ide.template.js.if"
+			name="if">
+			<pattern>
+				if (${condition}) {
+				${line_selection}${cursor}
+				}
+			</pattern>
+		</template>
+		<template
+			autoinsert="false"
+			contextTypeId="com.tulin.v8.webtools.ide.templateContextType.javascript"
+			description="%plugin.template.js.ifelse"
+			id="com.tulin.v8.webtools.ide.template.js.ifelse"
+			name="ifelse">
+			<pattern>
+				if (${condition}) {
+				${cursor}
+				} else {
+
+				}
+			</pattern>
+		</template>
+		<template
+			autoinsert="false"
+			contextTypeId="com.tulin.v8.webtools.ide.templateContextType.javascript"
+			description="%plugin.template.js.lazy"
+			id="com.tulin.v8.webtools.ide.template.js.lazy"
+			name="lazy">
+			<pattern>
+				if (${name:var} == null) {
+				${name} = new ${type}(${arguments});
+				${cursor}
+				}
+
+				return ${name};
+			</pattern>
+		</template>
+		<template
+			autoinsert="false"
+			contextTypeId="com.tulin.v8.webtools.ide.templateContextType.javascript"
+			description="%plugin.template.js.new"
+			id="com.tulin.v8.webtools.ide.template.js.new"
+			name="new">
+			<pattern>
+				new ${type}(${arguments});
+			</pattern>
+		</template>
+		<template
+			autoinsert="false"
+			contextTypeId="com.tulin.v8.webtools.ide.templateContextType.javascript"
+			description="%plugin.template.js.newwithvar"
+			id="com.tulin.v8.webtools.ide.template.js.newwithvar"
+			name="new">
+			<pattern>
+				var ${name} = new ${type}(${arguments});
+			</pattern>
+		</template>
+		<template
+			autoinsert="false"
+			contextTypeId="com.tulin.v8.webtools.ide.templateContextType.javascript"
+			description="%plugin.template.js.require"
+			id="com.tulin.v8.webtools.ide.template.js.require"
+			name="require">
+			<pattern>
+				require('${value}')
+			</pattern>
+		</template>
+		<template
+			autoinsert="false"
+			contextTypeId="com.tulin.v8.webtools.ide.templateContextType.javascript"
+			description="%plugin.template.js.requirewithvar"
+			id="com.tulin.v8.webtools.ide.template.js.requirewithvar"
+			name="require">
+			<pattern>
+				var ${name} = require('${value}');
+			</pattern>
+		</template>
+		<template
+			autoinsert="false"
+			contextTypeId="com.tulin.v8.webtools.ide.templateContextType.javascript"
+			description="%plugin.template.js.switch"
+			id="com.tulin.v8.webtools.ide.template.js.switch"
+			name="switch">
+			<pattern>
+				switch (${key}) {
+				case ${value}:
+				${cursor}
+				break;
+
+				default:
+				break;
+				}
+			</pattern>
+		</template>
+		<template
+			autoinsert="false"
+			contextTypeId="com.tulin.v8.webtools.ide.templateContextType.javascript"
+			description="%plugin.template.js.try"
+			id="com.tulin.v8.webtools.ide.template.js.try"
+			name="try">
+			<pattern>
+				try {
+				${line_selection}${cursor}
+				} catch (${e}) {
+				// ${todo}: handle exception
+				}
+			</pattern>
+		</template>
+		<template
+			autoinsert="false"
+			contextTypeId="com.tulin.v8.webtools.ide.templateContextType.javascript"
+			description="%plugin.template.js.var"
+			id="com.tulin.v8.webtools.ide.template.js.var"
+			name="var">
+			<pattern>
+				var ${name};
+			</pattern>
+		</template>
+		<template
+			autoinsert="false"
+			contextTypeId="com.tulin.v8.webtools.ide.templateContextType.javascript"
+			description="%plugin.template.js.while"
+			id="com.tulin.v8.webtools.ide.template.js.while"
+			name="while">
+			<pattern>
+				while (${condition}) {
+				${line_selection}${cursor}
+				}
+			</pattern>
+		</template>
+	</extension>
+
+	<extension point="org.eclipse.core.expressions.definitions">
+		<definition id="com.tulin.v8.webtools.ide.sseActiveContext.definition">
+			<with variable="activeContexts">
+				<iterate operator="or">
+					<equals value="com.tulin.v8.webtools.ide.sourceEditorScope" />
+				</iterate>
+			</with>
+		</definition>
+	</extension>
+
+	<extension
+		point="org.eclipse.ui.menus">
+		<menuContribution
+			locationURI="menu:org.eclipse.ui.main.menu?after=edit">
+			<menu
+				id="com.tulin.v8.webtools.ide.menus.source"
+				label="%menu.label.source">
+				<command
+					commandId="tulin.command.comment"
+					id="com.tulin.v8.webtools.ide.menus.comment"
+					style="push">
+					<visibleWhen checkEnabled="false">
+						<reference
+							definitionId="com.tulin.v8.webtools.ide.sseActiveContext.definition"></reference>
+					</visibleWhen>
+				</command>
+				<command
+					commandId="tulin.command.MultilineComment"
+					id="com.tulin.v8.webtools.ide.menus.MultilineComment"
+					style="push">
+					<visibleWhen checkEnabled="false">
+						<reference
+							definitionId="com.tulin.v8.webtools.ide.sseActiveContext.definition"></reference>
+					</visibleWhen>
+				</command>
+				<command
+					commandId="tulin.command.UnMultilineComment"
+					id="com.tulin.v8.webtools.ide.menus.UnMultilineComment"
+					style="push">
+					<visibleWhen checkEnabled="false">
+						<reference
+							definitionId="com.tulin.v8.webtools.ide.sseActiveContext.definition"></reference>
+					</visibleWhen>
+				</command>
+				<command
+					commandId="tulin.command.format"
+					id="com.tulin.v8.webtools.ide.menus.format"
+					style="push">
+					<visibleWhen checkEnabled="false">
+						<reference
+							definitionId="com.tulin.v8.webtools.ide.sseActiveContext.definition"></reference>
+					</visibleWhen>
+				</command>
+			</menu>
+		</menuContribution>
+	</extension>
+
+
+	<!--
    <extension
          point="org.eclipse.ui.editors">
       <editorContentTypeBinding
@@ -45,538 +619,6 @@
    <extension point="org.eclipse.ui.genericeditor.icons">
     <icon contentType="com.tulin.v8.webtools.ide.html" icon="icons/html.png"/>
    </extension>
-   -->
-   
-   <extension
-         point="org.eclipse.ui.editors">
-      <editor
-            class="com.tulin.v8.webtools.ide.html.editors.HTMLEditor"
-            contributorClass="com.tulin.v8.webtools.ide.html.editors.HTMLEditorContributor"
-            default="true"
-            extensions="htm,html,xhtml"
-            icon="icons/tlv8_html.png"
-            id="com.tulin.v8.webtools.ide.editors.HTMLEditor"
-            name="%plugin.editor.htmleditor"/>
-      <editor
-            class="com.tulin.v8.webtools.ide.css.editors.CSSEditor"
-            contributorClass="org.eclipse.ui.editors.text.TextEditorActionContributor"
-            default="true"
-            extensions="css"
-            icon="icons/tlv8_css.png"
-            id="com.tulin.v8.webtools.ide.csseditor.editors.CSSEditor"
-            name="%plugin.editor.csseditor"/>
-      <editor
-            class="com.tulin.v8.webtools.ide.js.editors.JavaScriptEditor"
-            contributorClass="com.tulin.v8.webtools.ide.js.editors.JavaScriptEditorContributor"
-            default="true"
-            extensions="js"
-            icon="icons/tlv8_js.png"
-            id="com.tulin.v8.webtools.ide.jseditor.editors.JavaScriptEditor"
-            name="%plugin.editor.jseditor"/>
-            
-      <editor
-            class="com.tulin.v8.webtools.ide.jsp.editors.JSPEditor"
-            contributorClass="com.tulin.v8.webtools.ide.jsp.editors.JSPEditorContributor"
-            default="true"
-            extensions="jsp,jspf,jspx"
-            icon="icons/tlv8_jsp.png"
-            id="com.tulin.v8.webtools.ide.jspeditor.editors.JSPEditor"
-            name="%plugin.editor.jspeditor"/>
-            
-      <editor
-            class="com.tulin.v8.webtools.ide.xml.editors.XMLEditor"
-            contributorClass="com.tulin.v8.webtools.ide.xml.editors.XMLEditorContributor"
-            default="true"
-            extensions="xml,tld,xsl"
-            icon="icons/tlv8_xml.png"
-            id="com.tulin.v8.webtools.ide.xmleditor.editors.XMLEditor"
-            name="%plugin.editor.xmleditor">
-      </editor>
-   </extension>
-   
-   <extension
-         point="com.tulin.v8.webtools.ide.fileAssistProcessor">
-      <processor class="com.tulin.v8.webtools.ide.assist.FileAssistProcessor"/>
-   </extension>
-   <extension
-         point="com.tulin.v8.webtools.ide.customTagAttributeAssist">
-      <customTagAttributeAssist
-            class="com.tulin.v8.webtools.ide.jsp.editors.JSTLAttributeAssist">
-      </customTagAttributeAssist>
-   </extension>
-   
-   <!--====================================================-->
-   <!-- Preferences -->
-   <!--====================================================-->
-   <extension
-         point="org.eclipse.ui.preferencePages">
-      <page
-            class="com.tulin.v8.webtools.ide.preferencePages.PreferencePage"
-            name="%plugin.preference.category"
-            category="com.tulin.v8.ide.preferences.StudioPreferencePage"
-            id="com.tulin.v8.webtools.ide.category"/>
-      <page
-            class="com.tulin.v8.webtools.ide.preferencePages.CustomAssistPreferencePage"
-            category="com.tulin.v8.webtools.ide.AssistPreferencePage"
-            name="%plugin.preference.customassist"
-            id="com.tulin.v8.webtools.ide.CustomAssistPreferencePage"/>
-      <page
-            class="com.tulin.v8.webtools.ide.preferencePages.DTDPreferencePage"
-            category="com.tulin.v8.webtools.ide.XMLPreferencePage"
-            name="%plugin.preference.dtd"
-            id="com.tulin.v8.webtools.ide.DTDPreferencePage"/>
-      <page
-            class="com.tulin.v8.webtools.ide.preferencePages.TLDPreferencePage"
-            category="com.tulin.v8.webtools.ide.JSPEditorPreferencePage"
-            name="%plugin.preference.tld"
-            id="com.tulin.v8.webtools.ide.TLDPreferencePage"/>
-      <page
-            class="com.tulin.v8.webtools.ide.preferencePages.AssistPreferencePage"
-            category="com.tulin.v8.webtools.ide.category"
-            name="%plugin.preference.codeassist"
-            id="com.tulin.v8.webtools.ide.AssistPreferencePage"/>
-      <page
-            class="com.tulin.v8.webtools.ide.preferencePages.CSSEditorPreferencePage"
-            category="com.tulin.v8.webtools.ide.category"
-            name="%plugin.preference.csseditor"
-            id="com.tulin.v8.webtools.ide.CSSEditorPreferencePage"/>
-      <page
-            class="com.tulin.v8.webtools.ide.preferencePages.JSPEditorPreferencePage"
-            category="com.tulin.v8.webtools.ide.category"
-            name="%plugin.preference.jspeditor"
-            id="com.tulin.v8.webtools.ide.JSPEditorPreferencePage"/>
-      <page
-            class="com.tulin.v8.webtools.ide.preferencePages.JavaScriptEditorPreferencePage"
-            category="com.tulin.v8.webtools.ide.category"
-            name="%plugin.preference.jseditor"
-            id="com.tulin.v8.webtools.ide.JavaScriptEditorPreferencePage"/>
-      <page
-            class="com.tulin.v8.webtools.ide.preferencePages.XMLPreferencePage"
-            category="com.tulin.v8.webtools.ide.category"
-            name="XML"
-            id="com.tulin.v8.webtools.ide.XMLPreferencePage"/>
-      <page
-            class="com.tulin.v8.webtools.ide.preferencePages.HTMLTaskTagPreferencePage"
-            category="com.tulin.v8.webtools.ide.XMLPreferencePage"
-            name="%plugin.preference.tasktag"
-            id="com.tulin.v8.webtools.ide.tasktag.HTMLTaskTagPreferencePage"/>
-      <page
-            class="com.tulin.v8.webtools.ide.preferencePages.HTMLTemplatePreferencePage"
-            category="com.tulin.v8.webtools.ide.AssistPreferencePage"
-            name="%plugin.preference.template"
-            id="com.tulin.v8.webtools.ide.template.HTMLTemplatePreferencePage"/>
-      <page
-            class="com.tulin.v8.webtools.ide.preferencePages.FormatterPreferencePage"
-            category="com.tulin.v8.webtools.ide.category"
-            name="%plugin.preference.formatter"
-            id="com.tulin.v8.webtools.ide.FormatterPreferencePage"/>
-   </extension>
-   
-   <!-- Keybinding scope for source editor -->
-	<extension point="org.eclipse.ui.contexts">
-		<context
-			name="TLv8 Web Source"
-			parentId="org.eclipse.ui.textEditorScope"
-			description="TLv8 Web File Source"
-			id="com.tulin.v8.webtools.ide.sourceEditorScope">
-		</context>
-	</extension>
-   
-   <extension
-         point="org.eclipse.ui.commands">
-      <category
-            name="%category.label.source"
-            id="tulin.commands.category">
-      </category>
-      <command
-      		categoryId="tulin.commands.category"
-            id="tulin.command.comment"
-            name="%menu.label.comment">
-      </command>
-      <command
-      		categoryId="tulin.commands.category"
-            id="tulin.command.MultilineComment"
-            name="%menu.label.mcomment">
-      </command>
-      <command
-      		categoryId="tulin.commands.category"
-            id="tulin.command.UnMultilineComment"
-            name="%menu.label.umcomment">
-      </command>
-      <command
-            categoryId="tulin.commands.category"
-            id="tulin.command.format"
-            name="%menu.label.fortmat">
-      </command>
-   </extension>
-   
-   <extension
-         point="org.eclipse.ui.handlers">
-      <handler
-            commandId="tulin.command.comment"
-            class="com.tulin.v8.webtools.ide.handlers.ToggleCommentHandler">
-      </handler>
-      <handler
-            commandId="tulin.command.MultilineComment"
-            class="com.tulin.v8.webtools.ide.handlers.MultilineCommentHandler">
-      </handler>
-      <handler
-            commandId="tulin.command.UnMultilineComment"
-            class="com.tulin.v8.webtools.ide.handlers.UnMultilineCommentHandler">
-      </handler>
-      <handler
-            commandId="tulin.command.format"
-            class="com.tulin.v8.webtools.ide.handlers.FormaterHandler">
-      </handler>
-   </extension>
-   
-   <extension
-         point="org.eclipse.ui.bindings">
-      <key
-            commandId="tulin.command.comment"
-            contextId="com.tulin.v8.webtools.ide.sourceEditorScope"
-            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
-            sequence="M1+/"/>
-      <key
-            commandId="tulin.command.MultilineComment"
-            contextId="com.tulin.v8.webtools.ide.sourceEditorScope"
-            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
-            sequence="M1+M2+/"/>
-      <key
-            commandId="tulin.command.UnMultilineComment"
-            contextId="com.tulin.v8.webtools.ide.sourceEditorScope"
-            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
-            sequence="M1+M2+\"/>
-      <key
-            commandId="tulin.command.format"
-            contextId="com.tulin.v8.webtools.ide.sourceEditorScope"
-            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
-            sequence="M1+M2+F"/>
-   </extension>
-   
-   <!--====================================================-->
-   <!-- Template -->
-   <!--====================================================-->
-   <extension
-         point="org.eclipse.ui.editors.templates">
-      <contextType
-            class="com.tulin.v8.webtools.ide.template.HTMLContextType"
-            name="HTML/JSP/XML"
-            id="com.tulin.v8.webtools.ide.templateContextType.html"/>
-      <contextType
-            class="com.tulin.v8.webtools.ide.template.JavaScriptContextType"
-            name="JavaScript"
-            id="com.tulin.v8.webtools.ide.templateContextType.javascript"/>
-      <template
-            autoinsert="false"
-            contextTypeId="com.tulin.v8.webtools.ide.templateContextType.javascript"
-            description="%plugin.template.js.catch"
-            id="com.tulin.v8.webtools.ide.template.js.catch"
-            name="catch">
-         <pattern>
-catch (e) {
-	${cursor}// ${todo}: handle exception
-}
-         </pattern>
-      </template>
-      <template
-            autoinsert="false"
-            contextTypeId="com.tulin.v8.webtools.ide.templateContextType.javascript"
-            description="%plugin.template.js.do"
-            id="com.tulin.v8.webtools.ide.template.js.do"
-            name="do">
-         <pattern>
-do {
-	${line_selection}${cursor}
-} while (${condition});
-         </pattern>
-      </template>
-      <template
-            autoinsert="false"
-            contextTypeId="com.tulin.v8.webtools.ide.templateContextType.javascript"
-            description="%plugin.template.js.else"
-            id="com.tulin.v8.webtools.ide.template.js.else"
-            name="else">
-         <pattern>
-else {
-	${cursor}
-}
-         </pattern>
-      </template>
-      <template
-            autoinsert="false"
-            contextTypeId="com.tulin.v8.webtools.ide.templateContextType.javascript"
-            description="%plugin.template.js.elseif"
-            id="com.tulin.v8.webtools.ide.template.js.elseif"
-            name="elseif">
-         <pattern>
-else if (${condition}) {
-	${cursor}
-}
-         </pattern>
-      </template>
-      <template
-            autoinsert="false"
-            contextTypeId="com.tulin.v8.webtools.ide.templateContextType.javascript"
-            description="%plugin.template.js.for"
-            id="com.tulin.v8.webtools.ide.template.js.for"
-            name="for">
-         <pattern>
-for (var ${index} = 0; ${index} &lt; ${array}.length; ${index}++) {
-	${line_selection}${cursor}
-}
-         </pattern>
-      </template>
-      <template
-            autoinsert="false"
-            contextTypeId="com.tulin.v8.webtools.ide.templateContextType.javascript"
-            description="%plugin.template.js.forwithvar"
-            id="com.tulin.v8.webtools.ide.template.js.forwithvar"
-            name="for">
-         <pattern>
-for (var ${index} = 0; ${index} &lt; ${array}.length; ${index}++) {
-	var ${array_element} = ${array}[${index}];
-	${cursor}
-}
-         </pattern>
-      </template>
-      <template
-            autoinsert="false"
-            contextTypeId="com.tulin.v8.webtools.ide.templateContextType.javascript"
-            description="%plugin.template.js.forin"
-            id="com.tulin.v8.webtools.ide.template.js.forin"
-            name="forin">
-         <pattern>
-for (var ${iterable_element} in ${iterable}) {
-	${cursor}
-}
-         </pattern>
-      </template>
-      <template
-            autoinsert="false"
-            contextTypeId="com.tulin.v8.webtools.ide.templateContextType.javascript"
-            description="%plugin.template.js.function"
-            id="com.tulin.v8.webtools.ide.template.js.function"
-            name="function">
-         <pattern>
-function ${name}(${args}) {
-    ${cursor}
-}
-         </pattern>
-      </template>
-      <template
-            autoinsert="false"
-            contextTypeId="com.tulin.v8.webtools.ide.templateContextType.javascript"
-            description="%plugin.template.js.anonymousFunction"
-            id="com.tulin.v8.webtools.ide.template.js.anonymousFunction"
-            name="function">
-         <pattern>
-function (${args}) {
-    ${cursor}
-}
-         </pattern>
-      </template>
-      <template
-            autoinsert="false"
-            contextTypeId="com.tulin.v8.webtools.ide.templateContextType.javascript"
-            description="%plugin.template.js.if"
-            id="com.tulin.v8.webtools.ide.template.js.if"
-            name="if">
-         <pattern>
-if (${condition}) {
-	${line_selection}${cursor}
-}
-         </pattern>
-      </template>
-      <template
-            autoinsert="false"
-            contextTypeId="com.tulin.v8.webtools.ide.templateContextType.javascript"
-            description="%plugin.template.js.ifelse"
-            id="com.tulin.v8.webtools.ide.template.js.ifelse"
-            name="ifelse">
-         <pattern>
-if (${condition}) {
-	${cursor}
-} else {
-
-}
-         </pattern>
-      </template>
-      <template
-            autoinsert="false"
-            contextTypeId="com.tulin.v8.webtools.ide.templateContextType.javascript"
-            description="%plugin.template.js.lazy"
-            id="com.tulin.v8.webtools.ide.template.js.lazy"
-            name="lazy">
-         <pattern>
-if (${name:var} == null) {
-	${name} = new ${type}(${arguments});
-	${cursor}
-}
-
-return ${name};
-         </pattern>
-      </template>
-      <template
-            autoinsert="false"
-            contextTypeId="com.tulin.v8.webtools.ide.templateContextType.javascript"
-            description="%plugin.template.js.new"
-            id="com.tulin.v8.webtools.ide.template.js.new"
-            name="new">
-         <pattern>
-new ${type}(${arguments});
-         </pattern>
-      </template>
-      <template
-            autoinsert="false"
-            contextTypeId="com.tulin.v8.webtools.ide.templateContextType.javascript"
-            description="%plugin.template.js.newwithvar"
-            id="com.tulin.v8.webtools.ide.template.js.newwithvar"
-            name="new">
-         <pattern>
-var ${name} = new ${type}(${arguments});
-         </pattern>
-      </template>
-      <template
-            autoinsert="false"
-            contextTypeId="com.tulin.v8.webtools.ide.templateContextType.javascript"
-            description="%plugin.template.js.require"
-            id="com.tulin.v8.webtools.ide.template.js.require"
-            name="require">
-         <pattern>
-require('${value}')
-         </pattern>
-      </template>
-      <template
-            autoinsert="false"
-            contextTypeId="com.tulin.v8.webtools.ide.templateContextType.javascript"
-            description="%plugin.template.js.requirewithvar"
-            id="com.tulin.v8.webtools.ide.template.js.requirewithvar"
-            name="require">
-         <pattern>
-var ${name} = require('${value}');
-         </pattern>
-      </template>
-      <template
-            autoinsert="false"
-            contextTypeId="com.tulin.v8.webtools.ide.templateContextType.javascript"
-            description="%plugin.template.js.switch"
-            id="com.tulin.v8.webtools.ide.template.js.switch"
-            name="switch">
-         <pattern>
-switch (${key}) {
-	case ${value}:
-		${cursor}
-		break;
-
-	default:
-		break;
-}
-         </pattern>
-      </template>
-      <template
-            autoinsert="false"
-            contextTypeId="com.tulin.v8.webtools.ide.templateContextType.javascript"
-            description="%plugin.template.js.try"
-            id="com.tulin.v8.webtools.ide.template.js.try"
-            name="try">
-         <pattern>
-try {
-	${line_selection}${cursor}
-} catch (${e}) {
-	// ${todo}: handle exception
-}
-         </pattern>
-      </template>
-      <template
-            autoinsert="false"
-            contextTypeId="com.tulin.v8.webtools.ide.templateContextType.javascript"
-            description="%plugin.template.js.var"
-            id="com.tulin.v8.webtools.ide.template.js.var"
-            name="var">
-         <pattern>
-var ${name};
-         </pattern>
-      </template>
-      <template
-            autoinsert="false"
-            contextTypeId="com.tulin.v8.webtools.ide.templateContextType.javascript"
-            description="%plugin.template.js.while"
-            id="com.tulin.v8.webtools.ide.template.js.while"
-            name="while">
-         <pattern>
-while (${condition}) {
-	${line_selection}${cursor}
-}
-         </pattern>
-      </template>
-   </extension>
-   
-   <!-- Javascript File Editor-->
-    <extension
-         point="org.eclipse.core.contenttype.contentTypes">
-      <content-type
-            base-type="org.eclipse.core.runtime.text"
-            file-extensions="js"
-            id="com.tulin.v8.webtools.ide.js"
-            name="Javascript">
-      </content-type>
-   </extension>
-   
-   <extension point="org.eclipse.core.expressions.definitions">
-		<definition id="com.tulin.v8.webtools.ide.sseActiveContext.definition">
-            <with variable="activeContexts">
-	           <iterate operator="or">
-	              <equals value="com.tulin.v8.webtools.ide.sourceEditorScope"/>
-	           </iterate>
-            </with>
-		</definition>
-	</extension>
-   
-    <extension
-          point="org.eclipse.ui.menus">
-       <menuContribution
-             locationURI="menu:org.eclipse.ui.main.menu?after=edit">
-          <menu
-                id="com.tulin.v8.webtools.ide.menus.source"
-                label="%menu.label.source">
-             <command
-                   commandId="tulin.command.comment"
-                   id="com.tulin.v8.webtools.ide.menus.comment"
-                   style="push">
-                   <visibleWhen checkEnabled="false">
-						<reference definitionId="com.tulin.v8.webtools.ide.sseActiveContext.definition"></reference>
-				   </visibleWhen>
-             </command>
-             <command
-                   commandId="tulin.command.MultilineComment"
-                   id="com.tulin.v8.webtools.ide.menus.MultilineComment"
-                   style="push">
-                   <visibleWhen checkEnabled="false">
-						<reference definitionId="com.tulin.v8.webtools.ide.sseActiveContext.definition"></reference>
-				   </visibleWhen>
-             </command>
-             <command
-                   commandId="tulin.command.UnMultilineComment"
-                   id="com.tulin.v8.webtools.ide.menus.UnMultilineComment"
-                   style="push">
-                   <visibleWhen checkEnabled="false">
-						<reference definitionId="com.tulin.v8.webtools.ide.sseActiveContext.definition"></reference>
-				   </visibleWhen>
-             </command>
-             <command
-                   commandId="tulin.command.format"
-                   id="com.tulin.v8.webtools.ide.menus.format"
-                   style="push">
-                   <visibleWhen checkEnabled="false">
-						<reference definitionId="com.tulin.v8.webtools.ide.sseActiveContext.definition"></reference>
-				   </visibleWhen>
-             </command>
-          </menu>
-       </menuContribution>
-    </extension>
-    
-   <!--
    <extension
          point="org.eclipse.ui.editors">
       <editorContentTypeBinding
