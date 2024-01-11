@@ -84,7 +84,6 @@
 		<editor
 			class="com.tulin.v8.webtools.ide.html.editors.HTMLEditor"
 			contributorClass="com.tulin.v8.webtools.ide.html.editors.HTMLEditorContributor"
-			default="true"
 			icon="icons/tlv8_html.png"
 			id="com.tulin.v8.webtools.ide.editors.HTMLEditor"
 			name="%plugin.editor.htmleditor">
@@ -111,7 +110,6 @@
 		<editor
 			class="com.tulin.v8.webtools.ide.jsp.editors.JSPEditor"
 			contributorClass="com.tulin.v8.webtools.ide.jsp.editors.JSPEditorContributor"
-			default="true"
 			icon="icons/tlv8_jsp.png"
 			id="com.tulin.v8.webtools.ide.jspeditor.editors.JSPEditor"
 			name="%plugin.editor.jspeditor">
@@ -120,7 +118,6 @@
 		<editor
 			class="com.tulin.v8.webtools.ide.xml.editors.XMLEditor"
 			contributorClass="com.tulin.v8.webtools.ide.xml.editors.XMLEditorContributor"
-			default="true"
 			extensions="xml,tld,xsl"
 			icon="icons/tlv8_xml.png"
 			id="com.tulin.v8.webtools.ide.xmleditor.editors.XMLEditor"
