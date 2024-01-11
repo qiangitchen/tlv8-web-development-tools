@@ -215,13 +215,13 @@ public class JavaScriptConfiguration extends AbsTextSourceViewerConfiguration {
 		reconciler.setDamager(dr, IDocument.DEFAULT_CONTENT_TYPE);
 		reconciler.setRepairer(dr, IDocument.DEFAULT_CONTENT_TYPE);
 
-		dr = new DefaultDamagerRepairer(getCommentScanner());
-		reconciler.setDamager(dr, JavaScriptPartitionScanner.JS_COMMENT);
-		reconciler.setRepairer(dr, JavaScriptPartitionScanner.JS_COMMENT);
-
 		dr = new DefaultDamagerRepairer(getJsdocScanner());
 		reconciler.setDamager(dr, JavaScriptPartitionScanner.JS_JSDOC);
 		reconciler.setRepairer(dr, JavaScriptPartitionScanner.JS_JSDOC);
+
+		dr = new DefaultDamagerRepairer(getCommentScanner());
+		reconciler.setDamager(dr, JavaScriptPartitionScanner.JS_COMMENT);
+		reconciler.setRepairer(dr, JavaScriptPartitionScanner.JS_COMMENT);
 
 		return reconciler;
 	}

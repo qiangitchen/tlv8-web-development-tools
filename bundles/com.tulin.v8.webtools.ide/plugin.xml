@@ -608,7 +608,7 @@
 	</extension>
 
 
-	<!--
+   <!--
    <extension
          point="org.eclipse.ui.editors">
       <editorContentTypeBinding
@@ -619,6 +619,7 @@
    <extension point="org.eclipse.ui.genericeditor.icons">
     <icon contentType="com.tulin.v8.webtools.ide.html" icon="icons/html.png"/>
    </extension>
+   -->
    <extension
          point="org.eclipse.ui.editors">
       <editorContentTypeBinding
@@ -633,6 +634,12 @@
             contentType="com.tulin.v8.webtools.ide.js">
       </autoEditStrategy>
    </extension>
-   -->
+   <extension
+         point="org.eclipse.ui.genericeditor.presentationReconcilers">
+      <presentationReconciler
+            class="com.tulin.v8.webtools.ide.js.JavaScriptPresentationReconciler"
+            contentType="com.tulin.v8.webtools.ide.js">
+      </presentationReconciler>
+   </extension>
 
 </plugin>

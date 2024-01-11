@@ -41,15 +41,15 @@ public class JavaScriptScanner extends RuleBasedScanner {
 		IToken keyword = colorProvider.getToken(WebToolsPlugin.PREF_COLOR_JSKEYWORD, true);
 		IToken string = colorProvider.getToken(WebToolsPlugin.PREF_COLOR_JSSTRING);
 		IToken normal = colorProvider.getToken(WebToolsPlugin.PREF_COLOR_FG);
-		IToken comment = colorProvider.getToken(WebToolsPlugin.PREF_COLOR_JSCOMMENT);
 		IToken jsdoc = colorProvider.getToken(WebToolsPlugin.PREF_COLOR_JSDOC);
+		IToken comment = colorProvider.getToken(WebToolsPlugin.PREF_COLOR_JSCOMMENT);
 
 		List<IRule> rules = new ArrayList<IRule>();
 		rules.add(new SingleLineRule("\"", "\"", string, '\\'));
 		rules.add(new SingleLineRule("'", "'", string, '\\'));
 		rules.add(new SingleLineRule("\\//", null, normal));
-		rules.add(new MultiLineRule("/*", "*/", comment, '\\'));
 		rules.add(new MultiLineRule("/**", "*/", jsdoc, '\\'));
+		rules.add(new MultiLineRule("/*", "*/", comment, '\\'));
 		rules.add(new EndOfLineRule("//", comment));
 
 		WordRule wordRule = new WordRule(new JavaWordDetector(), normal);
