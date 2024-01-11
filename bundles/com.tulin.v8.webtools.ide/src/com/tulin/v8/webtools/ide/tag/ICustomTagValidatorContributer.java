@@ -1,4 +1,4 @@
-package com.tulin.v8.webtools.ide;
+package com.tulin.v8.webtools.ide.tag;
 
 /**
  * An interface to contribute <code>ICustomTagConverter</code> to ths JSP editor.

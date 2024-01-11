@@ -6,9 +6,9 @@ import java.io.InputStream;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import com.tulin.v8.webtools.ide.IOUtil;
 import com.tulin.v8.webtools.ide.assist.AttributeInfo;
 import com.tulin.v8.webtools.ide.assist.TagInfo;
+import com.tulin.v8.webtools.ide.utils.IOUtil;
 
 public class TagFileParser {
 	private static final Pattern ATTRIBUTE = Pattern.compile("<%@\\s*attribute\\s+(.+?)%>", Pattern.DOTALL);

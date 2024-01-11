@@ -27,11 +27,11 @@ import org.eclipse.jface.text.rules.RuleBasedScanner;
 import org.eclipse.jface.text.source.ISourceViewer;
 import org.eclipse.ui.texteditor.ITextEditor;
 
-import com.tulin.v8.webtools.ide.ColorProvider;
-import com.tulin.v8.webtools.ide.ContentTypeRelatedExtensionTracker;
 import com.tulin.v8.webtools.ide.WebToolsPlugin;
 import com.tulin.v8.webtools.ide.assist.ContentAssistProcessorRegistry;
 import com.tulin.v8.webtools.ide.assist.EditorContentAssistant;
+import com.tulin.v8.webtools.ide.color.ColorProvider;
+import com.tulin.v8.webtools.ide.content.ContentTypeRelatedExtensionTracker;
 import com.tulin.v8.webtools.ide.hover.CompositeTextHover;
 import com.tulin.v8.webtools.ide.js.JavaScriptAssistProcessor;
 import com.tulin.v8.webtools.ide.js.JavaScriptScanner;

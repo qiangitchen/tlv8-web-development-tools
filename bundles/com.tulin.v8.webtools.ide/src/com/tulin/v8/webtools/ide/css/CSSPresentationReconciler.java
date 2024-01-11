@@ -5,8 +5,8 @@ import org.eclipse.jface.text.presentation.PresentationReconciler;
 import org.eclipse.jface.text.rules.DefaultDamagerRepairer;
 import org.eclipse.jface.text.rules.RuleBasedScanner;
 
-import com.tulin.v8.webtools.ide.ColorProvider;
 import com.tulin.v8.webtools.ide.WebToolsPlugin;
+import com.tulin.v8.webtools.ide.color.ColorProvider;
 import com.tulin.v8.webtools.ide.css.editors.CSSPartitionScanner;
 
 /**

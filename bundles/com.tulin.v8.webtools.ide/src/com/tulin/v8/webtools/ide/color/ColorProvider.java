@@ -1,4 +1,4 @@
-package com.tulin.v8.webtools.ide;
+package com.tulin.v8.webtools.ide.color;
 
 import java.util.HashMap;
 import java.util.Iterator;

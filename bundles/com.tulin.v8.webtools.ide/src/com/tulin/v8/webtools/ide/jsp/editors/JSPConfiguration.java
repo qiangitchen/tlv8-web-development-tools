@@ -5,10 +5,10 @@ import org.eclipse.jface.text.contentassist.IContentAssistant;
 import org.eclipse.jface.text.rules.RuleBasedScanner;
 import org.eclipse.jface.text.source.ISourceViewer;
 
-import com.tulin.v8.webtools.ide.ColorProvider;
 import com.tulin.v8.webtools.ide.IHyperlinkProvider;
 import com.tulin.v8.webtools.ide.WebToolsPlugin;
 import com.tulin.v8.webtools.ide.assist.HTMLAssistProcessor;
+import com.tulin.v8.webtools.ide.color.ColorProvider;
 import com.tulin.v8.webtools.ide.html.HTMLHyperlinkDetector;
 import com.tulin.v8.webtools.ide.html.HTMLPartitionScanner;
 import com.tulin.v8.webtools.ide.html.HTMLTagScanner;

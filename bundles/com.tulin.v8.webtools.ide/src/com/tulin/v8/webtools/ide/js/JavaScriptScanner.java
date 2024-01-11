@@ -11,9 +11,9 @@ import org.eclipse.jface.text.rules.RuleBasedScanner;
 import org.eclipse.jface.text.rules.SingleLineRule;
 import org.eclipse.jface.text.rules.WordRule;
 
-import com.tulin.v8.webtools.ide.ColorProvider;
 import com.tulin.v8.webtools.ide.JavaWordDetector;
 import com.tulin.v8.webtools.ide.WebToolsPlugin;
+import com.tulin.v8.webtools.ide.color.ColorProvider;
 
 public class JavaScriptScanner extends RuleBasedScanner {
 

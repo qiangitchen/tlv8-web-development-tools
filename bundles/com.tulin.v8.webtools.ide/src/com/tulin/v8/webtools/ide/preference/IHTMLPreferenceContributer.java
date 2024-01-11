@@ -1,4 +1,4 @@
-package com.tulin.v8.webtools.ide;
+package com.tulin.v8.webtools.ide.preference;
 
 import org.eclipse.jface.preference.IPreferenceStore;
 

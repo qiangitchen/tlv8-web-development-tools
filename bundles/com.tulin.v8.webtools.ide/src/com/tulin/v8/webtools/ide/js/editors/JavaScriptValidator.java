@@ -25,7 +25,6 @@ import org.eclipse.jdt.launching.IVMRunner;
 import org.eclipse.jdt.launching.JavaRuntime;
 import org.eclipse.jdt.launching.VMRunnerConfiguration;
 
-import com.tulin.v8.webtools.ide.IOUtil;
 import com.tulin.v8.webtools.ide.ProjectParams;
 import com.tulin.v8.webtools.ide.WebToolsPlugin;
 import com.tulin.v8.webtools.ide.html.HTMLUtil;
@@ -34,6 +33,7 @@ import com.tulin.v8.webtools.ide.js.model.JavaScriptContext;
 import com.tulin.v8.webtools.ide.js.model.JavaScriptElement;
 import com.tulin.v8.webtools.ide.js.model.JavaScriptModel;
 import com.tulin.v8.webtools.ide.js.model.ModelManager;
+import com.tulin.v8.webtools.ide.utils.IOUtil;
 
 /**
  * The validator for JavaScriptEditor.

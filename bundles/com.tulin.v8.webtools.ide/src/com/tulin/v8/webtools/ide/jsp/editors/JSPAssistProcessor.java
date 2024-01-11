@@ -15,7 +15,6 @@ import org.eclipse.ui.IFileEditorInput;
 import com.tulin.v8.fuzzyxml.FuzzyXMLDocument;
 import com.tulin.v8.fuzzyxml.FuzzyXMLElement;
 import com.tulin.v8.fuzzyxml.FuzzyXMLParser;
-import com.tulin.v8.webtools.ide.ICustomTagAttributeAssist;
 import com.tulin.v8.webtools.ide.WebToolsPlugin;
 import com.tulin.v8.webtools.ide.assist.AssistInfo;
 import com.tulin.v8.webtools.ide.assist.AttributeInfo;
@@ -28,6 +27,7 @@ import com.tulin.v8.webtools.ide.html.editors.HTMLSourceEditor;
 import com.tulin.v8.webtools.ide.jsp.IJSPELAssistProcessor;
 import com.tulin.v8.webtools.ide.jsp.JSPInfo;
 import com.tulin.v8.webtools.ide.jsp.TLDInfo;
+import com.tulin.v8.webtools.ide.tag.ICustomTagAttributeAssist;
 import com.tulin.v8.webtools.ide.xml.editors.ClassNameAssistProcessor;
 
 /**

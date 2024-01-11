@@ -13,12 +13,12 @@ import com.tulin.v8.fuzzyxml.FuzzyXMLDocument;
 import com.tulin.v8.fuzzyxml.FuzzyXMLElement;
 import com.tulin.v8.fuzzyxml.FuzzyXMLNode;
 import com.tulin.v8.fuzzyxml.FuzzyXMLParser;
-import com.tulin.v8.webtools.ide.ICustomTagConverter;
-import com.tulin.v8.webtools.ide.ICustomTagConverterContributer;
 import com.tulin.v8.webtools.ide.ProjectParams;
 import com.tulin.v8.webtools.ide.WebToolsPlugin;
 import com.tulin.v8.webtools.ide.html.HTMLUtil;
 import com.tulin.v8.webtools.ide.jsp.JSPInfo;
+import com.tulin.v8.webtools.ide.tag.ICustomTagConverter;
+import com.tulin.v8.webtools.ide.tag.ICustomTagConverterContributer;
 
 /**
  * This class provides some utility methods to convert JSP to HTML for preview.

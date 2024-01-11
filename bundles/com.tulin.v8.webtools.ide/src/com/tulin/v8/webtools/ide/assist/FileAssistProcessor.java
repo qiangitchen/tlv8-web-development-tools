@@ -9,7 +9,6 @@ import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.swt.graphics.Image;
 
-import com.tulin.v8.webtools.ide.IFileAssistProcessor;
 import com.tulin.v8.webtools.ide.WebToolsPlugin;
 
 /**

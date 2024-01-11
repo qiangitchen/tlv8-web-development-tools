@@ -29,6 +29,8 @@ import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
 import com.tulin.v8.webtools.ide.assist.ContentAssistProcessorRegistry;
+import com.tulin.v8.webtools.ide.assist.IFileAssistProcessor;
+import com.tulin.v8.webtools.ide.color.ColorProvider;
 import com.tulin.v8.webtools.ide.hover.TextHoverRegistry;
 import com.tulin.v8.webtools.ide.html.editors.views.IPaletteContributer;
 import com.tulin.v8.webtools.ide.js.launch.ClosureCompilerLaunchUtil;
@@ -36,6 +38,9 @@ import com.tulin.v8.webtools.ide.js.launch.JavaScriptLaunchUtil;
 import com.tulin.v8.webtools.ide.jsp.IJSPELAssistProcessor;
 import com.tulin.v8.webtools.ide.jsp.IJSPFilter;
 import com.tulin.v8.webtools.ide.jsp.ITLDLocator;
+import com.tulin.v8.webtools.ide.tag.ICustomTagAttributeAssist;
+import com.tulin.v8.webtools.ide.tag.ICustomTagConverterContributer;
+import com.tulin.v8.webtools.ide.tag.ICustomTagValidatorContributer;
 
 public class WebToolsPlugin extends AbstractUIPlugin {
 	/** Non-NLS strings */

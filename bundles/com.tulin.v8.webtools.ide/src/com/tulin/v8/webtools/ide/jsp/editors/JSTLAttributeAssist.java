@@ -7,12 +7,12 @@ import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IFileEditorInput;
 
 import com.tulin.v8.fuzzyxml.FuzzyXMLElement;
-import com.tulin.v8.webtools.ide.ICustomTagAttributeAssist;
-import com.tulin.v8.webtools.ide.IFileAssistProcessor;
 import com.tulin.v8.webtools.ide.WebToolsPlugin;
 import com.tulin.v8.webtools.ide.assist.AssistInfo;
 import com.tulin.v8.webtools.ide.assist.AttributeInfo;
+import com.tulin.v8.webtools.ide.assist.IFileAssistProcessor;
 import com.tulin.v8.webtools.ide.html.HTMLUtil;
+import com.tulin.v8.webtools.ide.tag.ICustomTagAttributeAssist;
 
 /**
  * An implementation of <code>ICustomTagAttributeAssist</code> for JSTL.

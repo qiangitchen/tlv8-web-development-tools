@@ -9,8 +9,8 @@ import org.eclipse.ui.editors.text.TextEditor;
 import org.eclipse.ui.texteditor.ChainedPreferenceStore;
 import org.eclipse.ui.texteditor.ITextEditorActionConstants;
 
-import com.tulin.v8.webtools.ide.ColorProvider;
 import com.tulin.v8.webtools.ide.WebToolsPlugin;
+import com.tulin.v8.webtools.ide.color.ColorProvider;
 
 public class WebSourceEditor extends TextEditor {
 	protected ColorProvider colorProvider;

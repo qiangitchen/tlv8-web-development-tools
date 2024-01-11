@@ -33,7 +33,6 @@ import org.eclipse.jface.text.contentassist.IContextInformationValidator;
 import org.eclipse.jface.text.templates.TemplateContextType;
 import org.eclipse.swt.graphics.Image;
 
-import com.tulin.v8.webtools.ide.IOUtil;
 import com.tulin.v8.webtools.ide.WebToolsPlugin;
 import com.tulin.v8.webtools.ide.html.HTMLUtil;
 import com.tulin.v8.webtools.ide.js.launch.JavaScriptLibPathTable;
@@ -47,6 +46,7 @@ import com.tulin.v8.webtools.ide.js.model.ModelManager;
 import com.tulin.v8.webtools.ide.js.model.JavaScriptFunction.JavaScriptArgument;
 import com.tulin.v8.webtools.ide.template.HTMLTemplateManager;
 import com.tulin.v8.webtools.ide.template.JavaScriptContextType;
+import com.tulin.v8.webtools.ide.utils.IOUtil;
 
 /**
  * IContentAssistProcessor implementation for JavaScriptEditor.

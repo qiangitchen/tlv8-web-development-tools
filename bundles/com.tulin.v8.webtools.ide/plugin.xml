@@ -36,7 +36,7 @@
 	<!-- 初始配置 -->
 	<extension
 		point="org.eclipse.core.runtime.preferences">
-		<initializer class="com.tulin.v8.webtools.ide.PreferenceInitializer" />
+		<initializer class="com.tulin.v8.webtools.ide.preference.PreferenceInitializer" />
 	</extension>
 
 	<!-- 文件类型 -->

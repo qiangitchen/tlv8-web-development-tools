@@ -6,6 +6,11 @@ Bundle-Vendor: TuLin
 Bundle-Encoding: UTF-8
 Bundle-Localization: plugin
 Bundle-Version: 1.0.0.qualifier
+Export-Package: com.tulin.v8.webtools.ide.html.editors,
+ com.tulin.v8.webtools.ide.js.editors,
+ com.tulin.v8.webtools.ide.jsp.editors,
+ com.tulin.v8.webtools.ide.text,
+ com.tulin.v8.webtools.ide.xml.editors
 Require-Bundle: org.eclipse.jface,
  org.eclipse.jface.text,
  org.eclipse.core.runtime,

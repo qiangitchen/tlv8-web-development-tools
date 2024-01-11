@@ -1,6 +1,6 @@
 package com.tulin.v8.webtools.ide.css;
 
-import com.tulin.v8.webtools.ide.StringUtils;
+import com.tulin.v8.webtools.ide.utils.StringUtils;
 
 public class CSSInfo {
 

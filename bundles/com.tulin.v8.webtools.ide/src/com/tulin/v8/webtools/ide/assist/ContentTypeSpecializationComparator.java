@@ -4,7 +4,7 @@ import java.util.Comparator;
 
 import org.eclipse.core.runtime.content.IContentType;
 
-import com.tulin.v8.webtools.ide.ContentTypeRelatedExtension;
+import com.tulin.v8.webtools.ide.content.ContentTypeRelatedExtension;
 
 /**
  * Compares extension so that the ones with the most "specialized" content-types

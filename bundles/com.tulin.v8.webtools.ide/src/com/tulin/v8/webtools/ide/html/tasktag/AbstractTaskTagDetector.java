@@ -6,8 +6,8 @@ import java.util.List;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IMarker;
 
-import com.tulin.v8.webtools.ide.IOUtil;
 import com.tulin.v8.webtools.ide.html.HTMLUtil;
+import com.tulin.v8.webtools.ide.utils.IOUtil;
 
 /**
  * The base class for the {@link com.tulin.v8.webtools.ide.tasktag.ITaskTagDetector}

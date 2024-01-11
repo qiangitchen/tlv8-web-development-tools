@@ -52,7 +52,7 @@
                   
                </documentation>
                <appInfo>
-                  <meta.attribute kind="java" basedOn="com.tulin.v8.webtools.ide.IPreferenceContributer"/>
+                  <meta.attribute kind="java" basedOn="com.tulin.v8.webtools.ide.preference.IPreferenceContributer"/>
                </appInfo>
             </annotation>
          </attribute>

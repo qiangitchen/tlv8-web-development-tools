@@ -11,8 +11,8 @@ import org.eclipse.jface.text.rules.SingleLineRule;
 import org.eclipse.jface.text.rules.WhitespaceRule;
 import org.eclipse.jface.text.rules.WordRule;
 
-import com.tulin.v8.webtools.ide.ColorProvider;
 import com.tulin.v8.webtools.ide.WebToolsPlugin;
+import com.tulin.v8.webtools.ide.color.ColorProvider;
 import com.tulin.v8.webtools.ide.html.HTMLWhitespaceDetector;
 
 public class JSPDirectiveScanner extends RuleBasedScanner {

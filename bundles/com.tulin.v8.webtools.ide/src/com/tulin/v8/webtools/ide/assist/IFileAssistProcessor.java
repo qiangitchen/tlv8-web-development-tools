@@ -1,8 +1,6 @@
-package com.tulin.v8.webtools.ide;
+package com.tulin.v8.webtools.ide.assist;
 
 import org.eclipse.core.resources.IFile;
-
-import com.tulin.v8.webtools.ide.assist.AssistInfo;
 
 public interface IFileAssistProcessor {
 

@@ -23,13 +23,13 @@ import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IFileEditorInput;
 import org.eclipse.ui.views.contentoutline.ContentOutlinePage;
 
-import com.tulin.v8.webtools.ide.StringUtils;
 import com.tulin.v8.webtools.ide.WebToolsPlugin;
 import com.tulin.v8.webtools.ide.js.model.JavaScriptContext;
 import com.tulin.v8.webtools.ide.js.model.JavaScriptElement;
 import com.tulin.v8.webtools.ide.js.model.JavaScriptFunction;
 import com.tulin.v8.webtools.ide.js.model.JavaScriptModel;
 import com.tulin.v8.webtools.ide.js.model.JavaScriptPrototype;
+import com.tulin.v8.webtools.ide.utils.StringUtils;
 
 /**
  * ContentOutlinePage implementation for JavaScriptEditor.

@@ -24,8 +24,8 @@ import org.eclipse.jface.text.source.ISourceViewer;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.texteditor.ITextEditor;
 
-import com.tulin.v8.webtools.ide.ContentTypeRelatedExtension;
 import com.tulin.v8.webtools.ide.WebToolsPlugin;
+import com.tulin.v8.webtools.ide.content.ContentTypeRelatedExtension;
 
 /**
  * A registry of content assist processors provided by extension

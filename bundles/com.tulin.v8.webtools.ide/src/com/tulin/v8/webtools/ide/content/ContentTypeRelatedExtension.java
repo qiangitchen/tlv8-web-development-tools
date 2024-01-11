@@ -1,4 +1,4 @@
-package com.tulin.v8.webtools.ide;
+package com.tulin.v8.webtools.ide.content;
 
 import org.eclipse.core.expressions.ElementHandler;
 import org.eclipse.core.expressions.EvaluationContext;
@@ -14,6 +14,8 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.content.IContentType;
 import org.eclipse.jface.text.source.ISourceViewer;
 import org.eclipse.ui.texteditor.ITextEditor;
+
+import com.tulin.v8.webtools.ide.WebToolsPlugin;
 
 /**
  * This class wraps and proxies an instance of T provided through extensions and

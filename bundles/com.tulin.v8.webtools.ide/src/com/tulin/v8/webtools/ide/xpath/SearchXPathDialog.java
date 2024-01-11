@@ -1,4 +1,4 @@
-package com.tulin.v8.webtools.ide;
+package com.tulin.v8.webtools.ide.xpath;
 
 import org.eclipse.jface.text.ITextSelection;
 import org.eclipse.jface.text.TextSelection;
@@ -23,6 +23,7 @@ import com.tulin.v8.fuzzyxml.FuzzyXMLDocument;
 import com.tulin.v8.fuzzyxml.FuzzyXMLNode;
 import com.tulin.v8.fuzzyxml.FuzzyXMLParser;
 import com.tulin.v8.fuzzyxml.XPath;
+import com.tulin.v8.webtools.ide.WebToolsPlugin;
 import com.tulin.v8.webtools.ide.html.HTMLUtil;
 import com.tulin.v8.webtools.ide.html.editors.HTMLSourceEditor;
 import com.tulin.v8.webtools.ide.html.editors.views.IPaletteTarget;

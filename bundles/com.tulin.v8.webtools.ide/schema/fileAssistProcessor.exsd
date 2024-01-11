@@ -52,7 +52,7 @@
                   
                </documentation>
                <appinfo>
-                  <meta.attribute kind="java" basedOn=":com.tulin.v8.webtools.ide.IFileAssistProcessor"/>
+                  <meta.attribute kind="java" basedOn=":com.tulin.v8.webtools.ide.assist.IFileAssistProcessor"/>
                </appinfo>
             </annotation>
          </attribute>

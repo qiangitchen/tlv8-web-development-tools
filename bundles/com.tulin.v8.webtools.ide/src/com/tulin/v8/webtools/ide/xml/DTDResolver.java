@@ -16,8 +16,8 @@ import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xml.sax.ext.EntityResolver2;
 
-import com.tulin.v8.webtools.ide.IOUtil;
 import com.tulin.v8.webtools.ide.WebToolsPlugin;
+import com.tulin.v8.webtools.ide.utils.IOUtil;
 
 /**
  * An implementation of <code>EntityResolver</code> to load DTDs or XSDs from

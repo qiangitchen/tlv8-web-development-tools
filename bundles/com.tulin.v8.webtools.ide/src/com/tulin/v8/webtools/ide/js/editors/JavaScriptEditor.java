@@ -51,12 +51,12 @@ import org.eclipse.ui.texteditor.ITextEditorActionDefinitionIds;
 import org.eclipse.ui.views.contentoutline.IContentOutlinePage;
 
 import com.tulin.v8.webtools.ide.ProjectParams;
-import com.tulin.v8.webtools.ide.StringUtils;
 import com.tulin.v8.webtools.ide.WebToolsPlugin;
 import com.tulin.v8.webtools.ide.formatter.Formater;
 import com.tulin.v8.webtools.ide.html.editors.SoftTabVerifyListener;
 import com.tulin.v8.webtools.ide.js.launch.JavaScriptLaunchUtil;
 import com.tulin.v8.webtools.ide.text.WebSourceEditor;
+import com.tulin.v8.webtools.ide.utils.StringUtils;
 
 /**
  * The JavaScript editor.

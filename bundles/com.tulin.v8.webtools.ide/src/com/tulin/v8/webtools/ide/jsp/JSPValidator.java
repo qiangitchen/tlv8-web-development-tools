@@ -12,13 +12,13 @@ import com.tulin.v8.fuzzyxml.FuzzyXMLDocument;
 import com.tulin.v8.fuzzyxml.FuzzyXMLElement;
 import com.tulin.v8.fuzzyxml.FuzzyXMLNode;
 import com.tulin.v8.fuzzyxml.XPath;
-import com.tulin.v8.webtools.ide.ICustomTagValidator;
-import com.tulin.v8.webtools.ide.ICustomTagValidatorContributer;
 import com.tulin.v8.webtools.ide.WebToolsPlugin;
 import com.tulin.v8.webtools.ide.assist.AttributeInfo;
 import com.tulin.v8.webtools.ide.assist.TagInfo;
 import com.tulin.v8.webtools.ide.html.HTMLUtil;
 import com.tulin.v8.webtools.ide.html.editors.HTMLValidator;
+import com.tulin.v8.webtools.ide.tag.ICustomTagValidator;
+import com.tulin.v8.webtools.ide.tag.ICustomTagValidatorContributer;
 
 /**
  * The JSP Validator that is called by <code>JSPSourceEditor</code>.

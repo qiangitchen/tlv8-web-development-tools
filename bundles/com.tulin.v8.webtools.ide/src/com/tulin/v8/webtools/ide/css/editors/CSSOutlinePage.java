@@ -24,9 +24,9 @@ import org.w3c.dom.css.CSSStyleSheet;
 import org.w3c.dom.css.CSSValue;
 
 import com.steadystate.css.parser.CSSOMParser;
-import com.tulin.v8.webtools.ide.StringUtils;
 import com.tulin.v8.webtools.ide.WebToolsPlugin;
 import com.tulin.v8.webtools.ide.css.CSSStyleProp;
+import com.tulin.v8.webtools.ide.utils.StringUtils;
 
 /**
  * CSS大纲内容页

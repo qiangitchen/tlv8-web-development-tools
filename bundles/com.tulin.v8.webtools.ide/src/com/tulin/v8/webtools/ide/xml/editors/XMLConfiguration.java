@@ -1,7 +1,7 @@
 package com.tulin.v8.webtools.ide.xml.editors;
 
-import com.tulin.v8.webtools.ide.ColorProvider;
 import com.tulin.v8.webtools.ide.assist.HTMLAssistProcessor;
+import com.tulin.v8.webtools.ide.color.ColorProvider;
 import com.tulin.v8.webtools.ide.html.HTMLHyperlinkDetector;
 import com.tulin.v8.webtools.ide.html.editors.HTMLConfiguration;
 import com.tulin.v8.webtools.ide.html.editors.HTMLSourceEditor;

@@ -5,9 +5,9 @@ import java.util.Map;
 
 import com.tulin.v8.fuzzyxml.FuzzyXMLElement;
 import com.tulin.v8.fuzzyxml.FuzzyXMLNode;
-import com.tulin.v8.webtools.ide.ICustomTagConverter;
 import com.tulin.v8.webtools.ide.jsp.JSPInfo;
 import com.tulin.v8.webtools.ide.jsp.editors.JSPPreviewConverter;
+import com.tulin.v8.webtools.ide.tag.ICustomTagConverter;
 
 public abstract class AbstractCustomTagConverter implements ICustomTagConverter {
 

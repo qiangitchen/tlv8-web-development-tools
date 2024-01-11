@@ -24,7 +24,6 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.ide.IDE;
 import org.eclipse.ui.ide.IGotoMarker;
 
-import com.tulin.v8.webtools.ide.IOUtil;
 import com.tulin.v8.webtools.ide.WebToolsPlugin;
 import com.tulin.v8.webtools.ide.html.HTMLUtil;
 import com.tulin.v8.webtools.ide.js.launch.JavaScriptLibPathTable;
@@ -34,6 +33,7 @@ import com.tulin.v8.webtools.ide.js.model.JavaScriptModel;
 import com.tulin.v8.webtools.ide.js.model.JavaScriptVariable;
 import com.tulin.v8.webtools.ide.js.model.ModelManager;
 import com.tulin.v8.webtools.ide.js.model.JavaScriptModel.RequirePathData;
+import com.tulin.v8.webtools.ide.utils.IOUtil;
 
 /**
  * <code>IHyperlinkDetector</code> for JavaScript.

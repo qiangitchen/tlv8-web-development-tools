@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import com.tulin.v8.webtools.ide.StringUtils;
+import com.tulin.v8.webtools.ide.utils.StringUtils;
 
 public class JsDocParser {
 

@@ -22,10 +22,10 @@ import com.tulin.v8.fuzzyxml.FuzzyXMLElement;
 import com.tulin.v8.fuzzyxml.FuzzyXMLNode;
 import com.tulin.v8.fuzzyxml.FuzzyXMLParser;
 import com.tulin.v8.fuzzyxml.XPath;
-import com.tulin.v8.webtools.ide.IOUtil;
 import com.tulin.v8.webtools.ide.ProjectParams;
 import com.tulin.v8.webtools.ide.WebToolsPlugin;
 import com.tulin.v8.webtools.ide.html.HTMLUtil;
+import com.tulin.v8.webtools.ide.utils.IOUtil;
 
 /**
  * This class has informations about JSP like following:

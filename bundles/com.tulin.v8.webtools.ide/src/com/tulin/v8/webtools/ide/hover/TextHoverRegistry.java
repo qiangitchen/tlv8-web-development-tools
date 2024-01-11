@@ -20,8 +20,8 @@ import org.eclipse.jface.text.ITextHover;
 import org.eclipse.jface.text.source.ISourceViewer;
 import org.eclipse.ui.texteditor.ITextEditor;
 
-import com.tulin.v8.webtools.ide.ContentTypeRelatedExtension;
 import com.tulin.v8.webtools.ide.WebToolsPlugin;
+import com.tulin.v8.webtools.ide.content.ContentTypeRelatedExtension;
 
 /**
  * Text hover registry that manages the detectors contributed by the

@@ -37,14 +37,14 @@ import org.eclipse.jface.text.rules.RuleBasedScanner;
 import org.eclipse.jface.text.source.ISourceViewer;
 import org.eclipse.swt.widgets.Shell;
 
-import com.tulin.v8.webtools.ide.ColorProvider;
-import com.tulin.v8.webtools.ide.ContentTypeRelatedExtensionTracker;
 import com.tulin.v8.webtools.ide.WebToolsPlugin;
 import com.tulin.v8.webtools.ide.assist.ContentAssistProcessorRegistry;
 import com.tulin.v8.webtools.ide.assist.EditorContentAssistant;
 import com.tulin.v8.webtools.ide.assist.HTMLAssistProcessor;
 import com.tulin.v8.webtools.ide.assist.InnerCSSAssistProcessor;
 import com.tulin.v8.webtools.ide.assist.InnerJavaScriptAssistProcessor;
+import com.tulin.v8.webtools.ide.color.ColorProvider;
+import com.tulin.v8.webtools.ide.content.ContentTypeRelatedExtensionTracker;
 import com.tulin.v8.webtools.ide.hover.CompositeTextHover;
 import com.tulin.v8.webtools.ide.html.HTMLHyperlinkDetector;
 import com.tulin.v8.webtools.ide.html.HTMLPartitionScanner;

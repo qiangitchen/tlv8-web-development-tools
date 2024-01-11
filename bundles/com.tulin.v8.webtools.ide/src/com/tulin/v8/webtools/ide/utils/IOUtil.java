@@ -1,4 +1,4 @@
-package com.tulin.v8.webtools.ide;
+package com.tulin.v8.webtools.ide.utils;
 
 import java.io.ByteArrayOutputStream;
 import java.io.Closeable;

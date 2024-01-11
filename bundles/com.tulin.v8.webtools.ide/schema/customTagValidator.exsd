@@ -52,7 +52,7 @@
                   
                </documentation>
                <appInfo>
-                  <meta.attribute kind="java" basedOn="com.tulin.v8.webtools.ide.ICustomTagValidatorContributer"/>
+                  <meta.attribute kind="java" basedOn="com.tulin.v8.webtools.ide.tag.ICustomTagValidatorContributer"/>
                </appInfo>
             </annotation>
          </attribute>

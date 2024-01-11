@@ -15,9 +15,9 @@ import com.tulin.v8.fuzzyxml.FuzzyXMLDocument;
 import com.tulin.v8.fuzzyxml.FuzzyXMLParser;
 import com.tulin.v8.fuzzyxml.event.FuzzyXMLErrorEvent;
 import com.tulin.v8.fuzzyxml.event.FuzzyXMLErrorListener;
-import com.tulin.v8.webtools.ide.IOUtil;
 import com.tulin.v8.webtools.ide.WebToolsPlugin;
 import com.tulin.v8.webtools.ide.html.HTMLUtil;
+import com.tulin.v8.webtools.ide.utils.IOUtil;
 
 /**
  * The HTML Validator that is called by HTMLSourceEditor.

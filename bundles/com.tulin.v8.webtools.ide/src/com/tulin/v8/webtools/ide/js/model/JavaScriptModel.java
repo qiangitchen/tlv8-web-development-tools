@@ -15,7 +15,6 @@ import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.ResourcesPlugin;
 
-import com.tulin.v8.webtools.ide.IOUtil;
 import com.tulin.v8.webtools.ide.WebToolsPlugin;
 import com.tulin.v8.webtools.ide.js.JsDocParser;
 import com.tulin.v8.webtools.ide.js.JsDocParser.JsDoc;
@@ -31,6 +30,7 @@ import com.tulin.v8.webtools.ide.rhino.javascript.Parser;
 import com.tulin.v8.webtools.ide.rhino.javascript.ScriptOrFnNode;
 import com.tulin.v8.webtools.ide.rhino.javascript.Token;
 import com.tulin.v8.webtools.ide.rhino.javascript.Node.Symbol;
+import com.tulin.v8.webtools.ide.utils.IOUtil;
 
 public class JavaScriptModel extends JavaScriptContext {
 	// child models

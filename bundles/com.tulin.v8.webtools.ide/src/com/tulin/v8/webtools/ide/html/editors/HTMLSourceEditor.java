@@ -56,7 +56,6 @@ import org.eclipse.ui.texteditor.ITextEditorActionDefinitionIds;
 import org.eclipse.ui.views.contentoutline.IContentOutlinePage;
 
 import com.tulin.v8.webtools.ide.ProjectParams;
-import com.tulin.v8.webtools.ide.SearchXPathDialog;
 import com.tulin.v8.webtools.ide.WebToolsPlugin;
 import com.tulin.v8.webtools.ide.assist.HTMLAssistProcessor;
 import com.tulin.v8.webtools.ide.css.ChooseColorAction;
@@ -66,6 +65,7 @@ import com.tulin.v8.webtools.ide.html.HTMLUtil;
 import com.tulin.v8.webtools.ide.html.HtmlAutoEditStrategy;
 import com.tulin.v8.webtools.ide.html.IHTMLOutlinePage;
 import com.tulin.v8.webtools.ide.text.WebSourceEditor;
+import com.tulin.v8.webtools.ide.xpath.SearchXPathDialog;
 
 /**
  * HTML source editor.
