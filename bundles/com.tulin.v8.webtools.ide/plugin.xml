@@ -94,7 +94,7 @@
 			contributorClass="org.eclipse.ui.editors.text.TextEditorActionContributor"
 			default="true"
 			icon="icons/tlv8_css.png"
-			id="com.tulin.v8.webtools.ide.csseditor.editors.CSSEditor"
+			id="com.tulin.v8.webtools.ide.editors.CSSEditor"
 			name="%plugin.editor.csseditor">
 			<contentTypeBinding contentTypeId="com.tulin.v8.webtools.ide.css" />
 		</editor>
@@ -103,7 +103,7 @@
 			contributorClass="com.tulin.v8.webtools.ide.js.editors.JavaScriptEditorContributor"
 			default="true"
 			icon="icons/tlv8_js.png"
-			id="com.tulin.v8.webtools.ide.jseditor.editors.JavaScriptEditor"
+			id="com.tulin.v8.webtools.ide.editors.JavaScriptEditor"
 			name="%plugin.editor.jseditor">
 			<contentTypeBinding contentTypeId="com.tulin.v8.webtools.ide.js" />
 		</editor>
@@ -111,7 +111,7 @@
 			class="com.tulin.v8.webtools.ide.jsp.editors.JSPEditor"
 			contributorClass="com.tulin.v8.webtools.ide.jsp.editors.JSPEditorContributor"
 			icon="icons/tlv8_jsp.png"
-			id="com.tulin.v8.webtools.ide.jspeditor.editors.JSPEditor"
+			id="com.tulin.v8.webtools.ide.editors.JSPEditor"
 			name="%plugin.editor.jspeditor">
 			<contentTypeBinding contentTypeId="com.tulin.v8.webtools.ide.jsp" />
 		</editor>
@@ -120,7 +120,7 @@
 			contributorClass="com.tulin.v8.webtools.ide.xml.editors.XMLEditorContributor"
 			extensions="xml,tld,xsl"
 			icon="icons/tlv8_xml.png"
-			id="com.tulin.v8.webtools.ide.xmleditor.editors.XMLEditor"
+			id="com.tulin.v8.webtools.ide.editors.XMLEditor"
 			name="%plugin.editor.xmleditor">
 			<contentTypeBinding contentTypeId="com.tulin.v8.webtools.ide.xml" />
 		</editor>
