@@ -8,6 +8,9 @@ import org.eclipse.jface.text.rules.RuleBasedScanner;
 import com.tulin.v8.webtools.ide.ColorProvider;
 import com.tulin.v8.webtools.ide.WebToolsPlugin;
 
+/**
+ * HTML代码高亮(通用文本编辑器扩展)
+ */
 public class HtmlPresentationReconciler extends PresentationReconciler {
 
 	public HtmlPresentationReconciler() {
@@ -25,9 +28,9 @@ public class HtmlPresentationReconciler extends PresentationReconciler {
 		this.setDamager(dr, HTMLPartitionScanner.PREFIX_TAG);
 		this.setRepairer(dr, HTMLPartitionScanner.PREFIX_TAG);
 
-		HTMLScanner scanner = new HTMLScanner(colorProvider);
+		HTMLRuleBasedScanner scanner = new HTMLRuleBasedScanner(colorProvider);
 		scanner.setDefaultReturnToken(colorProvider.getToken(WebToolsPlugin.PREF_COLOR_FG));
-		dr = new HTMLTagDamagerRepairer(scanner);
+		dr = new DefaultDamagerRepairer(scanner);
 		this.setDamager(dr, IDocument.DEFAULT_CONTENT_TYPE);
 		this.setRepairer(dr, IDocument.DEFAULT_CONTENT_TYPE);
 

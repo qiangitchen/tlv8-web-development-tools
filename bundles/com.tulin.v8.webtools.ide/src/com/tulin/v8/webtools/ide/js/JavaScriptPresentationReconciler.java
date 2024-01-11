@@ -10,7 +10,7 @@ import com.tulin.v8.webtools.ide.WebToolsPlugin;
 import com.tulin.v8.webtools.ide.js.editors.JavaScriptPartitionScanner;
 
 /**
- * JS代码高亮
+ * JS代码高亮(通用文本编辑器扩展)
  */
 public class JavaScriptPresentationReconciler extends PresentationReconciler {
 	private ColorProvider colorProvider;

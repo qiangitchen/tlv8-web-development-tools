@@ -118,13 +118,13 @@
 			<contentTypeBinding contentTypeId="com.tulin.v8.webtools.ide.jsp" />
 		</editor>
 		<editor
-        class="com.tulin.v8.webtools.ide.xml.editors.XMLEditor"
-        contributorClass="com.tulin.v8.webtools.ide.xml.editors.XMLEditorContributor"
-        default="true"
-        extensions="xml,tld,xsl"
-        icon="icons/tlv8_xml.png"
-        id="com.tulin.v8.webtools.ide.xmleditor.editors.XMLEditor"
-        name="%plugin.editor.xmleditor">
+			class="com.tulin.v8.webtools.ide.xml.editors.XMLEditor"
+			contributorClass="com.tulin.v8.webtools.ide.xml.editors.XMLEditorContributor"
+			default="true"
+			extensions="xml,tld,xsl"
+			icon="icons/tlv8_xml.png"
+			id="com.tulin.v8.webtools.ide.xmleditor.editors.XMLEditor"
+			name="%plugin.editor.xmleditor">
 			<contentTypeBinding contentTypeId="com.tulin.v8.webtools.ide.xml" />
 		</editor>
 	</extension>
@@ -607,39 +607,59 @@
 		</menuContribution>
 	</extension>
 
+	<!-- GenericEditor point -->
+	<extension point="org.eclipse.ui.editors">
+		<editorContentTypeBinding
+			contentTypeId="com.tulin.v8.webtools.ide.js"
+			editorId="org.eclipse.ui.genericeditor.GenericEditor">
+		</editorContentTypeBinding>
+		<editorContentTypeBinding
+			contentTypeId="com.tulin.v8.webtools.ide.html"
+			editorId="org.eclipse.ui.genericeditor.GenericEditor">
+		</editorContentTypeBinding>
+		<editorContentTypeBinding
+			contentTypeId="com.tulin.v8.webtools.ide.css"
+			editorId="org.eclipse.ui.genericeditor.GenericEditor">
+		</editorContentTypeBinding>
+	</extension>
+	<extension
+		point="org.eclipse.ui.genericeditor.autoEditStrategies">
+		<autoEditStrategy
+			class="com.tulin.v8.webtools.ide.js.JavaScriptAutoEditStrategy"
+			contentType="com.tulin.v8.webtools.ide.js">
+		</autoEditStrategy>
+	</extension>
+	<extension
+		point="org.eclipse.ui.genericeditor.presentationReconcilers">
+		<presentationReconciler
+			class="com.tulin.v8.webtools.ide.js.JavaScriptPresentationReconciler"
+			contentType="com.tulin.v8.webtools.ide.js">
+		</presentationReconciler>
+		<presentationReconciler
+			class="com.tulin.v8.webtools.ide.html.HtmlPresentationReconciler"
+			contentType="com.tulin.v8.webtools.ide.html">
+		</presentationReconciler>
+		<presentationReconciler
+			class="com.tulin.v8.webtools.ide.css.CSSPresentationReconciler"
+			contentType="com.tulin.v8.webtools.ide.css">
+		</presentationReconciler>
+	</extension>
+	<extension
+		point="org.eclipse.ui.genericeditor.contentAssistProcessors">
+		<contentAssistProcessor
+			class="com.tulin.v8.webtools.ide.assist.HTMLAssistProcessor"
+			contentType="com.tulin.v8.webtools.ide.html">
+		</contentAssistProcessor>
+		<contentAssistProcessor
+			class="com.tulin.v8.webtools.ide.css.CSSAssistProcessor"
+			contentType="com.tulin.v8.webtools.ide.css">
+		</contentAssistProcessor>
+	</extension>
 
-   <!--
-   <extension
-         point="org.eclipse.ui.editors">
-      <editorContentTypeBinding
-            contentTypeId="com.tulin.v8.webtools.ide.html"
-            editorId="org.eclipse.ui.genericeditor.GenericEditor">
-      </editorContentTypeBinding>
-   </extension>
+	<!--
    <extension point="org.eclipse.ui.genericeditor.icons">
-    <icon contentType="com.tulin.v8.webtools.ide.html" icon="icons/html.png"/>
+    <icon contentType="com.tulin.v8.webtools.ide.html" icon="icons/tlv8_html.png"/>
    </extension>
    -->
-   <extension
-         point="org.eclipse.ui.editors">
-      <editorContentTypeBinding
-            contentTypeId="com.tulin.v8.webtools.ide.js"
-            editorId="org.eclipse.ui.genericeditor.GenericEditor">
-      </editorContentTypeBinding>
-   </extension>
-   <extension
-         point="org.eclipse.ui.genericeditor.autoEditStrategies">
-      <autoEditStrategy
-            class="com.tulin.v8.webtools.ide.js.JavaScriptAutoEditStrategy"
-            contentType="com.tulin.v8.webtools.ide.js">
-      </autoEditStrategy>
-   </extension>
-   <extension
-         point="org.eclipse.ui.genericeditor.presentationReconcilers">
-      <presentationReconciler
-            class="com.tulin.v8.webtools.ide.js.JavaScriptPresentationReconciler"
-            contentType="com.tulin.v8.webtools.ide.js">
-      </presentationReconciler>
-   </extension>
 
 </plugin>
