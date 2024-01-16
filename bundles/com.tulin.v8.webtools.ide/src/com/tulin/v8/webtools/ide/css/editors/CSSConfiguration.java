@@ -57,7 +57,9 @@ public class CSSConfiguration extends TextSourceViewerConfiguration {
 //		IPreferenceStore store = WebToolsPlugin.getDefault().getPreferenceStore();
 //		assistant.enableAutoActivation(store.getBoolean(WebToolsPlugin.PREF_ASSIST_AUTO));
 //		assistant.setAutoActivationDelay(store.getInt(WebToolsPlugin.PREF_ASSIST_TIMES));
-
+		
+		assistant.setInformationControlCreator(getInformationControlCreator(sourceViewer));
+		
 		return assistant;
 	}
 

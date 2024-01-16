@@ -1,26 +1,21 @@
 package com.tulin.v8.webtools.ide.css;
 
-import com.tulin.v8.webtools.ide.utils.StringUtils;
-
 public class CSSInfo {
 
 	private String replaceString;
 	private String displayString;
+	private String description;
 
 	public CSSInfo(String replaceString) {
 		this.replaceString = replaceString;
-		this.displayString = CSSStyles.getString(replaceString);
-		if (!replaceString.equals(displayString)) {
-			this.displayString = replaceString + "  -->[" + displayString + "]";
-		}
+		this.displayString = replaceString;
+		this.description = CSSStyles.getString(replaceString);
 	}
 
-	public CSSInfo(String replaceString, String displayString) {
+	public CSSInfo(String replaceString, String description) {
 		this.replaceString = replaceString;
 		this.displayString = replaceString;
-		if (StringUtils.isNotEmpty(displayString)) {
-			this.displayString = replaceString + "  -->[" + displayString + "]";
-		}
+		this.description = description;
 	}
 
 	public String getDisplayString() {
@@ -29,6 +24,14 @@ public class CSSInfo {
 
 	public String getReplaceString() {
 		return replaceString;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
 }

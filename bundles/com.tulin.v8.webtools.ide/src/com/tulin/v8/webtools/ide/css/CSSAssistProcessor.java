@@ -34,9 +34,10 @@ public class CSSAssistProcessor implements IContentAssistProcessor {
 						for (CSSInfo value : values) {
 							if (value.getReplaceString().startsWith(vals)) {
 								list.add(new CompletionProposal(value.getReplaceString() + ";", offset, 0,
-										value.getReplaceString().length() + 1, WebToolsPlugin.getDefault()
-												.getImageRegistry().get(WebToolsPlugin.ICON_CSS_PROP),
-										value.getDisplayString(), null, null));
+										value.getReplaceString().length() + 1,
+										WebToolsPlugin.getDefault().getImageRegistry()
+												.get(WebToolsPlugin.ICON_CSS_PROP),
+										value.getDisplayString(), null, value.getDescription()));
 							}
 						}
 					}
@@ -51,7 +52,8 @@ public class CSSAssistProcessor implements IContentAssistProcessor {
 						list.add(new CompletionProposal(replaceString, offset - word.length(), word.length(),
 								replaceString.length(),
 								WebToolsPlugin.getDefault().getImageRegistry().get(WebToolsPlugin.ICON_CSS_PROP),
-								CSSDefinition.CSS_KEYWORDS[i].getDisplayString(), null, null));
+								CSSDefinition.CSS_KEYWORDS[i].getDisplayString(), null,
+								CSSDefinition.CSS_KEYWORDS[i].getDescription()));
 					}
 				}
 			}

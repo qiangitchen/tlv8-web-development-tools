@@ -30,6 +30,7 @@ public class TagInfo {
 	 */
 	public TagInfo(String tagName, boolean hasBody) {
 		this(tagName, hasBody, false);
+		setDescription(TagDefinitionDes.getString(tagName));
 	}
 
 	/**
@@ -53,6 +54,7 @@ public class TagInfo {
 		this.tagName = tagName;
 		this.hasBody = hasBody;
 		this.emptyTag = emptyTag;
+		setDescription(TagDefinitionDes.getString(tagName));
 	}
 
 	public String getTagName() {
