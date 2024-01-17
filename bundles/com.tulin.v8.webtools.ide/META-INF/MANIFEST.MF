@@ -5,7 +5,7 @@ Bundle-SymbolicName: com.tulin.v8.webtools.ide;singleton:=true
 Bundle-Vendor: TuLin
 Bundle-Encoding: UTF-8
 Bundle-Localization: plugin
-Bundle-Version: 1.0.0.qualifier
+Bundle-Version: 3.2.0.qualifier
 Export-Package: com.tulin.v8.webtools.ide.css.editors,
  com.tulin.v8.webtools.ide.html.editors,
  com.tulin.v8.webtools.ide.js.editors,
