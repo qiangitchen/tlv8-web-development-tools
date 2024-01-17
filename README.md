@@ -3,7 +3,7 @@
 <p align="center">  
   <a href="#"><img src='https://img.shields.io/badge/jdk-11+-redviolet.svg'/></a>
   <a href='LICENSE'><img src='https://img.shields.io/badge/License-EPL2.0-blue.svg'></img></a>
-  <a href='../../releases'><img src='https://img.shields.io/badge/eclipse-version-4.30+-blueviolet.svg'></a>
+  <a href='../../releases'><img src='https://img.shields.io/badge/Eclipse-4.30+-blue.svg'></img></a>
 </p>
 
 #### 介绍
