@@ -2,7 +2,7 @@
 
 <p align="center">  
   <a href="#"><img src='https://img.shields.io/badge/jdk-11+-redviolet.svg'/></a>
-  <a href='../../releases'><img src='https://img.shields.io/badge/Eclipse-4.30+-violet.svg'></img></a>
+  <a href='../../releases'><img src='https://img.shields.io/badge/Eclipse-4.26+-brown.svg'></img></a>
   <a href='LICENSE'><img src='https://img.shields.io/badge/License-EPL2.0-blue.svg'></img></a>
 </p>
 
