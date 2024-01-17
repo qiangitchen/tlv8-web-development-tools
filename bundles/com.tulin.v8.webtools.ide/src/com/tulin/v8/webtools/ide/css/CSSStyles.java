@@ -1,7 +1,6 @@
 package com.tulin.v8.webtools.ide.css;
 
 import java.util.Enumeration;
-import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
 public class CSSStyles {
@@ -16,7 +15,7 @@ public class CSSStyles {
 	public static String getString(String key) {
 		try {
 			return RESOURCE_BUNDLE.getString(key);
-		} catch (MissingResourceException e) {
+		} catch (Exception e) {
 			return key;
 		}
 	}

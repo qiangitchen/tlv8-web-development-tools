@@ -1,7 +1,6 @@
 package com.tulin.v8.webtools.ide.assist;
 
 import java.util.Enumeration;
-import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
 public class TagDefinitionDes {
@@ -15,7 +14,7 @@ public class TagDefinitionDes {
 	public static String getString(String key) {
 		try {
 			return RESOURCE_BUNDLE.getString(key);
-		} catch (MissingResourceException e) {
+		} catch (Exception e) {
 			return key;
 		}
 	}

@@ -136,6 +136,56 @@
 			class="com.tulin.v8.webtools.ide.jsp.editors.JSTLAttributeAssist">
 		</customTagAttributeAssist>
 	</extension>
+	
+	<!--====================================================-->
+   <!-- Wizards -->
+   <!--====================================================-->
+   <extension
+         point="org.eclipse.ui.newWizards">
+      <category
+            name="%plugin.preference.category"
+            id="com.tulin.v8.webtools"/>
+      <wizard
+            class="com.tulin.v8.webtools.ide.wizards.HTMLNewWizard"
+            icon="icons/html_file.gif"
+            category="com.tulin.v8.webtools"
+            name="%plugin.wizard.html"
+            id="com.tulin.v8.webtools.wizards.HTMLNewWizard"/>
+      <wizard
+            class="com.tulin.v8.webtools.ide.wizards.JSPNewWizard"
+            icon="icons/jsp_file.gif"
+            category="com.tulin.v8.webtools"
+            name="%plugin.wizard.jsp"
+            id="com.tulin.v8.webtools.wizards.JSPNewWizard"/>
+      <wizard
+            class="com.tulin.v8.webtools.ide.wizards.XMLNewWizard"
+            icon="icons/xml.gif"
+            category="com.tulin.v8.webtools"
+            name="%plugin.wizard.xml"
+            id="com.tulin.v8.webtools.wizards.XMLNewWizard"/>
+      <wizard
+            category="com.tulin.v8.webtools"
+            class="com.tulin.v8.webtools.ide.wizards.AddJavaScriptLibraryWizard"
+            icon="icons/js.gif"
+            id="com.tulin.v8.webtools.jseditor.wizards.AddJavaScriptLibraryWizard"
+            name="%plugin.wizard.jslibrary">
+      </wizard>
+      
+      <wizard
+            canFinishEarly="false"
+            category="com.tulin.v8.webtools"
+            class="com.tulin.v8.webtools.ide.wizards.NewWebProjectWizard"
+            finalPerspective="com.tulin.v8.ide.perspectives.RelEngPerspective"
+            hasPages="true"
+            icon="icons/web.gif"
+            id="com.tulin.v8.webtools.wizards.NewWebProjectWizard"
+            name="%np.title"
+            project="true">
+        <description>
+            %np.desc
+        </description>
+       </wizard>
+   </extension>
 
 	<!--====================================================-->
 	<!-- Preferences -->
