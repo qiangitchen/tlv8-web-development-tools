@@ -1,4 +1,4 @@
-package com.tulin.v8.webtools.ide.html.editors.views;
+package com.tulin.v8.webtools.ide.views;
 
 import java.io.IOException;
 import java.io.StringReader;

@@ -79,6 +79,9 @@
 		</content-type>
 	</extension>
 
+	<!--====================================================-->
+   	<!-- Editors -->
+   	<!--====================================================-->
 	<extension
 		point="org.eclipse.ui.editors">
 		<editor
@@ -138,9 +141,9 @@
 	</extension>
 	
 	<!--====================================================-->
-   <!-- Wizards -->
-   <!--====================================================-->
-   <extension
+   	<!-- Wizards -->
+   	<!--====================================================-->
+   	<extension
          point="org.eclipse.ui.newWizards">
       <category
             name="%plugin.preference.category"
@@ -185,7 +188,7 @@
             %np.desc
         </description>
        </wizard>
-   </extension>
+   	</extension>
 
 	<!--====================================================-->
 	<!-- Preferences -->
@@ -313,6 +316,7 @@
 		</handler>
 	</extension>
 
+	<!-- 绑定快捷键 -->
 	<extension
 		point="org.eclipse.ui.bindings">
 		<key
@@ -336,6 +340,36 @@
 			schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
 			sequence="M1+M2+F" />
 	</extension>
+	
+	<!--====================================================-->
+   	<!-- Views -->
+   	<!--====================================================-->
+   	<extension
+         point="org.eclipse.ui.views">
+      <category
+            name="%plugin.preference.category"
+            id="com.tulin.v8.webtools"/>
+      <view
+            icon="icons/image.gif"
+            category="com.tulin.v8.webtools"
+            class="com.tulin.v8.webtools.ide.views.ImageView"
+            name="%plugin.views.image"
+            id="com.tulin.v8.webtools.views.ImageView"/>
+      <view
+            category="com.tulin.v8.webtools"
+            class="com.tulin.v8.webtools.ide.views.CSSPreviewView"
+            icon="icons/css.gif"
+            id="com.tulin.v8.webtools.views.CSSPreviewView"
+            name="%plugin.views.csspreview"/>
+      <!--
+      <view
+            class="com.tulin.v8.webtools.ide.views.PaletteView"
+            category="com.tulin.v8.webtools"
+            icon="icons/palette.gif"
+            name="%plugin.views.palette"
+            id="com.tulin.v8.webtools.views.PaletteView"/>
+      -->
+   	</extension>
 
 	<!--====================================================-->
 	<!-- Template -->
@@ -607,6 +641,7 @@
 		</definition>
 	</extension>
 
+	<!-- 菜单定义  -->
 	<extension
 		point="org.eclipse.ui.menus">
 		<menuContribution
@@ -653,6 +688,27 @@
 			</menu>
 		</menuContribution>
 	</extension>
+	
+	<!--====================================================-->
+   	<!-- nature and builder -->
+   	<!--====================================================-->
+   	<extension
+         id="ProjectNature"
+         name="ProjectNature"
+         point="org.eclipse.core.resources.natures">
+      <runtime>
+         <run class="com.tulin.v8.webtools.ide.ProjectNature">
+         </run>
+      </runtime>
+   	</extension>
+   	<extension
+         id="ProjectBuilder"
+         name="ProjectBuilder"
+         point="org.eclipse.core.resources.builders">
+      <builder>
+         <run class="com.tulin.v8.webtools.ide.ProjectBuilder"/>
+      </builder>
+   	</extension>
 
 	<!-- GenericEditor point -->
 	<extension point="org.eclipse.ui.editors">
@@ -704,9 +760,9 @@
 	</extension>
 
 	<!--
-   <extension point="org.eclipse.ui.genericeditor.icons">
-    <icon contentType="com.tulin.v8.webtools.ide.html" icon="icons/tlv8_html.png"/>
-   </extension>
-   -->
+   	<extension point="org.eclipse.ui.genericeditor.icons">
+    	<icon contentType="com.tulin.v8.webtools.ide.html" icon="icons/tlv8_html.png"/>
+   	</extension>
+   	-->
 
 </plugin>

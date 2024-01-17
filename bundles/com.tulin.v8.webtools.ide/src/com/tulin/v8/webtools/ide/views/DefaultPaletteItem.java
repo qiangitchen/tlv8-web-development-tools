@@ -1,4 +1,4 @@
-package com.tulin.v8.webtools.ide.html.editors.views;
+package com.tulin.v8.webtools.ide.views;
 
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.text.IDocument;

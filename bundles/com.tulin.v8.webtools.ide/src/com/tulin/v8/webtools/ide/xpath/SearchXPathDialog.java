@@ -26,7 +26,7 @@ import com.tulin.v8.fuzzyxml.XPath;
 import com.tulin.v8.webtools.ide.WebToolsPlugin;
 import com.tulin.v8.webtools.ide.html.HTMLUtil;
 import com.tulin.v8.webtools.ide.html.editors.HTMLSourceEditor;
-import com.tulin.v8.webtools.ide.html.editors.views.IPaletteTarget;
+import com.tulin.v8.webtools.ide.views.IPaletteTarget;
 
 public class SearchXPathDialog extends Window {
 

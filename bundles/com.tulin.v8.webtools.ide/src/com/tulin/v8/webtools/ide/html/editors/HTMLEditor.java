@@ -20,7 +20,7 @@ import org.eclipse.ui.contexts.IContextService;
 import org.eclipse.ui.part.EditorPart;
 
 import com.tulin.v8.webtools.ide.WebToolsPlugin;
-import com.tulin.v8.webtools.ide.html.editors.views.IPaletteTarget;
+import com.tulin.v8.webtools.ide.views.IPaletteTarget;
 
 /**
  * This is the HTML editor that supports tabbed and split style.
