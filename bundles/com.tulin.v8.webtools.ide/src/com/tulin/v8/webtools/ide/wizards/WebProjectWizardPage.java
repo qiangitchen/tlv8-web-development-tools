@@ -53,7 +53,7 @@ public class WebProjectWizardPage extends WizardPage {
 		modtext.add("3.0");
 		modtext.add("4.0");
 		modtext.add("5.0");
-		modtext.setText("3.0");
+		modtext.setText("5.0");
 
 		Label srcl = new Label(composite, SWT.NONE);
 		srcl.setLayoutData(new GridData());

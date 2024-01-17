@@ -166,6 +166,7 @@
             category="com.tulin.v8.webtools"
             name="%plugin.wizard.xml"
             id="com.tulin.v8.webtools.wizards.XMLNewWizard"/>
+      <!--
       <wizard
             category="com.tulin.v8.webtools"
             class="com.tulin.v8.webtools.ide.wizards.AddJavaScriptLibraryWizard"
@@ -173,7 +174,7 @@
             id="com.tulin.v8.webtools.jseditor.wizards.AddJavaScriptLibraryWizard"
             name="%plugin.wizard.jslibrary">
       </wizard>
-      
+      -->
       <wizard
             canFinishEarly="false"
             category="com.tulin.v8.webtools"

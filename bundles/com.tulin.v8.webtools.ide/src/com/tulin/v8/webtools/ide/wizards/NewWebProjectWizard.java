@@ -77,8 +77,13 @@ public class NewWebProjectWizard extends BasicNewResourceWizard {
 			new File(project.getLocation().toFile().getAbsoluteFile() + File.separator + cet).mkdirs();
 		}
 
-		File webf = new File(
-				project.getLocation().toFile().getAbsoluteFile() + File.separator + cet + File.separator + "web.xml");
+		File webi = new File(
+				project.getLocation().toFile().getAbsoluteFile() + File.separator + cet + File.separator + "WEB-INF");
+		if (!webi.exists()) {
+			webi.mkdirs();
+		}
+		File webf = new File(project.getLocation().toFile().getAbsoluteFile() + File.separator + cet + File.separator
+				+ "WEB-INF" + File.separator + "web.xml");
 		if (!webf.exists()) {
 			webf.createNewFile();
 		}
