@@ -6,7 +6,8 @@ Bundle-Vendor: TuLin
 Bundle-Encoding: UTF-8
 Bundle-Localization: plugin
 Bundle-Version: 1.0.0.qualifier
-Export-Package: com.tulin.v8.webtools.ide.html.editors,
+Export-Package: com.tulin.v8.webtools.ide.css.editors,
+ com.tulin.v8.webtools.ide.html.editors,
  com.tulin.v8.webtools.ide.js.editors,
  com.tulin.v8.webtools.ide.jsp.editors,
  com.tulin.v8.webtools.ide.text,
