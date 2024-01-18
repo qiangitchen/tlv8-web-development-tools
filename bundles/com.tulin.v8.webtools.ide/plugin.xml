@@ -45,14 +45,14 @@
 		<!-- HTML File Editor-->
 		<content-type
 			base-type="org.eclipse.core.runtime.text"
-			file-extensions="htm,html,xhtml"
+			file-extensions="html,htm,xhtml,htpl,wml,shtml,shtm"
 			id="com.tulin.v8.webtools.ide.html"
 			name="HTML">
 		</content-type>
 		<!-- JSP File Editor-->
 		<content-type
 			base-type="org.eclipse.core.runtime.text"
-			file-extensions="jsp,jspf,jspx"
+			file-extensions="jsp,jsf,jspf,jspx,tag,tagx,tagf"
 			id="com.tulin.v8.webtools.ide.jsp"
 			name="JSP">
 		</content-type>
