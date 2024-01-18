@@ -77,6 +77,13 @@
 			id="com.tulin.v8.webtools.ide.xml"
 			name="XML">
 		</content-type>
+		<!-- VUE File Editor-->
+		<content-type
+			base-type="org.eclipse.core.runtime.text"
+			file-extensions="vue"
+			id="com.tulin.v8.webtools.ide.vue"
+			name="VUE">
+		</content-type>
 	</extension>
 
 	<!--====================================================-->
@@ -725,6 +732,10 @@
 			contentTypeId="com.tulin.v8.webtools.ide.css"
 			editorId="org.eclipse.ui.genericeditor.GenericEditor">
 		</editorContentTypeBinding>
+		<editorContentTypeBinding
+			contentTypeId="com.tulin.v8.webtools.ide.vue"
+			editorId="org.eclipse.ui.genericeditor.GenericEditor">
+		</editorContentTypeBinding>
 	</extension>
 	<extension
 		point="org.eclipse.ui.genericeditor.autoEditStrategies">
@@ -744,6 +755,10 @@
 			contentType="com.tulin.v8.webtools.ide.html">
 		</presentationReconciler>
 		<presentationReconciler
+			class="com.tulin.v8.webtools.ide.html.HtmlPresentationReconciler"
+			contentType="com.tulin.v8.webtools.ide.vue">
+		</presentationReconciler>
+		<presentationReconciler
 			class="com.tulin.v8.webtools.ide.css.CSSPresentationReconciler"
 			contentType="com.tulin.v8.webtools.ide.css">
 		</presentationReconciler>
@@ -753,6 +768,10 @@
 		<contentAssistProcessor
 			class="com.tulin.v8.webtools.ide.assist.HTMLAssistProcessor"
 			contentType="com.tulin.v8.webtools.ide.html">
+		</contentAssistProcessor>
+		<contentAssistProcessor
+			class="com.tulin.v8.webtools.ide.assist.HTMLAssistProcessor"
+			contentType="com.tulin.v8.webtools.ide.vue">
 		</contentAssistProcessor>
 		<contentAssistProcessor
 			class="com.tulin.v8.webtools.ide.css.CSSAssistProcessor"
