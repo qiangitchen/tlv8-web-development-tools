@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.eclipse.jface.text.rules.IRule;
 import org.eclipse.jface.text.rules.IToken;
-import org.eclipse.jface.text.rules.MultiLineRule;
 import org.eclipse.jface.text.rules.SingleLineRule;
 
 import com.tulin.v8.webtools.ide.WebToolsPlugin;
@@ -23,15 +22,10 @@ public class InnerJavaScriptScanner extends JavaScriptScanner {
 	@Override
 	protected List<IRule> createRules(ColorProvider colorProvider) {
 		IToken tag = colorProvider.getToken(WebToolsPlugin.PREF_COLOR_TAG);
-		IToken comment = colorProvider.getToken(WebToolsPlugin.PREF_COLOR_JSCOMMENT);
-		IToken jsdoc = colorProvider.getToken(WebToolsPlugin.PREF_COLOR_JSDOC);
 
 		List<IRule> rules = super.createRules(colorProvider);
 		rules.add(new SingleLineRule("<scrip", "t", tag));
 		rules.add(new SingleLineRule("</script", ">", tag));
-
-		rules.add(new MultiLineRule("/**", "*/", jsdoc));
-		rules.add(new MultiLineRule("/*", "*/", comment));
 
 		return rules;
 	}

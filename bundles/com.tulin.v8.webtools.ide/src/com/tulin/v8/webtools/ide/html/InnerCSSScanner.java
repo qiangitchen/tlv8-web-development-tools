@@ -24,12 +24,14 @@ public class InnerCSSScanner extends CSSBlockScanner {
 	@Override
 	protected List<IRule> createRules(ColorProvider colorProvider) {
 		IToken tag = colorProvider.getToken(WebToolsPlugin.PREF_COLOR_TAG);
-		IToken comment = colorProvider.getToken(WebToolsPlugin.PREF_COLOR_CSSCOMMENT);
+		IToken attr = colorProvider.getToken(WebToolsPlugin.PREF_COLOR_ATTR);
+		IToken val = colorProvider.getToken(WebToolsPlugin.PREF_COLOR_VALUE);
 
 		List<IRule> rules = new ArrayList<IRule>();
+		rules.add(new MultiLineRule("\"", "\"", val, '\\'));
+		rules.add(new MultiLineRule(" ", "=", attr, '\\'));
 		rules.add(new SingleLineRule("<styl", "e", tag));
 		rules.add(new SingleLineRule("</style", ">", tag));
-		rules.add(new MultiLineRule("/*", "*/", comment));
 		rules.addAll(super.createRules(colorProvider));
 
 		return rules;

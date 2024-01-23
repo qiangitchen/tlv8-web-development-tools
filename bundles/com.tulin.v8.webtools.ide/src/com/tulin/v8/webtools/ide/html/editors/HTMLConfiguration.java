@@ -59,26 +59,26 @@ import com.tulin.v8.webtools.ide.text.AbsTextSourceViewerConfiguration;
  * <code>SourceViewerConfiguration</code> for <code>HTMLSourceEditor</code>.
  */
 public class HTMLConfiguration extends AbsTextSourceViewerConfiguration {
-	private HTMLDoubleClickStrategy doubleClickStrategy;
+	protected HTMLDoubleClickStrategy doubleClickStrategy;
 
-	private HTMLScanner scanner;
-	private HTMLTagScanner tagScanner;
-	private RuleBasedScanner commentScanner;
-	private RuleBasedScanner scriptScanner;
-	private RuleBasedScanner doctypeScanner;
-	private RuleBasedScanner directiveScanner;
-	private RuleBasedScanner javaScriptScanner;
-	private RuleBasedScanner cssScanner;
+	protected HTMLScanner scanner;
+	protected HTMLTagScanner tagScanner;
+	protected RuleBasedScanner commentScanner;
+	protected RuleBasedScanner scriptScanner;
+	protected RuleBasedScanner doctypeScanner;
+	protected RuleBasedScanner directiveScanner;
+	protected RuleBasedScanner javaScriptScanner;
+	protected RuleBasedScanner cssScanner;
 
-	private ColorProvider colorProvider;
+	protected ColorProvider colorProvider;
 
-	private ContentAssistant assistant;
-	private HTMLAssistProcessor processor;
-	private InnerJavaScriptAssistProcessor jsProcessor;
-	private InnerCSSAssistProcessor cssProcessor;
+	protected ContentAssistant assistant;
+	protected HTMLAssistProcessor processor;
+	protected InnerJavaScriptAssistProcessor jsProcessor;
+	protected InnerCSSAssistProcessor cssProcessor;
 
-	private HtmlAutoEditStrategy autoEditStrategy;
-	private HTMLHyperlinkDetector hyperlinkDetector;
+	protected HtmlAutoEditStrategy autoEditStrategy;
+	protected HTMLHyperlinkDetector hyperlinkDetector;
 
 	protected HTMLSourceEditor editor;
 
