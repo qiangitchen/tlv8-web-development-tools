@@ -61,7 +61,7 @@
 			base-type="org.eclipse.core.runtime.text"
 			file-extensions="js"
 			id="com.tulin.v8.webtools.ide.js"
-			name="Javascript">
+			name="Java Script">
 		</content-type>
 		<!-- CSS File Editor-->
 		<content-type
@@ -92,37 +92,41 @@
 	<extension
 		point="org.eclipse.ui.editors">
 		<editor
-			class="com.tulin.v8.webtools.ide.html.editors.HTMLEditor"
-			contributorClass="com.tulin.v8.webtools.ide.html.editors.HTMLEditorContributor"
-			icon="icons/tlv8_html.png"
-			id="com.tulin.v8.webtools.ide.editors.HTMLEditor"
-			name="%plugin.editor.htmleditor">
+        class="com.tulin.v8.webtools.ide.html.editors.HTMLEditor"
+        contributorClass="com.tulin.v8.webtools.ide.html.editors.HTMLEditorContributor"
+        extensions="html,htm,xhtml,htpl,wml,shtml,shtm"
+        icon="icons/tlv8_html.png"
+        id="com.tulin.v8.webtools.ide.editors.HTMLEditor"
+        name="%plugin.editor.htmleditor">
 			<contentTypeBinding contentTypeId="com.tulin.v8.webtools.ide.html" />
 		</editor>
 		<editor
-			class="com.tulin.v8.webtools.ide.css.editors.CSSEditor"
-			contributorClass="org.eclipse.ui.editors.text.TextEditorActionContributor"
-			default="true"
-			icon="icons/tlv8_css.png"
-			id="com.tulin.v8.webtools.ide.editors.CSSEditor"
-			name="%plugin.editor.csseditor">
+        class="com.tulin.v8.webtools.ide.css.editors.CSSEditor"
+        contributorClass="org.eclipse.ui.editors.text.TextEditorActionContributor"
+        default="true"
+        extensions="css"
+        icon="icons/tlv8_css.png"
+        id="com.tulin.v8.webtools.ide.editors.CSSEditor"
+        name="%plugin.editor.csseditor">
 			<contentTypeBinding contentTypeId="com.tulin.v8.webtools.ide.css" />
 		</editor>
 		<editor
-			class="com.tulin.v8.webtools.ide.js.editors.JavaScriptEditor"
-			contributorClass="com.tulin.v8.webtools.ide.js.editors.JavaScriptEditorContributor"
-			default="true"
-			icon="icons/tlv8_js.png"
-			id="com.tulin.v8.webtools.ide.editors.JavaScriptEditor"
-			name="%plugin.editor.jseditor">
+        class="com.tulin.v8.webtools.ide.js.editors.JavaScriptEditor"
+        contributorClass="com.tulin.v8.webtools.ide.js.editors.JavaScriptEditorContributor"
+        default="true"
+        extensions="js"
+        icon="icons/tlv8_js.png"
+        id="com.tulin.v8.webtools.ide.editors.JavaScriptEditor"
+        name="%plugin.editor.jseditor">
 			<contentTypeBinding contentTypeId="com.tulin.v8.webtools.ide.js" />
 		</editor>
 		<editor
-			class="com.tulin.v8.webtools.ide.jsp.editors.JSPEditor"
-			contributorClass="com.tulin.v8.webtools.ide.jsp.editors.JSPEditorContributor"
-			icon="icons/tlv8_jsp.png"
-			id="com.tulin.v8.webtools.ide.editors.JSPEditor"
-			name="%plugin.editor.jspeditor">
+        class="com.tulin.v8.webtools.ide.jsp.editors.JSPEditor"
+        contributorClass="com.tulin.v8.webtools.ide.jsp.editors.JSPEditorContributor"
+        extensions="jsp,jsf,jspf,jspx,tag,tagx,tagf"
+        icon="icons/tlv8_jsp.png"
+        id="com.tulin.v8.webtools.ide.editors.JSPEditor"
+        name="%plugin.editor.jspeditor">
 			<contentTypeBinding contentTypeId="com.tulin.v8.webtools.ide.jsp" />
 		</editor>
 		<editor
