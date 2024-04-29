@@ -75,11 +75,11 @@ public class HTMLValidator implements FuzzyXMLErrorListener {
 							Matcher matcher = TIDY_ERROR.matcher(dim[i]);
 							if (matcher.matches()) {
 								String message = matcher.group(3);
-								if (message.startsWith("Warning")) {
+								if (message.startsWith("Warning") || message.startsWith("Error")) {
 									HTMLUtil.addMarker(file, IMarker.SEVERITY_WARNING,
 											Integer.parseInt(matcher.group(1)), matcher.group(3));
 								} else {
-									HTMLUtil.addMarker(file, IMarker.SEVERITY_ERROR, Integer.parseInt(matcher.group(1)),
+									HTMLUtil.addMarker(file, IMarker.SEVERITY_INFO, Integer.parseInt(matcher.group(1)),
 											matcher.group(3));
 								}
 							}
