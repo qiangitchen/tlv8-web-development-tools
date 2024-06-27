@@ -14,12 +14,13 @@ import org.eclipse.ui.handlers.HandlerUtil;
 import org.eclipse.ui.part.MultiPageEditorPart;
 
 import com.tulin.v8.webtools.ide.WebToolsPlugin;
+import com.tulin.v8.webtools.ide.css.editors.CSSEditor;
 import com.tulin.v8.webtools.ide.html.editors.HTMLEditor;
 import com.tulin.v8.webtools.ide.html.editors.HTMLSourceEditor;
 import com.tulin.v8.webtools.ide.js.editors.JavaScriptEditor;
 import com.tulin.v8.webtools.ide.xml.editors.XMLEditor;
 
-public class ToggleCommentHandler extends AbstractHandler implements IHandler{
+public class ToggleCommentHandler extends AbstractHandler implements IHandler {
 
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
@@ -41,6 +42,9 @@ public class ToggleCommentHandler extends AbstractHandler implements IHandler{
 			} else if (editor.getSelectedPage() instanceof JavaScriptEditor) {
 				JavaScriptEditor jseditor = (JavaScriptEditor) editor.getSelectedPage();
 				toggleJSComment(jseditor);
+			} else if (editor.getSelectedPage() instanceof CSSEditor) {
+				CSSEditor csseditor = (CSSEditor) editor.getSelectedPage();
+				toggleCSSComment(csseditor);
 			}
 		} else if (page.getActiveEditor() instanceof XMLEditor) {
 			XMLEditor editor = (XMLEditor) page.getActiveEditor();
@@ -51,6 +55,9 @@ public class ToggleCommentHandler extends AbstractHandler implements IHandler{
 		} else if (page.getActiveEditor() instanceof JavaScriptEditor) {
 			JavaScriptEditor editor = (JavaScriptEditor) page.getActiveEditor();
 			toggleJSComment(editor);
+		} else if (page.getActiveEditor() instanceof CSSEditor) {
+			CSSEditor csseditor = (CSSEditor) page.getActiveEditor();
+			toggleCSSComment(csseditor);
 		}
 		return null;
 	}
@@ -84,12 +91,40 @@ public class ToggleCommentHandler extends AbstractHandler implements IHandler{
 			int offset = doc.getLineOffset(startline);
 			int length = doc.getLineOffset(endline) + doc.getLineLength(endline) - offset - 2;
 			String text = doc.get(offset, length);
-			if (text.startsWith("//")) {
-				text = text.replaceAll("(^|\r\n|\r|\n)//", "$1");
-			} else {
-				text = text.replaceAll("(^|\r\n|\r|\n)", "$1//");
+			if (startline == endline) {// 单行注释/取消注释
+				if (text.trim().startsWith("//")) {
+					text = text.replaceFirst("//", "");
+				} else {
+					text = "//" + text;
+				}
+			} else {// 多行注释/取消注释
+				if (text.trim().startsWith("//")) {
+					text = text.replaceAll("(^|\r\n|\r|\n)//", "$1");
+				} else {
+					text = text.replaceAll("(^|\r\n|\r|\n)", "$1//");
+				}
 			}
 			doc.replace(offset, length, text);
+		} catch (BadLocationException e) {
+			WebToolsPlugin.logException(e);
+		}
+	}
+
+	public static void toggleCSSComment(CSSEditor editor) {
+		ITextSelection sel = (ITextSelection) editor.getSelectionProvider().getSelection();
+		IDocument doc = editor.getDocumentProvider().getDocument(editor.getEditorInput());
+		String text = sel.getText().trim();
+		if ("".equals(text)) {
+			return;
+		}
+		try {
+			if (text.startsWith("/*") && text.indexOf("*/") > 3) {
+				text = text.replaceFirst("/\\*", "");
+				text = text.replaceFirst("\\*/", "");
+				doc.replace(sel.getOffset(), sel.getLength(), text);
+			} else {
+				doc.replace(sel.getOffset(), sel.getLength(), "/*" + sel.getText() + "*/");
+			}
 		} catch (BadLocationException e) {
 			WebToolsPlugin.logException(e);
 		}
