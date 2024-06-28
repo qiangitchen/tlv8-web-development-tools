@@ -17,11 +17,14 @@ public class JavascriptFormator {
 					new org.openjdk.nashorn.api.scripting.NashornScriptEngineFactory());
 			engine = mgr.getEngineByName("JavaScript");
 		}
-		String scriptText = FileUtils.FileToString("/js/format/jsformat.js");
+//		String scriptText = FileUtils.FileToString("/js/format/jsformat.js");
+		String scriptText = FileUtils.FileToString("/js/format/beautify.js");
 		engine.eval(scriptText);
 		Invocable inv = (Invocable) engine;
+//		String value = String.valueOf(
+//				inv.invokeFunction("js_beautify", new Object[] { text, Integer.valueOf(1), "\t", Integer.valueOf(0) }));
 		String value = String.valueOf(
-				inv.invokeFunction("js_beautify", new Object[] { text, Integer.valueOf(1), "\t", Integer.valueOf(0) }));
+				inv.invokeFunction("js_beautify", new Object[] { text }));
 		return value;
 	}
 }

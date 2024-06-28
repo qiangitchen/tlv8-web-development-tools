@@ -22,7 +22,21 @@ public class Formater {
 		if (editor instanceof XMLEditor) {
 			new FormatXMLAction(editor).run();
 		} else if (editor instanceof HTMLSourceEditor) {
-			new FormatHTMLAction(editor).run();
+			try {
+				String tText = editor.getDocumentProvider().getDocument(editor.getEditorInput()).get();
+				ITextSelection sel = (ITextSelection) editor.getSelectionProvider().getSelection();
+				String stext = sel.getText().trim();
+				if (("".equals(stext)) || (stext == null)) {
+					String text = HtmlFormator.format(tText);
+					editor.getDocumentProvider().getDocument(editor.getEditorInput()).set(text);
+					return;
+				}
+				String text = HtmlFormator.format(stext);
+				IDocument doc = editor.getDocumentProvider().getDocument(editor.getEditorInput());
+				doc.replace(sel.getOffset(), sel.getLength(), text);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		} else if (editor instanceof JavaScriptEditor) {
 			try {
 				String tText = editor.getDocumentProvider().getDocument(editor.getEditorInput()).get();

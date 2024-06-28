@@ -4,31 +4,22 @@ import javax.script.Invocable;
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-
 public class HtmlFormator {
 	public static String format(String text) throws Exception {
-		String value;
+		ScriptEngineManager mgr = new ScriptEngineManager();
+		ScriptEngine engine = null;
 		try {
-			return formatHtml(text);
+			engine = mgr.getEngineByName("JavaScript");
 		} catch (Exception e) {
-			ScriptEngineManager mgr = new ScriptEngineManager();
-			ScriptEngine engine = mgr.getEngineByName("JavaScript");
-			String scriptText = FileUtils.FileToString("/js/format/jsformat.js") + "\n"
-					+ FileUtils.FileToString("/js/format/htmlformat.js");
-			engine.eval(scriptText);
-			Invocable inv = (Invocable) engine;
-			value = String.valueOf(inv.invokeFunction("style_html",
-					new Object[] { text, Integer.valueOf(1), "\t", Integer.valueOf(80) }));
 		}
-		return value;
-	}
-
-	public static String formatHtml(String str) throws Exception {
-		Document doc = Jsoup.parse(str);
-		doc.outputSettings().indentAmount(4);
-		doc.outputSettings().prettyPrint(true);
-		return doc.html();
+		if (engine == null) {
+			mgr.registerEngineName("customScriptEngineFactory",
+					new org.openjdk.nashorn.api.scripting.NashornScriptEngineFactory());
+			engine = mgr.getEngineByName("JavaScript");
+		}
+		String scriptText = FileUtils.FileToString("/js/format/beautify-html.js");
+		engine.eval(scriptText);
+		Invocable inv = (Invocable) engine;
+		return String.valueOf(inv.invokeFunction("style_html", new Object[] { text }));
 	}
 }
