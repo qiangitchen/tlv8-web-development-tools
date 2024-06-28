@@ -33,8 +33,8 @@ public class CSSAssistProcessor implements IContentAssistProcessor {
 						List<CSSInfo> values = CSSDefinition.CSS_VALUES[i].getValues();
 						for (CSSInfo value : values) {
 							if (value.getReplaceString().startsWith(vals)) {
-								list.add(new CompletionProposal(value.getReplaceString() + ";", offset, 0,
-										value.getReplaceString().length() + 1,
+								list.add(new CompletionProposal(value.getReplaceString() + ";", offset - vals.length(),
+										vals.length(), value.getReplaceString().length() + 1,
 										WebToolsPlugin.getDefault().getImageRegistry()
 												.get(WebToolsPlugin.ICON_CSS_PROP),
 										value.getDisplayString(), null, value.getDescription()));
