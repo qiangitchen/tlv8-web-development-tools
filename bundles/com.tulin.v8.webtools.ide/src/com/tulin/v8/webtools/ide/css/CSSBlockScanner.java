@@ -7,6 +7,7 @@ import org.eclipse.jface.text.rules.IRule;
 import org.eclipse.jface.text.rules.IToken;
 import org.eclipse.jface.text.rules.MultiLineRule;
 import org.eclipse.jface.text.rules.RuleBasedScanner;
+import org.eclipse.jface.text.rules.SingleLineRule;
 import org.eclipse.swt.SWT;
 
 import com.tulin.v8.webtools.ide.WebToolsPlugin;
@@ -29,6 +30,7 @@ public class CSSBlockScanner extends RuleBasedScanner {
 	protected List<IRule> createRules(ColorProvider colorProvider) {
 		IToken tag = colorProvider.getToken(WebToolsPlugin.PREF_COLOR_TAG);
 		List<IRule> rules = new ArrayList<IRule>();
+		rules.add(new SingleLineRule("@", " ", colorProvider.getToken(WebToolsPlugin.PREF_COLOR_FG)));
 		rules.add(new MultiLineRule("/*", "*/", colorProvider.getToken(WebToolsPlugin.PREF_COLOR_CSSCOMMENT)));
 		rules.add(new CSSRule(tag, colorProvider.getToken(WebToolsPlugin.PREF_COLOR_CSSPROP),
 				colorProvider.getToken(WebToolsPlugin.PREF_COLOR_CSSVALUE, SWT.ITALIC)));

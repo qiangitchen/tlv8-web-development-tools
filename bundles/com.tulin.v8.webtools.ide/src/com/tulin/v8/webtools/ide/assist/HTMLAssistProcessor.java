@@ -25,6 +25,9 @@ import com.tulin.v8.fuzzyxml.FuzzyXMLElement;
 import com.tulin.v8.fuzzyxml.FuzzyXMLNode;
 import com.tulin.v8.fuzzyxml.FuzzyXMLParser;
 import com.tulin.v8.webtools.ide.WebToolsPlugin;
+import com.tulin.v8.webtools.ide.css.CSSDefinition;
+import com.tulin.v8.webtools.ide.css.CSSInfo;
+import com.tulin.v8.webtools.ide.css.CSSValue;
 import com.tulin.v8.webtools.ide.html.HTMLUtil;
 import com.tulin.v8.webtools.ide.html.editors.HTMLSourceEditor;
 
@@ -442,6 +445,53 @@ public class HTMLAssistProcessor extends HTMLTemplateAssistProcessor { /* implem
 				}
 				list.add(new CompletionProposal(assistKeyword, documentOffset - length, length, assistKeyword.length(),
 						tagImage, assistKeyword, null, null));
+			}
+		}
+
+		// STYLE Attribute
+		if ("style".equalsIgnoreCase(attr)) {
+			// attribute value
+			if ((word.startsWith("\"") && (word.length() == 1 || !word.endsWith("\"")))
+					|| (word.startsWith("'") && (word.length() == 1 || !word.endsWith("\'")))) {
+				String sword = word.substring(1);
+				if (sword.indexOf(";") > 0) {
+					sword = sword.substring(sword.lastIndexOf(";") + 1);
+				}
+				sword = sword.trim();
+				if (sword.indexOf(":") > 0) {
+					String prop = sword.substring(0, sword.indexOf(":"));
+					String vals = sword.substring(sword.indexOf(":") + 1).trim();
+					for (int i = 0; i < CSSDefinition.CSS_VALUES.length; i++) {
+						CSSValue cssValue = CSSDefinition.CSS_VALUES[i];
+						if (cssValue.getName().startsWith(prop)) {
+							List<CSSInfo> values = cssValue.getValues();
+							for (CSSInfo value : values) {
+								if (value.getReplaceString().startsWith(vals)) {
+									list.add(new CompletionProposal(value.getReplaceString() + ";",
+											offset - vals.length(), vals.length(),
+											value.getReplaceString().length() + 1,
+											WebToolsPlugin.getDefault().getImageRegistry()
+													.get(WebToolsPlugin.ICON_CSS_PROP),
+											value.getDisplayString(), null, value.getDescription()));
+								}
+							}
+						}
+					}
+				} else {
+					for (int i = 0; i < CSSDefinition.CSS_KEYWORDS.length; i++) {
+						CSSInfo cssInfo = CSSDefinition.CSS_KEYWORDS[i];
+						if (cssInfo.getReplaceString().startsWith(sword)) {
+							String replaceString = cssInfo.getReplaceString();
+							if (replaceString.indexOf(":") < 0) {
+								replaceString += ": ";
+							}
+							list.add(new CompletionProposal(replaceString, offset - sword.length(), sword.length(),
+									replaceString.length(),
+									WebToolsPlugin.getDefault().getImageRegistry().get(WebToolsPlugin.ICON_CSS_PROP),
+									cssInfo.getDisplayString(), null, cssInfo.getDescription()));
+						}
+					}
+				}
 			}
 		}
 

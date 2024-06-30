@@ -436,7 +436,7 @@ public class HTMLConfiguration extends AbsTextSourceViewerConfiguration {
 	protected RuleBasedScanner getCSSScanner() {
 		if (cssScanner == null) {
 			cssScanner = new InnerCSSScanner(colorProvider);
-			cssScanner.setDefaultReturnToken(colorProvider.getToken(WebToolsPlugin.PREF_COLOR_FG));
+			cssScanner.setDefaultReturnToken(colorProvider.getToken(WebToolsPlugin.PREF_COLOR_TAG));
 		}
 		return cssScanner;
 	}
