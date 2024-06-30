@@ -36,7 +36,7 @@ public class CSSConfiguration extends TextSourceViewerConfiguration {
 	private RuleBasedScanner getDefaultScanner() {
 		if (defaultScanner == null) {
 			defaultScanner = new CSSBlockScanner(colorProvider);
-			defaultScanner.setDefaultReturnToken(colorProvider.getToken(WebToolsPlugin.PREF_COLOR_FG));
+			defaultScanner.setDefaultReturnToken(colorProvider.getToken(WebToolsPlugin.PREF_COLOR_TAG));
 		}
 		return defaultScanner;
 	}

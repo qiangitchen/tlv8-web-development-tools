@@ -29,10 +29,8 @@ public class CSSBlockScanner extends RuleBasedScanner {
 	protected List<IRule> createRules(ColorProvider colorProvider) {
 		IToken tag = colorProvider.getToken(WebToolsPlugin.PREF_COLOR_TAG);
 		List<IRule> rules = new ArrayList<IRule>();
-		rules.add(new MultiLineRule(".", "{", tag));
 		rules.add(new MultiLineRule("/*", "*/", colorProvider.getToken(WebToolsPlugin.PREF_COLOR_CSSCOMMENT)));
-		rules.add(new CSSRule(colorProvider.getToken(WebToolsPlugin.PREF_COLOR_TAG, true),
-				colorProvider.getToken(WebToolsPlugin.PREF_COLOR_CSSPROP),
+		rules.add(new CSSRule(tag, colorProvider.getToken(WebToolsPlugin.PREF_COLOR_CSSPROP),
 				colorProvider.getToken(WebToolsPlugin.PREF_COLOR_CSSVALUE, SWT.ITALIC)));
 		return rules;
 	}
